@@ -1,0 +1,255 @@
+
+<mat-card>
+    <mat-card-content>
+      <mat-card-title>Bienvenue</mat-card-title>
+      <mat-chip-list class="mat-chip-list-stacked" *ngIf="sp==true">
+          <mat-chip id="sp" *ngFor="let aColor of availableColors"
+          (focus)="color = aColor.color" color="{{aColor.color}}" selected="true">
+      {{aColor.name}}
+      </mat-chip>
+      </mat-chip-list>
+
+
+
+
+
+    <mat-card-subtitle>Ajouter Consultant</mat-card-subtitle>
+
+
+
+
+
+
+
+ 
+    
+    <form [formGroup]="myForm">
+
+
+<!-- ==================================================-------------------------------============ -->
+
+
+        <mat-accordion class="example-headers-align"></mat-accordion>
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" >
+          
+        <mat-expansion-panel-header>
+      
+          <mat-panel-title>Données personnelles</mat-panel-title>
+          <mat-panel-description>Remplir les données personnelles du consultant<mat-icon>account_circle</mat-icon></mat-panel-description>
+        </mat-expansion-panel-header>
+     
+
+     <mat-form-field>
+        <input matInput placeholder="Nom" name="nom" formControlName="nom" required>
+        <div *ngIf="myForm?.get('nom').invalid && (myForm?.get('nom').dirty || myForm?.get('nom').touched)">
+          <div *ngIf="myForm?.get('nom').errors?.required">Le nom est obligatoire</div>
+          <div *ngIf="myForm?.get('nom').errors?.minLength(5)">Le nom est min</div>
+
+        </div>
+      </mat-form-field>
+<!-- ========================== -->
+      <mat-form-field>
+        <input matInput placeholder="Prénom" name="prenom" formControlName="prenom" required>
+        <div *ngIf="myForm?.get('prenom').invalid && (myForm?.get('prenom').dirty || myForm?.get('prenom').touched)">
+          <div *ngIf="myForm?.get('prenom').errors?.required">Le prénom est obligatoire</div>
+        </div>
+      </mat-form-field>
+      <!-- ===================== -->
+      <mat-form-field>
+        <input type="number" matInput placeholder="Age" name="age" formControlName="age" required>
+      </mat-form-field>
+      <!-- ===================== -->
+
+
+
+      <mat-form-field>
+        <input  type="date" matInput placeholder="Date de naissance" name="date_naissance" formControlName="date_naissance" required>
+       
+      </mat-form-field>
+      <!-- =================================== -->
+      <mat-form-field>
+        <mat-label>Genre</mat-label>
+        <mat-select formControlName="genre">
+          <mat-option value="Masculin">Masculin</mat-option>
+          <mat-option value="Féminin">Féminin</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- ============================= -->
+
+
+      <mat-form-field>
+        <mat-label>situation_amoureuse</mat-label>
+                <mat-select formControlName="situation_amoureuse">
+                  <mat-option value="Célibataire">Célibataire</mat-option>
+                  <mat-option value="En couple">En couple</mat-option>
+                <mat-option value="Marié(e)">Marié(e)</mat-option>
+              <mat-option value="Divorcé(e)">Divorcé(e)</mat-option>
+            <mat-option value="Veuf(ve)">Veuf(ve)</mat-option>
+             </mat-select>
+          </mat-form-field>
+      <!-- ============================= -->
+      <mat-form-field>
+        <input matInput placeholder="CIN" name="cin" formControlName="cin" required>
+      </mat-form-field>
+        <!-- ============================= -->
+      <mat-form-field>
+        <input matInput placeholder="Adresse" name="adress" formControlName="adress" required>
+      </mat-form-field>
+        <!-- ============================= -->
+      <mat-form-field>
+        <input matInput type="email" placeholder="Email" name="mail" formControlName="mail" required>
+      </mat-form-field>
+        <!-- ============================= -->
+      <mat-form-field>
+        <input matInput placeholder="Mobile 1" name="tel1" formControlName="tel1" required>
+      </mat-form-field>
+        <!-- ============================= -->
+      <mat-form-field>
+        <input matInput placeholder="Mobile 2" name="tel2" formControlName="tel2"  >
+      </mat-form-field>
+        <!-- ============================= -->
+
+      <mat-form-field>
+        <mat-label>Statut</mat-label>
+        <mat-select formControlName="status">
+          <mat-option value="actif">Actif</mat-option>
+          <mat-option value="inactif">Inactif</mat-option>
+        </mat-select>
+      </mat-form-field>
+        <!-- ============================= -->
+      <mat-action-row>
+        <button mat-button color="primary" (click)="nextStep()">Suivant</button>
+
+ 
+  </mat-action-row>
+
+
+
+        </mat-expansion-panel>
+    <!-- =====*******************************************************====== -->
+  <mat-expansion-panel [expanded]="step === 1"   (opened)="setStep(1)" hideToggle="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Données RH</mat-panel-title>
+      <mat-panel-description>Remplir les données RH<mat-icon>map</mat-icon></mat-panel-description>
+    </mat-expansion-panel-header>
+    
+
+    <mat-form-field>
+      <input matInput type="text" placeholder="Code" name="code" formControlName="code" required>
+    </mat-form-field>
+      <!-- ============================= -->
+
+
+
+
+        <mat-form-field>
+            <input matInput type="text" placeholder="fonction" name="fonction" formControlName="fonction" required>
+          </mat-form-field>
+            <!-- ============================= -->
+            <mat-form-field>
+                <input matInput placeholder="Grade" name="grade" formControlName="grade" required>
+              </mat-form-field>
+
+            <!-- ============================= -->
+
+
+            <mat-action-row>
+      
+        
+    
+      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+
+      <button mat-button color="primary" (click)="nextStep()">Suivant</button></mat-action-row>
+</mat-expansion-panel>
+
+
+
+            <!-- =========**********************************************************==================== -->
+
+
+
+<!-- =====*******************************************************====== -->
+<mat-expansion-panel [expanded]="step === 2"   (opened)="setStep(2)" hideToggle="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Données Contractulles</mat-panel-title>
+      <mat-panel-description>Remplir les données contractulles<mat-icon>map</mat-icon></mat-panel-description>
+    </mat-expansion-panel-header>
+    
+<!-- =================================== -->
+<mat-form-field>
+    <mat-label>Type de contrat</mat-label>
+    <mat-select formControlName="contrat">
+        <mat-option value="Prestataire">Prestataire</mat-option>
+        <mat-option value="CDI">CDI</mat-option>
+        <mat-option value="CIVP">CIVP</mat-option>
+        <mat-option value="CDD">CDD</mat-option>
+    </mat-select>
+  </mat-form-field>
+<!-- =================================== -->
+
+
+<mat-form-field>
+    <input  type="date" matInput placeholder="Date d integration" name="date_integration" formControlName="date_integration" required>
+   
+  </mat-form-field>
+
+       
+            <!-- ============================= -->
+       
+  <mat-form-field >
+    <mat-label>Société </mat-label>
+   
+    <mat-select formControlName="societe">
+   
+        <mat-option value="Prestataire">Prestataire</mat-option>
+        <mat-option value="Accompany">Accompany</mat-option>
+        <mat-option value="Alpha Banking">Alpha Banking </mat-option>
+        <mat-option value="Digitaly">Digitaly  </mat-option>
+
+
+    </mat-select>
+  </mat-form-field>
+            <!-- ============================= -->
+            <mat-form-field >
+                <mat-label>Business_unit</mat-label>
+               
+                <mat-select formControlName="business_unit">
+               
+                    <mat-option value="Prestataire">Prestataire</mat-option>
+                    <mat-option value="Accompany">Accompany</mat-option>
+                    <mat-option value="Alpha Banking">Alpha Banking </mat-option>
+                    <mat-option value="Digitaly">Digitaly  </mat-option>
+            
+            
+                </mat-select>
+              </mat-form-field>
+
+
+
+
+            <mat-action-row>
+      
+      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+
+      <button mat-button color="primary"  (click)="ajouterConsultant()">Ajouter</button>
+
+    </mat-action-row>
+</mat-expansion-panel>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</form>
+
+
+
+    </mat-card-content></mat-card>

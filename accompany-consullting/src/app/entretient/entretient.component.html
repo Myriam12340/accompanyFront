@@ -1,0 +1,165 @@
+
+
+<mat-card>
+    <mat-card-content>
+        <mat-card-title>Entretien initial </mat-card-title>
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 mt-5">
+     
+        <form [formGroup]="entretienForm" (ngSubmit)="addEntretien()">
+            <div class="p-20 bg-info ">
+                <h4 class="card-title text-white m-0 text-center">Description du poste </h4></div>
+         
+
+                
+
+
+
+
+
+                <fieldset>
+                    <div class="fieldset-content"> 
+          
+                <mat-form-field class="col-md-4">
+                    <input matInput placeholder="Post" name="post" formControlName="post" required>
+                    
+                   
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="description Poste" name="descriptionPoste" formControlName="descriptionPoste" required>
+                    
+                   
+                  </mat-form-field>
+                  </div></fieldset>
+
+<!------------------------------------------------------------------------------------------>
+
+<div class="p-20 bg-info ">
+    <h4 class="card-title text-white m-0 text-center">Profil du Candidat
+    </h4></div>
+
+
+    
+
+
+
+
+
+    <fieldset>
+        <div class="fieldset-content"> 
+
+    <mat-form-field class="col-md-4">
+        <input matInput placeholder="Nom" name="nom" formControlName="nom" required>
+        
+       
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Prenom" name="prenom" formControlName="prenom" required>
+        
+       
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Email" name="email" formControlName="email" required>
+        
+       
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Mobile 1" name="tel1" formControlName="tel1" required>
+        
+       
+      </mat-form-field>
+
+      
+      <mat-form-field>
+        <input matInput placeholder="Mobile 2" name="tel2" formControlName="tel2" required>
+        
+       
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Competance" name="competance" formControlName="competance" required>
+        
+       
+      </mat-form-field>
+
+
+   
+
+
+      <div>
+        <label>CV (PDF):</label>
+        <input type="file" (change)="onFileSelected($event)" />
+      </div>
+
+
+
+
+      </div></fieldset>
+              
+
+
+<!---------------------------------------      Avis de recruteur  --------------------------------------------------->
+
+
+
+<div class="p-20 bg-info ">
+    <h4 class="card-title text-white m-0 text-center"> Avis de recruteur </h4></div>
+
+
+    
+
+
+
+
+
+    <fieldset>
+        <div class="fieldset-content"> 
+
+    <mat-form-field class="col-md-4">
+        <input matInput placeholder="avis" name="avis" formControlName="avis" required>
+        
+       
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Decision</mat-label>
+        <mat-select formControlName="statut">
+          <mat-option value="GO">GO</mat-option>
+          <mat-option value="NOTGO">NOT GO</mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div></fieldset>
+
+
+      
+
+         
+           
+
+      
+      <mat-action-row>
+      
+        
+    
+        <button  type="submit" mat-button color="warn" (click)="addEntretien()">Terminer</button>
+  
+      <!-- Modifier le bouton "+Entretien" pour qu'il utilise *ngIf -->
+<button mat-button color="primary" (click)="add()" *ngIf="entretienForm.controls.statut.value === 'GO'">+Entretien</button>
+</mat-action-row>
+        
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+</mat-card-content>
+  </mat-card>

@@ -1,0 +1,31 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="assets/images/users/login.png" width="30" id="icon" alt="User Icon" />
+    </div>
+
+    <!-- Login Form -->
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+      <div class="form-group">
+        <input type="email" id="email" name="email" ngModel class="form-control" placeholder="Email" required autofocus>
+      </div>
+    
+      <div class="form-group">
+        <input type="password" id="password" name="password" ngModel class="form-control" placeholder="Password" required>
+      </div>
+
+      <div class="alert alert-warning" *ngIf="invalidlogin">
+        Email ou mot de passe incorrect.
+      </div>
+
+      <button class="btn btn-lg btn-primary" type="submit" [disabled]="!loginForm.valid">Se connecter</button>
+
+    </form>
+
+    <!-- Remind Passowrd -->
+    
+  </div>
+</div>

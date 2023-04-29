@@ -1,0 +1,108 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body text-center">
+            <img src="assets\images\users\login.png" alt="Photo de profil" class="img-fluid rounded-circle mb-3">
+            <h4 class="card-title">{{consultant.nom}}&{{consultant.prenom}}</h4>
+           
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Informations personnelles</h4>
+            <hr>
+            <div class="row">
+              <div class="col-md-6">
+                <p><strong>Nom :</strong> {{consultant.nom}}</p>
+                <p><strong>Prénom :</strong>  {{consultant.prenom}}</p>
+                <p><strong>Date de naissance :</strong> {{consultant.date_naissance| date:'dd-MM-yyyy'}}</p>
+                <p><strong>Genre :</strong>{{consultant.genre}}</p> 
+                <p><strong>Cin :</strong>{{consultant.cin}}</p>
+                <p><strong>Age :</strong>{{consultant.age}}</p>
+
+              </div>
+              <div class="col-md-6">
+                <p><strong>situation_civile</strong>{{consultant.situation_amoureuse}}</p>
+
+                <p><strong>Adresse :</strong> {{consultant.adress}}</p>
+                <p><strong>Email :</strong> {{consultant.mail}}</p>
+                <p><strong>Téléphone :</strong>{{consultant.tel1}}</p>
+                <p><strong>Téléphone 2 :</strong>{{consultant.tel2}}</p>
+                <p><strong>Status:</strong>{{consultant.status}}</p>
+              </div>
+            </div>
+            <h4 class="card-title">Données RH & Contractulles</h4>
+            <hr>
+            <div class="col-md-6">
+              <p><strong>Code :</strong> {{consultant.code}}</p>
+
+                <p><strong>Fonction :</strong> {{consultant.fonction}}</p>
+                <p><strong>Grade:</strong>  {{consultant.grade}}</p>
+                <p><strong> société:</strong> {{consultant.societe}}</p>
+                <p><strong>business_unit :</strong>{{consultant.business_unit}}</p> 
+                <p><strong>Date d'integration :</strong>{{consultant.date_integration| date:'dd-MM-yyyy'}}</p> 
+
+              </div>
+            <h4 class="card-title">Entretien</h4>
+            <hr>
+           
+
+
+            <table class="interview-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Consultant</th>
+                    <th>Manager</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>01/01/2022</td>
+                    <td>Annuel</td>
+                    <td>John Doe</td>
+                    <td>Jane Smith</td>
+                    <td>
+                   
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>05/05/2022</td>
+                    <td>Projet</td>
+                    <td>Mark Johnson</td>
+                    <td>Emily Davis</td>
+                    
+                  </tr>
+                  <tr>
+                    <td>10/10/2022</td>
+                    <td>Compétences</td>
+                    <td>Sara Wilson</td>
+                    <td>Mike Brown</td>
+              
+                  </tr>
+                </tbody>
+              </table>
+              
+
+
+
+
+
+
+
+
+
+
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

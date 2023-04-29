@@ -1,0 +1,39 @@
+<div class="my-custom-dialog ">
+<form class="p-3 rounded bg-light" (submit)="sendEmail()">
+  <div class="form-group">
+    <label for="fromName"><i class="fas fa-user"></i> From Name:</label>
+    <input type="text" class="form-control" id="fromName" name="fromName" [(ngModel)]="email.fromName">
+  </div>
+
+
+ 
+
+
+
+
+
+  <div class="form-group">
+    <label for="fromEmail"><i class="fas fa-envelope"></i> From Email:</label>
+    <input type="email" class="form-control" id="fromEmail" name="fromEmail" [(ngModel)]="email.fromEmail">
+  </div>
+  <div class="form-group">
+    <label for="toName"><i class="fas fa-user"></i> To Name:</label>
+    <input type="text" class="form-control" id="toName" name="toName" [(ngModel)]="email.toName">
+  </div>
+  <div class="form-group">
+    <label for="toEmail"><i class="fas fa-envelope"></i> To Email:</label>
+    <input type="email" class="form-control" id="toEmail" name="toEmail" [(ngModel)]="email.toEmail">
+  </div>
+  <div class="form-group">
+    <label for="subject"><i class="fas fa-heading"></i> Subject:</label>
+    <input type="text" class="form-control" id="subject" name="subject" [(ngModel)]="email.subject">
+  </div>
+  <div class="form-group">
+    <label for="body"><i class="fas fa-comment"></i> Body:</label>
+    <textarea class="form-control" id="body" name="body" [(ngModel)]="email.body"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Email</button>
+</form></div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
