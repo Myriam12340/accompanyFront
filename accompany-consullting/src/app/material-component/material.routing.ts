@@ -32,8 +32,11 @@ import { EvaluationListComponent } from '../evaluation-list/evaluation-list.comp
 import { CalendarComponent } from '../calendar/calendar.component';
 import { EntretientComponent } from '../entretient/entretient.component';
 import { MailRecruteurComponent } from '../mail-recruteur/mail-recruteur.component';
+import  { ListEntretienComponent } from '../list-entretien/list-entretien.component';
+
 
 export const MaterialRoutes: Routes = [
+  {path:'list-entreien',component:ListEntretienComponent},
   {path: 'Entretient',component:EntretientComponent},
     {path: 'mail',component:MailRecruteurComponent},
   

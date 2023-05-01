@@ -20,4 +20,12 @@ export class EntretienService {
     return this.http.post<entretient>(this.baseUrl, viewModel);
   }
 
+
+
+
+  getEntretientsByRecruteur(recruteur: number): Observable<entretient[]> {
+    return this.http.get<entretient[]>(`${this.baseUrl}/entretien/${recruteur}`);
+  }
+
+
 }

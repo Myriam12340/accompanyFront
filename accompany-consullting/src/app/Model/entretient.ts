@@ -4,8 +4,8 @@ export class entretient {
     avis: string;
     statut: string;
     id_candidat: number;
-    recruteur: User;
-    recruteurSuivant: User;
+    recruteur: number;
+    recruteurSuivant: number;
     post: string;
     descriptionPoste: string;
   }

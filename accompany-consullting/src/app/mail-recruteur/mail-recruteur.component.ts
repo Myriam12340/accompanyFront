@@ -2,6 +2,7 @@ import { Component, OnInit , Inject } from '@angular/core';
 import { MailService } from '../service/mail.service';
 import { EmailMessage } from '../Model/email-message';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AuthService } from '../service/Authentication Service/auth.service';
 
 @Component({
   selector: 'app-mail-recruteur',
@@ -9,7 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./mail-recruteur.component.css']
 })
 export class MailRecruteurComponent  {
- 
+ user: any ;
   email: EmailMessage = {
     fromName: '',
     fromEmail: '',
@@ -19,13 +20,35 @@ export class MailRecruteurComponent  {
     body: ''
   };
 
-  constructor(private emailService: MailService , public dialogRef: MatDialogRef<MailRecruteurComponent>) { }
+  constructor(private authService: AuthService,private emailService: MailService , public dialogRef: MatDialogRef<MailRecruteurComponent>) { }
 
   sendEmail() {
     this.emailService.sendEmail(this.email).subscribe(
       () => {
         console.log('Email sent successfully');
-        this.dialogRef.close(this.email.toEmail);
+       
+      
+        this.authService.getUserByEmail(this.email.toEmail).subscribe(
+          (user) => {
+            this.user = user;
+            this.dialogRef.close(this.user);
+          },
+          (error) => {
+            console.log('Error getting user by email:', error);
+          }
+        );
+
+
+
+
+
+
+
+
+
+
+
+
       },
       (error) => {
         console.log('Error sending email:', error);

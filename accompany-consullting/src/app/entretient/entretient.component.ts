@@ -8,6 +8,7 @@ import { EntretientViewModel } from '../Model/entretient-view-model';
 import { AuthService } from '../service/Authentication Service/auth.service'
 import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import { MailRecruteurComponent } from '../mail-recruteur/mail-recruteur.component';
+import { User } from '../Model/user';
 
 @Component({
   selector: 'app-entretient',
@@ -22,6 +23,7 @@ export class EntretientComponent implements OnInit {
   u1 : any ;
   u2 : any ;
   recruteur : any ;
+  user: any ;
   constructor(private authService: AuthService,
     private fb: FormBuilder,
     private entretienService: EntretienService , private dialog: MatDialog
@@ -52,9 +54,19 @@ export class EntretientComponent implements OnInit {
       this.authService.getUserProfile(localStorage.getItem("jwt")).subscribe(
         userProfile => {
           this.userProfile = userProfile;
-          console.log(this.userProfile);
-          this.u1  = this.authService.getUser(this.userProfile.id.value);
-          // Call the addEntretien method here
+          console.log("*************")
+    
+          this.authService.getUserByEmail(this.userProfile.email).subscribe(
+            (user) => {
+              this.user = user;
+              console.log('User found:', this.user.id);
+              this.recruteur = this.user.id;
+              this.addEntretien(); // Appel à la fonction qui ajoute l'entretien après la récupération de l'utilisateur
+            },
+            (error) => {
+              console.log('Error getting user by email:', error);
+            }
+          );
         },
         error => console.error(error)
       );
@@ -70,8 +82,20 @@ export class EntretientComponent implements OnInit {
 
 // Extract the logic for adding entretien to a separate method
 addEntretien(): void {
-  this.entretient.recruteurSuivant = this.u2 ; 
-  this.entretient.recruteur = this.u1;
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
   this.candidat.nom = this.entretienForm.get('nom')?.value;
   this.candidat.Prenom = this.entretienForm.get('prenom')?.value;
   this.candidat.email = this.entretienForm.get('email')?.value;
@@ -82,6 +106,7 @@ addEntretien(): void {
   this.entretient.descriptionPoste = this.entretienForm.get('descriptionPoste')?.value ;
   this.entretient.post = this.entretienForm.get('post')?.value ;
   this.entretient.statut = this.entretienForm.get('statut')?.value ;
+  this.entretient.recruteur = this.recruteur ;
   const viewModel = new EntretientViewModel();
   viewModel.candidat = this.candidat;
   viewModel.entretient = this.entretient;
@@ -92,15 +117,21 @@ addEntretien(): void {
       console.log(entretient);
       // réinitialiser le formulaire après ajout réussi
     });
+    console.log(this.entretient.recruteur);
+
 }
 
+
+
+
+
+///partie dialog mail 
 add() {
   const dialogRef = this.dialog.open(MailRecruteurComponent);
 
   dialogRef.afterClosed().subscribe(result => {
-    console.log('E-mail address:', result);
-    this.recruteur = result ;
-    this.u2 = this.authService.getUserByEmail(result)
+    console.log('E-mail address ress :', result);
+   this.entretient.recruteurSuivant = result.id ;
     // Do whatever you want with the retrieved email address here
   });
   
@@ -114,7 +145,7 @@ add() {
 
 
 
-
+//partie file 
 onFileSelected(event) {
   const file: File = event.target.files[0];
   this.entretienForm.get('cvPdf')?.setValue(file); // Enregistrer le fichier PDF dans le formulaire

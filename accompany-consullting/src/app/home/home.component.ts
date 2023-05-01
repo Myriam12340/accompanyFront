@@ -23,10 +23,10 @@ export class HomeComponent  {
       this.authService.getUserProfile(localStorage.getItem("jwt")).subscribe(
         userProfile => {
           this.userProfile = userProfile;
-          console.log(this.userProfile);
           this.username = userProfile.userName;
           this.email = userProfile.email;
           this.id = userProfile.id;
+          console.log(this.id);
 
         },
         error => console.error(error)

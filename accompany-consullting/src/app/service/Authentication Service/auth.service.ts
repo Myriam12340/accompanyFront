@@ -24,7 +24,7 @@ export class AuthService {
 
   private readonly apiUrl = 'http://localhost:60734/api/auth';
   private readonly tokenKey = 'jwt';
-
+e : any ;
   constructor(private http: HttpClient, private router: Router) { }
 
   register(email: string, password: string, role: string, username: string) {
@@ -77,8 +77,18 @@ export class AuthService {
     return this.http.get(this.apiUrl,val);
   }
 
-  getUserByEmail(email: string): Observable<User> {
-    const url = `http://localhost:60734/api/auth/email/${email}`;
-    return this.http.get<User>(url);
+  getUserByEmail(email: string) {
+    return this.http.get(`${this.apiUrl}/email/${email}`);
   }
+  
+
+
+
+
+  getUserById(email: string): Observable<any> {
+    const url = `${this.apiUrl}/email/${email}`;
+    return this.http.get<any>(url);
+  }
+
+  
 }
