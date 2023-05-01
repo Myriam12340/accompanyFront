@@ -106,6 +106,8 @@ addEntretien(): void {
   this.entretient.descriptionPoste = this.entretienForm.get('descriptionPoste')?.value ;
   this.entretient.post = this.entretienForm.get('post')?.value ;
   this.entretient.statut = this.entretienForm.get('statut')?.value ;
+  if (this.entretient.statut == "GO")
+  {this.entretient.valid = true }
   this.entretient.recruteur = this.recruteur ;
   const viewModel = new EntretientViewModel();
   viewModel.candidat = this.candidat;

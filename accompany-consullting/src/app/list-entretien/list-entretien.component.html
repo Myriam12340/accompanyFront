@@ -1,1 +1,22 @@
-<p>list-entretien works!</p>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="avis">
+      <th mat-header-cell *matHeaderCellDef>Avis</th>
+      <td mat-cell *matCellDef="let entretien">{{ entretien.avis }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="statut">
+      <th mat-header-cell *matHeaderCellDef>Statut</th>
+      <td mat-cell *matCellDef="let entretien">{{ entretien.statut }}</td>
+    </ng-container>
+    <ng-container matColumnDef="recruteur">
+        <th mat-header-cell *matHeaderCellDef>Statut</th>
+        <td mat-cell *matCellDef="let entretien">{{ entretien.recruteur }}</td>
+      </ng-container>
+      <ng-container matColumnDef="recruteursuivant">
+        <th mat-header-cell *matHeaderCellDef>Statut</th>
+        <td mat-cell *matCellDef="let entretien">{{ entretien.recruteurSuivant }}</td>
+      </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  

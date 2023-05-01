@@ -23,8 +23,8 @@ export class EntretienService {
 
 
 
-  getEntretientsByRecruteur(recruteur: number): Observable<entretient[]> {
-    return this.http.get<entretient[]>(`${this.baseUrl}/entretien/${recruteur}`);
+  getEntretientsHistorique(recruteur: number): Observable<entretient[]> {
+    return this.http.get<entretient[]>(`${this.baseUrl}/recruteur/${recruteur}`);
   }
 
 

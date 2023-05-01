@@ -8,5 +8,6 @@ export class entretient {
     recruteurSuivant: number;
     post: string;
     descriptionPoste: string;
+    valid : boolean ;
   }
   
