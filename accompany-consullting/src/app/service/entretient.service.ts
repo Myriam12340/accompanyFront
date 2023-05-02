@@ -27,5 +27,9 @@ export class EntretienService {
     return this.http.get<entretient[]>(`${this.baseUrl}/recruteur/${recruteur}`);
   }
 
+  getEntretienaaffecte(recruteursuivant: number): Observable<entretient[]> {
+    return this.http.get<entretient[]>(`${this.baseUrl}/recruteursuivant/${recruteursuivant}`);
+  }
+
 
 }

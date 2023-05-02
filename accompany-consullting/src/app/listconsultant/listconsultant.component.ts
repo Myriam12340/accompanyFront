@@ -45,57 +45,6 @@ export class ListconsultantComponent implements OnInit {
 
 
 
-  generatePdf() {
-    const documentDefinition = {
-      content: [
-        {
-          text: 'Liste des consultants',
-          style: 'header'
-        },
-        {
-          table: {
-            headerRows: 1,
-            widths: ['*', '*', '*', '*', '*', '*'],
-            body: [
-              [
-                { text: 'Nom', style: 'tableHeader' },
-                { text: 'Prénom', style: 'tableHeader' },
-                { text: 'Grade', style: 'tableHeader' },
-                { text: 'Adresse', style: 'tableHeader' },
-                { text: 'Téléphone', style: 'tableHeader' },
-                { text: 'E-mail', style: 'tableHeader' }
-              ],
-              ...this.consultants.map((consultant: Consultant) => {
-                return [
-                  consultant.nom,
-                  consultant.prenom,
-                  consultant.grade,
-                  consultant.adress,
-                  consultant.tel1 + (consultant.tel2 ? '\n' + consultant.tel2 : ''),
-                  consultant.mail
-                ];
-              })
-            ]
-          }
-        }
-      ],
-      styles: {
-        header: {
-          fontSize: 22,
-          bold: true,
-          margin: [0, 0, 0, 20]
-        },
-        tableHeader: {
-          bold: true,
-          fontSize: 13,
-          color: 'black'
-        }
-      }
-    };
-    pdfMake.createPdf(documentDefinition).download();
-  }
-
-  
 
 
 
@@ -157,6 +106,17 @@ export class ListconsultantComponent implements OnInit {
       this.filteredConsultants = this.consultants;
     }
   }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -235,6 +195,61 @@ export class ListconsultantComponent implements OnInit {
   }
 
 
+
+///PDF 
+
+
+
+
+generatePdf() {
+  const documentDefinition = {
+    content: [
+      {
+        text: 'Liste des consultants',
+        style: 'header'
+      },
+      {
+        table: {
+          headerRows: 1,
+          widths: ['*', '*', '*', '*', '*', '*'],
+          body: [
+            [
+              { text: 'Nom', style: 'tableHeader' },
+              { text: 'Prénom', style: 'tableHeader' },
+              { text: 'Grade', style: 'tableHeader' },
+              { text: 'Adresse', style: 'tableHeader' },
+              { text: 'Téléphone', style: 'tableHeader' },
+              { text: 'E-mail', style: 'tableHeader' }
+            ],
+            ...this.consultants.map((consultant: Consultant) => {
+              return [
+                consultant.nom,
+                consultant.prenom,
+                consultant.grade,
+                consultant.adress,
+                consultant.tel1 + (consultant.tel2 ? '\n' + consultant.tel2 : ''),
+                consultant.mail
+              ];
+            })
+          ]
+        }
+      }
+    ],
+    styles: {
+      header: {
+        fontSize: 22,
+        bold: true,
+        margin: [0, 0, 0, 20]
+      },
+      tableHeader: {
+        bold: true,
+        fontSize: 13,
+        color: 'black'
+      }
+    }
+  };
+  pdfMake.createPdf(documentDefinition).download();
+}
 
 
 

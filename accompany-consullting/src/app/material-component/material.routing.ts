@@ -36,7 +36,7 @@ import  { ListEntretienComponent } from '../list-entretien/list-entretien.compon
 
 
 export const MaterialRoutes: Routes = [
-  {path:'list-entreien',component:ListEntretienComponent},
+  {path:'list-entretien',component:ListEntretienComponent},
   {path: 'Entretient',component:EntretientComponent},
     {path: 'mail',component:MailRecruteurComponent},
   

@@ -17,7 +17,12 @@ MENUITEMS = [
   { state: 'menu', type: 'link', name: 'Menu', icon: 'view_headline' },
   { state: 'tabs', type: 'link', name: 'Tabs', icon: 'tab' },
   { state: 'stepper', type: 'link', name: 'Stepper', icon: 'web' },*/
-  
+  {
+    state: 'list-entretien',
+    type: 'link',
+    name: 'Entretiens',
+    icon: 'blur_circular'
+  },
   {
     state: 'evaluationlist',
     type: 'link',
