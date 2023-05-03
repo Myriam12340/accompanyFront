@@ -9,6 +9,9 @@ import { AuthService } from '../service/Authentication Service/auth.service'
 import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import { MailRecruteurComponent } from '../mail-recruteur/mail-recruteur.component';
 import { User } from '../Model/user';
+import { Router } from '@angular/router';
+import { DemoColor } from '../material-component/chips/chips.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-entretient',
@@ -24,7 +27,11 @@ export class EntretientComponent implements OnInit {
   u2 : any ;
   recruteur : any ;
   user: any ;
-  constructor(private authService: AuthService,
+  availableColors: DemoColor[] = [
+     
+    { name: 'vous devez Remplir tous les champs ', color: 'warn' }
+  ];
+  constructor( public snackBar: MatSnackBar, private router:Router, private authService: AuthService,
     private fb: FormBuilder,
     private entretienService: EntretienService , private dialog: MatDialog
   ) { }
@@ -81,19 +88,7 @@ export class EntretientComponent implements OnInit {
 
 
 // Extract the logic for adding entretien to a separate method
-addEntretien(): void {
-
-
-  
-
-
-
-
-
-
-
-
-
+  async addEntretien(): Promise<void> {
 
 
   this.candidat.nom = this.entretienForm.get('nom')?.value;
@@ -120,6 +115,15 @@ addEntretien(): void {
       // réinitialiser le formulaire après ajout réussi
     });
     console.log(this.entretient.recruteur);
+    if (this.entretienForm.valid) {
+      await this.snackBar.open("entretient  ajouté avec succès","test", {
+        duration: 2000,
+        panelClass: ['mat-toolbar', 'mat-primary']
+      });
+      this.router.navigate(['/list-entretien']).then(() => {
+        window.location.reload();
+      }); 
+    } 
 
 }
 
@@ -143,7 +147,8 @@ add() {
 }
 
 
-
+annuler(){
+  this.router.navigate(['/list-entretien'])}
 
 
 

@@ -17,7 +17,7 @@
 
 <div class="row col-12">
 <div class="col-1">
-    <button mat-raised-button color="primary" (click)="filteredEntretiensbyaction('Historique')">Historique</button>
+    <button mat-raised-button color="primary" (click)="filteredEntretiensbyaction('Historique') ">Historique</button>
 </div>
 <div class="col-9">
     <button mat-raised-button color="primary" (click)="allentretien()">Entretien à faire</button>
@@ -39,23 +39,65 @@
 
 <div class="col-12">
     <table class="table mat-elevation-z8" style="width: 100%;" mat-table [dataSource]="dataSource">
- 
+
     <ng-container matColumnDef="avis">
       <th mat-header-cell *matHeaderCellDef>Avis</th>
       <td mat-cell *matCellDef="let entretien">{{ entretien.avis }}</td>
     </ng-container>
   
     <ng-container matColumnDef="statut">
-      <th mat-header-cell *matHeaderCellDef>statut</th>
-      <td mat-cell *matCellDef="let entretien">{{ entretien.statut }}</td>
+      <th mat-header-cell *matHeaderCellDef>Etat</th>
+      <td mat-cell *matCellDef="let entretien">
+        <ng-container *ngIf="entretien.valid && entretien.recruteurSuivant == 0">
+          Validé
+        </ng-container>
+        <ng-container *ngIf="!entretien.valid && entretien.recruteurSuivant == 0">
+          Non validé
+        </ng-container>
+        <ng-container *ngIf="entretien.valid && entretien.recruteurSuivant != 0">
+          En attente
+        </ng-container>
+        <ng-container *ngIf="!entretien.valid && entretien.recruteurSuivant != 0">
+          Refusé
+        </ng-container>
+      </td>
     </ng-container>
+    
     <ng-container matColumnDef="candidat">
         <th mat-header-cell *matHeaderCellDef>Nom_candidat</th>
-        <td mat-cell *matCellDef="let entretien">{{ entretien.candidat.nom }}</td>
+        <td mat-cell *matCellDef="let entretien">{{ entretien.nom_candidat}}</td>
       </ng-container>
-      <ng-container matColumnDef="recruteursuivant">
+    
+      <ng-container matColumnDef="recruteursuivant" >
         <th mat-header-cell *matHeaderCellDef>Recruteur</th>
-        <td mat-cell *matCellDef="let entretien">{{ entretien.recruteurSuivant }}</td>
+        <td mat-cell *matCellDef="let entretien">{{ entretien.nom_recruteur }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let entretien">
+          <ng-container *ngIf="entretien.valid && entretien.recruteurSuivant == id ">
+            <button mat-raised-button color="primary" >passe </button>
+          </ng-container>  
+
+          <ng-container *ngIf="entretien.valid && entretien.recruteurSuivant == 0">
+            <button mat-raised-button color="primary" >Consulter</button>
+          </ng-container>
+
+          <ng-container *ngIf="!entretien.valid && entretien.recruteurSuivant == 0">
+            <button mat-raised-button color="primary" >Consulter</button>
+          </ng-container>
+          
+          <ng-container *ngIf="entretien.valid && entretien.recruteurSuivant != 0">
+            <button mat-raised-button color="primary" >Consulter</button>
+
+          </ng-container>
+          <ng-container *ngIf="!entretien.valid && entretien.recruteurSuivant != 0">
+                      <button mat-raised-button color="primary" >Consulter</button>
+
+          </ng-container>
+        
+        </td>
+
       </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

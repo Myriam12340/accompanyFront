@@ -129,26 +129,37 @@
           <mat-option value="GO">GO</mat-option>
           <mat-option value="NOTGO">NOT GO</mat-option>
         </mat-select>
+
+
+
+
+
+        
       </mat-form-field>
       </div></fieldset>
 
 
+      <br><br>
+      <section >
+        <div class="example-button-row">
+          <mat-action-row style="justify-content: flex-start;">
+            <button mat-fab style="background-color:rgb(221, 68, 68)" (click)="annuler()" aria-label="Example icon button with a home icon">
+              <mat-icon>home</mat-icon>
+            </button>
       
-
-         
-           
-
+            <button mat-fab style="background-color: rgb(19, 126, 19);"  (click)="addEntretien()" aria-label="Example icon button with a home icon">
+              <mat-icon >open_in_new</mat-icon>
+            </button>
       
-      <mat-action-row>
+            <button mat-fab color="accent" (click)="add()" *ngIf="entretienForm.controls.statut.value === 'GO'" aria-label="Example icon button with a plus one icon">
+              <mat-icon>plus_one</mat-icon>
+            </button>
+            <!-- Modifier le bouton "+Entretien" pour qu'il utilise *ngIf -->
+          </mat-action-row>
+        </div>
+      </section>
       
-        
-    
-        <button  type="submit" mat-button color="warn" (click)="addEntretien()">Terminer</button>
-  
-      <!-- Modifier le bouton "+Entretien" pour qu'il utilise *ngIf -->
-<button mat-button color="primary" (click)="add()" *ngIf="entretienForm.controls.statut.value === 'GO'">+Entretien</button>
-</mat-action-row>
-        
+   
 
         </form>
       </div>

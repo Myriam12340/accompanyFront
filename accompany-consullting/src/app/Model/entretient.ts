@@ -9,5 +9,9 @@ export class entretient {
     post: string;
     descriptionPoste: string;
     valid : boolean ;
+    nom_candidat?: string; // add this property
+    nom_recruteur?: string; // add this property
+
+    candidat : number ; 
   }
   

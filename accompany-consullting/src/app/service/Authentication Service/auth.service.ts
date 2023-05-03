@@ -73,8 +73,8 @@ e : any ;
     return this.http.get<UserProfile>(`${this.apiUrl}/profile`, { headers });
   }
 
-  getUser(val:any ){
-    return this.http.get(this.apiUrl,val);
+  getUser(recruteur: number) {
+    return this.http.get(this.apiUrl+"/"  + recruteur);
   }
 
   getUserByEmail(email: string) {

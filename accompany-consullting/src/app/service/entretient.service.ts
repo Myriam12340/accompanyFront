@@ -30,6 +30,13 @@ export class EntretienService {
   getEntretienaaffecte(recruteursuivant: number): Observable<entretient[]> {
     return this.http.get<entretient[]>(`${this.baseUrl}/recruteursuivant/${recruteursuivant}`);
   }
+  getCandidat(candidatid: number) {
+    return this.http.get(this.baseUrl + '/getcandidat/' + candidatid);
+  }
+  
+
+
+
 
 
 }
