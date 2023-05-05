@@ -30,23 +30,26 @@
         <div class="fieldset-content"> 
 
     <div class="col-md-4">
-        <span style="color: mediumslateblue; font-size: large; font-family: Georgia, 'Times New Roman', Times, serif;">{{candidatprofil.nom}}</span>
-       <h4><span style="font-family: 'Times New Roman', Times, serif; color: mediumslateblue;">Description : </span>{{candidatprofil.prenom}}</h4>
+        <p>    <span style="color: mediumslateblue; font-size: large; font-family: Georgia, 'Times New Roman', Times, serif;">Nom :</span>{{candidatprofil.nom}}</p>
+       <h4><span style="font-family: 'Times New Roman', Times, serif; color: mediumslateblue;">Prenom  : </span>{{candidatprofil.prenom}}</h4>
       
         
     </div>
     </div></fieldset>
 
     <div class="p-20 bg-info ">
-        <h4 class="card-title text-white m-0 text-center"> les anncies entretiens </h4></div>
+        <h4 class="card-title text-white m-0 text-center"> les anciens entretiens </h4></div>
     <mat-tab-group>
         <mat-tab *ngFor="let e of entretients ; let i = index">
           <fieldset>
             
-            <legend>{{ i +1}} </legend>
-            <p>{{ e.recruteurSuivant }}</p>
-            <p>{{ e.nom_recruteur}}</p>
-          </fieldset>
+            <legend>Entretien numero : {{ i +1}} </legend>
+            <p><span style="font-family: Georgia, 'Times New Roman', Times, serif; color: blue; font-size: large;"> Ancien Recruteur :  </span> {{ e.nom_recruteur}}</p>
+        
+            <p><span style="font-family: Georgia, 'Times New Roman', Times, serif; color: blue; font-size: large;"> Avis :  </span> {{ e.avis}}</p>
+            <p style="color: brown;">{{e.statut}}</p>
+
+        </fieldset>
         </mat-tab>
       </mat-tab-group>
 
