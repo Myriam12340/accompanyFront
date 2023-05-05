@@ -15,6 +15,7 @@ import { PageEvent } from '@angular/material/paginator';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { ConsultantModule } from '../Model/consultant/consultant.module';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 
@@ -28,11 +29,9 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 export class ListconsultantComponent implements OnInit {
   
 
-  
+  type : string ; 
   selectedConsultant: any;
   searchTerm: string;
-
-
   filteredDataSource = new MatTableDataSource<Consultant>([]);
 
   public filteredConsultants: Consultant[] = [];
@@ -72,11 +71,14 @@ export class ListconsultantComponent implements OnInit {
   pageSize = 5;
   currentPage = 0;
   totalConsultants = 0;
+  nbactif :Number ;
+  nbinactif: number ;
   constructor(private consultantservice: ConsultantService, private router: Router,private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.allconsultant();
-    
+   
+  
   }
 
   private allconsultant() {
@@ -85,26 +87,47 @@ export class ListconsultantComponent implements OnInit {
         const date1 = new Date(c1.date_integration);
         const date2 = new Date(c2.date_integration);
         this.paginatedConsultants = this.consultants.slice(0, this.pageSize);
+       
         return date2.getTime() - date1.getTime();
+
       });
+      this.totalConsultants = this.consultants.length;
+      console.log( this.totalConsultants);
       console.log(data);
+      this.type="tous";
+      console.log(this.type);
+
       this.filteredConsultants = this.consultants; // Initialisation de filteredConsultants après avoir reçu les données du service
     });
   }
+
 
   
 
   public filterConsultantsByStatus(status: string): void {
     if (status === 'actif') {
+      this.type="actif";
+
       // Show only active consultants
       this.filteredConsultants = this.consultants.filter(c => c.status === 'actif');
+      this.nbactif = this.filteredConsultants.length ;
+      console.log ("nb actif"+ this.totalConsultants);
     } else if (status === 'inactif') {
       // Show only inactive consultants
       this.filteredConsultants = this.consultants.filter(c => c.status === 'inactif');
+      this.nbinactif = this.filteredConsultants.length ;
+      console.log ("nb inactif"+ this.totalConsultants);
+      this.type="inactif";
+
+
+
     } else {
       // Show all consultants
       this.filteredConsultants = this.consultants;
+      this.type="tous";
+
     }
+console.log(this.type);
   }
 
 
@@ -181,6 +204,7 @@ export class ListconsultantComponent implements OnInit {
     this.consultantservice.getConsultantlist().subscribe(data => {
       this.consultants = data;
       this.totalConsultants = this.consultants.length;
+      console.log ("lenth to "+this.totalConsultants);
     });
   }
 
@@ -199,57 +223,100 @@ export class ListconsultantComponent implements OnInit {
 ///PDF 
 
 
+pdf(type : any) {
+console .log (this.type);
+  const logo = ('src/assets/images/Logo-HD.png'); // Only required in Node.js
+   const nbActif = this.consultants.filter((consultant) => consultant.status === 'actif').length;
+   const nbInActif = this.consultants.filter((consultant) => consultant.status === 'inactif').length;
+   var nb = "";
+   // Récupérer la liste des consultants en fonction du type sélectionné
+   if (type === 'actif') {
+    this.filteredConsultants = this.consultants.filter(c => c.status === 'actif');
+ nb ="Nombre de  Consultants Actif : " + nbActif ;
+  }
+  else if (type === 'inactif') {
+    this.filteredConsultants = this.consultants.filter(c => c.status === 'inactif');
+    nb ="Nombre de Consultants InActif : " + nbInActif ;
+  }
+  else {
+    this.filteredConsultants = this.consultants;
+    nb ="Nombre de Consultants Actif : " + nbActif +"\n Nombre de Consultants  InActif :"+ nbInActif ;
 
-
-generatePdf() {
+  }
   const documentDefinition = {
+    
     content: [
+   
       {
         text: 'Liste des consultants',
         style: 'header'
+        , continue : this.nbactif 
+      },  {
+        text:  nb,
+        style: 'subheader'
       },
+    
       {
         table: {
           headerRows: 1,
-          widths: ['*', '*', '*', '*', '*', '*'],
+          widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
           body: [
             [
-              { text: 'Nom', style: 'tableHeader' },
-              { text: 'Prénom', style: 'tableHeader' },
-              { text: 'Grade', style: 'tableHeader' },
-              { text: 'Adresse', style: 'tableHeader' },
-              { text: 'Téléphone', style: 'tableHeader' },
-              { text: 'E-mail', style: 'tableHeader' }
+              { text: 'Nom', style: 'tableHeader', fillColor: '#cccccc' },
+              { text: 'Prénom', style: 'tableHeader', fillColor: '#cccccc' },
+              { text: 'Grade', style: 'tableHeader', fillColor: '#cccccc' },
+              { text: 'Adresse', style: 'tableHeader', fillColor: '#cccccc' },
+              { text: 'Téléphone', style: 'tableHeader', fillColor: '#cccccc' },
+              { text: 'E-mail', style: 'tableHeader', fillColor: '#cccccc' },
+              { text: 'Statut', style: 'tableHeader', fillColor: '#cccccc' }
             ],
-            ...this.consultants.map((consultant: Consultant) => {
+            ... this.filteredConsultants.map((cons: Consultant) => {
               return [
-                consultant.nom,
-                consultant.prenom,
-                consultant.grade,
-                consultant.adress,
-                consultant.tel1 + (consultant.tel2 ? '\n' + consultant.tel2 : ''),
-                consultant.mail
+                { text: cons.nom, style: 'tableCell' },
+                { text: cons.prenom, style: 'tableCell' },
+                { text: cons.grade, style: 'tableCell' },
+                { text: cons.adress, style: 'tableCell' },
+                { text: cons.tel1 + (cons.tel2 ? '\n' + cons.tel2 : ''), style: 'tableCell' },
+                { text: cons.mail, style: 'tableCell' },
+                { text: cons.status, style: 'tableCell' }
               ];
             })
           ]
         }
       }
     ],
+    images: {
+      logo: logo, // Use a dataURL for browser environments
+    },
     styles: {
       header: {
-        fontSize: 12,
+        fontSize: 16,
         bold: true,
-        margin: [0, 0, 0, 20]
+        margin: [0, 0, 0, 20] ,
+        color :'red',
+      },
+      subheader: {
+        fontSize: 14,
+        bold: true,
+        margin: [0, 0, 0, 10]
       },
       tableHeader: {
         bold: true,
         fontSize: 13,
-        color: 'black'
-      }
+        color: 'white',
+        fillColor: '#333333',
+        margin: [0, 4, 0, 2]
+      }, footer: {
+        columns: [
+          'Left part',
+          { text: 'Right part', alignment: 'right' }
+        ]
+      },
     }
   };
   pdfMake.createPdf(documentDefinition).download();
 }
+
 
 
 

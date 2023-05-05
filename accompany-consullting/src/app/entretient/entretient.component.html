@@ -3,6 +3,7 @@
 <mat-card>
     <mat-card-content>
         <mat-card-title>Entretien initial </mat-card-title>
+        
 <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3 mt-5">
@@ -38,13 +39,6 @@
 <div class="p-20 bg-info ">
     <h4 class="card-title text-white m-0 text-center">Profil du Candidat
     </h4></div>
-
-
-    
-
-
-
-
 
     <fieldset>
         <div class="fieldset-content"> 
@@ -108,13 +102,6 @@
 <div class="p-20 bg-info ">
     <h4 class="card-title text-white m-0 text-center"> Avis de recruteur </h4></div>
 
-
-    
-
-
-
-
-
     <fieldset>
         <div class="fieldset-content"> 
 
@@ -142,8 +129,8 @@
       <br><br>
       <section >
         <div class="example-button-row">
-          <mat-action-row style="justify-content: flex-start;">
-            <button mat-fab style="background-color:rgb(221, 68, 68)" (click)="annuler()" aria-label="Example icon button with a home icon">
+          <mat-action-row class="rows">
+            <button  mat-fab style="background-color:rgb(221, 68, 68)" (click)="annuler()" aria-label="Example icon button with a home icon">
               <mat-icon>home</mat-icon>
             </button>
       
@@ -151,7 +138,7 @@
               <mat-icon >open_in_new</mat-icon>
             </button>
       
-            <button mat-fab color="accent" (click)="add()" *ngIf="entretienForm.controls.statut.value === 'GO'" aria-label="Example icon button with a plus one icon">
+            <button class="col-4 " mat-fab color="accent" (click)="add()" *ngIf="entretienForm.controls.statut.value === 'GO'" aria-label="Example icon button with a plus one icon">
               <mat-icon>plus_one</mat-icon>
             </button>
             <!-- Modifier le bouton "+Entretien" pour qu'il utilise *ngIf -->
@@ -159,7 +146,6 @@
         </div>
       </section>
       
-   
 
         </form>
       </div>

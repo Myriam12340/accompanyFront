@@ -33,9 +33,11 @@ import { CalendarComponent } from '../calendar/calendar.component';
 import { EntretientComponent } from '../entretient/entretient.component';
 import { MailRecruteurComponent } from '../mail-recruteur/mail-recruteur.component';
 import  { ListEntretienComponent } from '../list-entretien/list-entretien.component';
-
-
+import { EntretiensuivantComponent } from '../entretiensuivant/entretiensuivant.component';
+import { EntretientdetailComponent } from '../entretientdetail/entretientdetail.component';
 export const MaterialRoutes: Routes = [
+  {path:'entretiensuivant',component:EntretiensuivantComponent},
+{path:'entretientdetail',component :EntretientdetailComponent},
   {path:'list-entretien',component:ListEntretienComponent},
   {path: 'Entretient',component:EntretientComponent},
     {path: 'mail',component:MailRecruteurComponent},

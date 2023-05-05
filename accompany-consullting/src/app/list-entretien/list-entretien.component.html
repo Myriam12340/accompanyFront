@@ -40,11 +40,18 @@
 <div class="col-12">
     <table class="table mat-elevation-z8" style="width: 100%;" mat-table [dataSource]="dataSource">
 
+     
+
+
+
+
+
+
+
     <ng-container matColumnDef="avis">
       <th mat-header-cell *matHeaderCellDef>Avis</th>
       <td mat-cell *matCellDef="let entretien">{{ entretien.avis }}</td>
     </ng-container>
-  
     <ng-container matColumnDef="statut">
       <th mat-header-cell *matHeaderCellDef>Etat</th>
       <td mat-cell *matCellDef="let entretien">
@@ -76,24 +83,21 @@
         <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let entretien">
           <ng-container *ngIf="entretien.valid && entretien.recruteurSuivant == id ">
-            <button mat-raised-button color="primary" >passe </button>
-          </ng-container>  
-
+            <button mat-raised-button color="primary" (click)=" onPasseClicked(entretien.candidat , entretien.recruteurSuivant , entretien.descriptionPoste , entretien.post  )">passe </button>
+          </ng-container>
           <ng-container *ngIf="entretien.valid && entretien.recruteurSuivant == 0">
-            <button mat-raised-button color="primary" >Consulter</button>
+            <button mat-raised-button color="primary" (click)="buttondetail(entretien.candidat  ,  entretien.descriptionPoste , entretien.post  )" >Consulter</button>
           </ng-container>
 
           <ng-container *ngIf="!entretien.valid && entretien.recruteurSuivant == 0">
-            <button mat-raised-button color="primary" >Consulter</button>
+            <button mat-raised-button color="primary" (click)="buttondetail(entretien.candidat , entretien.descriptionPoste , entretien.post  )" >Consulter</button>
           </ng-container>
           
           <ng-container *ngIf="entretien.valid && entretien.recruteurSuivant != 0">
-            <button mat-raised-button color="primary" >Consulter</button>
-
+            <button mat-raised-button color="primary" (click)="buttondetail(entretien.candidat , entretien.descriptionPoste , entretien.post  )" >Consulter</button>
           </ng-container>
           <ng-container *ngIf="!entretien.valid && entretien.recruteurSuivant != 0">
-                      <button mat-raised-button color="primary" >Consulter</button>
-
+            <button mat-raised-button color="primary" (click)="buttondetail(entretien.candidat ,entretien.descriptionPoste , entretien.post  )" >Consulter</button>
           </ng-container>
         
         </td>

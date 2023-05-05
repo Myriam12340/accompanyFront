@@ -39,7 +39,7 @@ export class EvaluationListComponent implements OnInit {
     'email',
     'telephone',
     'date_naissance',
-    'date_integration'
+    'date_integration','anniversaire'
   ];
 
   filterConsultants() {

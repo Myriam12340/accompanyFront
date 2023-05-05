@@ -29,6 +29,7 @@ export class ListEntretienComponent implements OnInit {
   candidat : any ;
   recruteur : any ;
   candidats : Candidat[]=[];
+
   constructor( private router:Router,private authService: AuthService,private entretienService:EntretienService,private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -127,6 +128,12 @@ else
 
 
 
+  onPasseClicked(Candidat: number , recruteurSuivant : number , descriptionPoste: string , post : string ) {
+    this.router.navigate(['/entretiensuivant'], { queryParams: { Candidat ,  recruteurSuivant , descriptionPoste , post} });
+  }
+  buttondetail(Candidat: number  , descriptionPoste : string , post : string ) {
+    this.router.navigate(['/entretientdetail'], { queryParams: { Candidat  , descriptionPoste , post} });
+  }
 
 }
 

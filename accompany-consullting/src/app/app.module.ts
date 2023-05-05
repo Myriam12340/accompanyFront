@@ -39,6 +39,8 @@ import { AnniversaireComponent } from './anniversaire/anniversaire.component';
 import { JwtModule } from "@auth0/angular-jwt";
 import { MailRecruteurComponent } from './mail-recruteur/mail-recruteur.component';
 import { ListEntretienComponent } from './list-entretien/list-entretien.component';
+import { EntretiensuivantComponent } from './entretiensuivant/entretiensuivant.component';
+import { EntretientdetailComponent } from './entretientdetail/entretientdetail.component';
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
 }
@@ -69,6 +71,8 @@ export function tokenGetter() {
           AnniversaireComponent,
           MailRecruteurComponent,
           ListEntretienComponent,
+          EntretiensuivantComponent,
+          EntretientdetailComponent,
           
   ],
   imports: [

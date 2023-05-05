@@ -16,20 +16,7 @@ MENUITEMS = [
   { state: 'lists', type: 'link', name: 'Lists', icon: 'view_list' },
   { state: 'menu', type: 'link', name: 'Menu', icon: 'view_headline' },
   { state: 'tabs', type: 'link', name: 'Tabs', icon: 'tab' },
-  { state: 'stepper', type: 'link', name: 'Stepper', icon: 'web' },*/
-  {
-    state: 'list-entretien',
-    type: 'link',
-    name: 'Entretiens',
-    icon: 'blur_circular'
-  },
-  {
-    state: 'evaluationlist',
-    type: 'link',
-    name: 'evaluationlist',
-    icon: 'blur_circular'
-  },
-  
+  { state: 'stepper', type: 'link', name: 'Stepper', icon: 'web' },
   
   {
     state: 'addresponsable',
@@ -43,7 +30,8 @@ MENUITEMS = [
     name: 'Ajouter Annonce',
     icon: 'all_inclusive'
   },
-  {
+  
+   {
     state: 'listerannonce',
     type: 'link',
     name: 'Lister Annonce',
@@ -51,6 +39,24 @@ MENUITEMS = [
   },
   
   { state: 'dashboard', type: 'link', name: 'Rapport Statistique ', icon: 'assignment_turned_in' },
+  */
+  
+  {
+    state: 'list-entretien',
+    type: 'link',
+    name: 'Entretiens',
+    icon: 'blur_circular'
+  },
+  {
+    state: 'evaluationlist',
+    type: 'link',
+    name: 'Anniversaire',
+    icon: 'blur_circular'
+  },
+  
+  
+
+ 
   { state: 'listconsultants', type: 'link', name: 'Liste des consultants ', icon: 'assistant' },
  /* { state: 'toolbar', type: 'link', name: 'Toolbar', icon: 'voicemail' },
   {

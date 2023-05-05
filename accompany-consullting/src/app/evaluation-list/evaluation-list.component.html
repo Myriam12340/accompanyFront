@@ -1,6 +1,14 @@
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<div class="p-20 bg-info position-relative">
+  <h4 class="card-title text-white m-0"><i class="bi bi-cup"></i> </h4>
+
+     
+
+</div>
 
 <div>
   <table class="table mat-elevation-z8" style="width: 100%;" mat-table [dataSource]="birthdayConsultants">
@@ -21,7 +29,15 @@
       <th mat-header-cell *matHeaderCellDef class="thead-info"> Grade</th>
       <td mat-cell *matCellDef="let consultant"> {{ consultant.grade }} </td>
     </ng-container>
-    <tr mat-header-row *matHeaderRowDef="[ 'nom prenom', 'date_naissance', 'date_integration', 'grade']"></tr>
-    <tr mat-row *matRowDef="let consultant; columns: [ 'nom prenom', 'date_naissance', 'date_integration', 'grade'];"></tr>
+    <ng-container matColumnDef="anniversaire">
+      <th mat-header-cell *matHeaderCellDef class="thead-info"> Anniversaire</th>
+      <td mat-cell *matCellDef="let consultant"> 
+        <span *ngIf="consultant.isBirthday && consultant.isPro">Anniversaire pro et personnel</span>
+        <span *ngIf="consultant.isBirthday && !consultant.isPro">Anniversaire personnel</span>
+        <span *ngIf="!consultant.isBirthday && consultant.isPro">Pro</span>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="[ 'nom prenom', 'date_naissance', 'date_integration', 'grade','anniversaire']"></tr>
+    <tr mat-row *matRowDef="let consultant; columns: [ 'nom prenom', 'date_naissance', 'date_integration', 'grade','anniversaire'];"></tr>
   </table>
 </div>

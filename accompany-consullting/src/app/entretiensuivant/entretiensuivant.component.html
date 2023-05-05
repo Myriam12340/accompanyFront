@@ -1,0 +1,91 @@
+
+<app-entretientdetail></app-entretientdetail>
+<mat-card>
+    <mat-card-content>
+        <mat-card-title>Entretien  </mat-card-title>
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 mt-5">
+     
+        <form [formGroup]="entretienForm">
+          
+               
+<!------------------------------------------------------------------------------------------>
+
+
+   
+
+
+    
+
+
+
+
+
+<!---------------------------------------      Avis de recruteur  --------------------------------------------------->
+
+
+
+<div class="p-20 bg-info ">
+    <h4 class="card-title text-white m-0 text-center"> Avis de recruteur </h4></div>
+
+    <fieldset>
+        <div class="fieldset-content"> 
+
+    <mat-form-field class="col-md-4">
+        <input matInput placeholder="avis" name="avis" formControlName="avis" required>
+        
+       
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Decision</mat-label>
+        <mat-select formControlName="statut">
+          <mat-option value="GO">GO</mat-option>
+          <mat-option value="NOTGO">NOT GO</mat-option>
+        </mat-select>
+
+
+
+
+
+        
+      </mat-form-field>
+      </div></fieldset>
+
+
+      <br><br>
+      <section >
+        <div class="example-button-row">
+          <mat-action-row>
+            
+            <button mat-fab style="background-color: rgb(19, 126, 19);"  (click)="addEntretien()" aria-label="Example icon button with a home icon">
+                <mat-icon >open_in_new</mat-icon>
+              </button>
+
+
+              <button  mat-fab style="background-color:rgb(221, 68, 68)" (click)="annuler()" aria-label="Example icon button with a home icon">
+                <mat-icon>home</mat-icon>
+              </button>
+              <button mat-fab color="accent" (click)="add()" *ngIf="entretienForm.controls.statut.value === 'GO'" aria-label="Example icon button with a plus one icon">
+                <mat-icon>plus_one</mat-icon>
+              </button>
+           
+            <!-- Modifier le bouton "+Entretien" pour qu'il utilise *ngIf -->
+          </mat-action-row>
+        </div>
+      </section>
+      
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+</mat-card-content>
+  </mat-card>
