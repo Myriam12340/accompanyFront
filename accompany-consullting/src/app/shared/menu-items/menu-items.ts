@@ -40,7 +40,13 @@ MENUITEMS = [
   
   { state: 'dashboard', type: 'link', name: 'Rapport Statistique ', icon: 'assignment_turned_in' },
   */
-  
+
+  {
+    state: 'evaluation',
+    type: 'link',
+    name: 'evaluation',
+    icon: 'blur_circular'
+  },
   {
     state: 'list-entretien',
     type: 'link',

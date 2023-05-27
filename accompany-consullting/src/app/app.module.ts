@@ -41,6 +41,7 @@ import { MailRecruteurComponent } from './mail-recruteur/mail-recruteur.componen
 import { ListEntretienComponent } from './list-entretien/list-entretien.component';
 import { EntretiensuivantComponent } from './entretiensuivant/entretiensuivant.component';
 import { EntretientdetailComponent } from './entretientdetail/entretientdetail.component';
+import { EvaluationComponent } from './evaluation/evaluation.component';
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
 }
@@ -73,6 +74,7 @@ export function tokenGetter() {
           ListEntretienComponent,
           EntretiensuivantComponent,
           EntretientdetailComponent,
+          EvaluationComponent,
           
   ],
   imports: [

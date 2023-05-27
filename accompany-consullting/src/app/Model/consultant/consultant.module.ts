@@ -36,4 +36,8 @@ export class ConsultantModule {
   situation_amoureuse:string;
   isBirthday:boolean;
   isPro:boolean;
+  isI1 : Boolean ;
+  isI3 : boolean ;
+  prochain_entretien: string; // Nouvelle propriété
+
  }

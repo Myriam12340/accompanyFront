@@ -1,0 +1,44 @@
+.consultant-table {
+    width: 100%;
+  }
+  
+  .table-title {
+    font-weight: bold;
+  }
+  
+  .highlight-row {
+    background-color: #ffe6e6; /* Couleur de fond pour les lignes en surbrillance */
+  }
+  
+  .entretien-icon {
+    font-size: 20px;
+    margin-left: 5px;
+  }
+  
+  .entretien-today {
+    color: red; /* Couleur de l'icône pour le prochain entretien aujourd'hui */
+  }
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    background-color:rgb(62, 152, 168);
+    color: #fff;;
+  }
+  .action-button {
+    margin: 0;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2196F3;
+    color: #ffffff;
+  }
+  
+  .action-button:hover {
+    background-color: #1976D2;
+  }
+  

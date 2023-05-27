@@ -21,6 +21,10 @@ export class Consultant {
     isPro:boolean;
 code: string 
 situation_amoureuse:string;
+isI1 : Boolean ;
+isI3 : boolean ;
+prochain_entretien: string; // Nouvelle propriété
+
 
 }
 

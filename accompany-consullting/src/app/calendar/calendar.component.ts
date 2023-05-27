@@ -1,23 +1,28 @@
-import { Component } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { ConsultantService } from '../Model/consultant/consultant.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-calendar',
-  template: '',
+  template: `
+  <h2>Notifications</h2>
+  <ul>
+    <li *ngFor="let consultant of consultants">{{ consultant.nom }} - {{ consultant.dateNaissance | date:'dd/MM/yyyy' }}</li>
+  </ul>
+`
 })
-export class CalendarComponent {
-  calendarPlugins = [dayGridPlugin];
-  calendarEvents = [
-    { title: 'Événement 1', start: '2023-04-01' },
-    { title: 'Événement 2', start: '2023-04-05' },
-  ];
+export class CalendarComponent implements OnInit {
+  consultants: any[] = [];
 
 
-  constructor() {
-    // Importer les plugins requis ici
 
+  constructor(private consultantService: ConsultantService) { }
 
+  ngOnInit() {
+    this.consultantService.getConsultantlist().subscribe(data => {
+      this.consultants = data;
+    });
   }
 }

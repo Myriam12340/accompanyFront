@@ -35,7 +35,9 @@ import { MailRecruteurComponent } from '../mail-recruteur/mail-recruteur.compone
 import  { ListEntretienComponent } from '../list-entretien/list-entretien.component';
 import { EntretiensuivantComponent } from '../entretiensuivant/entretiensuivant.component';
 import { EntretientdetailComponent } from '../entretientdetail/entretientdetail.component';
+import { EvaluationComponent } from '../evaluation/evaluation.component';
 export const MaterialRoutes: Routes = [
+  {path:'evaluation',component:EvaluationComponent},
   {path:'entretiensuivant',component:EntretiensuivantComponent},
 {path:'entretientdetail',component :EntretientdetailComponent},
   {path:'list-entretien',component:ListEntretienComponent},
