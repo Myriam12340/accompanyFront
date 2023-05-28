@@ -83,11 +83,10 @@ isNextEvaluationToday(consultant: Consultant): boolean {
   const today = moment().startOf('day');
   return nextEvaluationDate.isSame(today, 'day') ||nextEvaluationDate3.isSame(today, 'day') ;
 }
-evaluerConsultant() {
-  // Effectuez ici les actions nécessaires avant la navigation si nécessaire
-
-  // Naviguer vers le composant eval-rh-integration en utilisant son chemin de routage
-  this.router.navigate(['/evaluation-Integration']);
+evaluerConsultant(consultantId: number) {
+  this.router.navigate(['/mission'], { queryParams: { consultantId: consultantId } });
 }
+
+
 
 }
