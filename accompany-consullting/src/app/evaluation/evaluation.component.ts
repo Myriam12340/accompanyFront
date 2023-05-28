@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ConsultantService } from '../Model/consultant/consultant.service';
 import { ConsultantModule } from '../Model/consultant/consultant.module';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-evaluation',
@@ -15,7 +16,7 @@ export class EvaluationComponent implements OnInit {
   integrationConsultants: Consultant[] = [];
   dataSource = new MatTableDataSource();
 
-  constructor(private consultantService: ConsultantService) {}
+  constructor(private consultantService: ConsultantService , private router: Router) {}
 
   ngOnInit() {
     this.consultantService.getConsultantlist().subscribe(
@@ -82,4 +83,11 @@ isNextEvaluationToday(consultant: Consultant): boolean {
   const today = moment().startOf('day');
   return nextEvaluationDate.isSame(today, 'day') ||nextEvaluationDate3.isSame(today, 'day') ;
 }
+evaluerConsultant() {
+  // Effectuez ici les actions nécessaires avant la navigation si nécessaire
+
+  // Naviguer vers le composant eval-rh-integration en utilisant son chemin de routage
+  this.router.navigate(['/evaluation-Integration']);
+}
+
 }

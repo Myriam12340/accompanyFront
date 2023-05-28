@@ -42,6 +42,8 @@ import { ListEntretienComponent } from './list-entretien/list-entretien.componen
 import { EntretiensuivantComponent } from './entretiensuivant/entretiensuivant.component';
 import { EntretientdetailComponent } from './entretientdetail/entretientdetail.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
+import { EvalRhIntegrationComponent } from './eval-rh-integration/eval-rh-integration.component';
+import { MissionComponent } from './mission/mission.component';
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
 }
@@ -75,6 +77,8 @@ export function tokenGetter() {
           EntretiensuivantComponent,
           EntretientdetailComponent,
           EvaluationComponent,
+          EvalRhIntegrationComponent,
+          MissionComponent,
           
   ],
   imports: [

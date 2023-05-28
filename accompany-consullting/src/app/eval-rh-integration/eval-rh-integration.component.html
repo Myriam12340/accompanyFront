@@ -1,0 +1,36 @@
+<p>eval-rh-integration works!</p>
+
+<form>
+  <div *ngFor="let formulaire of formulairesDupliques; let i = index" class="formulaire-container">
+    <h4>Formulaire {{ i + 1 }} - Mission numéro :</h4>
+    <input type="text" [(ngModel)]="formulaire.missionNumero" name="missionNumero" placeholder="Mission numéro">
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="responsable">Responsable</label>
+        <select class="form-control" [(ngModel)]="formulaire.Roles_res" name="Roles_res">
+          <option value="Insuffisant">Insuffisant</option>
+          <option value="Moyennement satisfait">Moyennement satisfait</option>
+          <option value="Satisfait">Satisfait</option>
+          <option value="Très satisfait">Très satisfait</option>
+          <option value="-">-</option>
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="consultant">Consultant</label>
+        <select class="form-control" [(ngModel)]="formulaire.Roles_resC" name="Roles_resC">
+          <option value="Insuffisant">Insuffisant</option>
+          <option value="Moyennement satisfait">Moyennement satisfait</option>
+          <option value="Satisfait">Satisfait</option>
+          <option value="Très satisfait">Très satisfait</option>
+          <option value="-">-</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Ajoutez d'autres champs selon vos besoins -->
+  </div>
+
+  <!-- Bouton pour dupliquer le formulaire -->
+  <button type="button" (click)="dupliquerFormulaire()">Dupliquer le formulaire</button>
+</form>

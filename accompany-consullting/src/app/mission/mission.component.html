@@ -1,0 +1,70 @@
+<p>mission works!</p>
+<form (ngSubmit)="submitForm()">
+  
+    <div>
+      <label for="titre">Titre:</label>
+      <input type="text" id="titre" name="titre" [(ngModel)]="mission.titre">
+    </div>
+    <div>
+      <label for="roleRH">Role RH:</label>
+      <input type="text" id="roleRH" name="roleRH" [(ngModel)]="mission.roleRH" required>
+    </div>
+    <div>
+      <label for="roleC">Role C:</label>
+      <input type="text" id="roleC" name="roleC" [(ngModel)]="mission.roleC" required>
+    </div>
+    <div>
+      <label for="relationClientRH">Relation client RH:</label>
+      <select id="relationClientRH" name="relationClientRH" [(ngModel)]="mission.relationClientRH" required>
+        <option value="Insuffisant">Insuffisant</option>
+        <option value="Moyennement satisfait">Moyennement satisfait</option>
+        <option value="Satisfait">Satisfait</option>
+        <option value="Très satisfait">Très satisfait</option>
+      </select>
+    </div>
+    <div>
+      <label for="relationClientC">Relation client C:</label>
+      <select id="relationClientC" name="relationClientC" [(ngModel)]="mission.relationClientC" required>
+        <option value="Insuffisant">Insuffisant</option>
+        <option value="Moyennement satisfait">Moyennement satisfait</option>
+        <option value="Satisfait">Satisfait</option>
+        <option value="Très satisfait">Très satisfait</option>
+      </select>
+    </div>
+    <div>
+      <label for="chargeRH">Charge RH:</label>
+      <input type="text" id="chargeRH" name="chargeRH" [(ngModel)]="mission.chargeRH" required>
+    </div>
+    <div>
+      <label for="chargeC">Charge C:</label>
+      <input type="text" id="chargeC" name="chargeC" [(ngModel)]="mission.chargeC" required>
+    </div>
+    <div>
+      <label for="satisficationRH">Satisfication RH:</label>
+      <select id="satisficationRH" name="satisficationRH" [(ngModel)]="mission.satisficationRH" required>
+        <option value="Insuffisant">Insuffisant</option>
+        <option value="Moyennement satisfait">Moyennement satisfait</option>
+        <option value="Satisfait">Satisfait</option>
+        <option value="Très satisfait">Très satisfait</option>
+      </select>
+    </div>
+    <div>
+      <label for="satisficationC">Satisfication C:</label>
+      <select id="satisficationC" name="satisficationC" [(ngModel)]="mission.satisficationC" required>
+        <option value="Insuffisant">Insuffisant</option>
+        <option value="Moyennement satisfait">Moyennement satisfait</option>
+        <option value="Satisfait">Satisfait</option>
+        <option value="Très satisfait">Très satisfait</option>
+      </select>
+    </div>
+    <div>
+      <label for="noteManager">Note Manager:</label>
+      <input type="text" id="noteManager" name="noteManager" [(ngModel)]="mission.noteManager">
+    </div>
+    <div>
+      <label for="feedbackManager">Feedback Manager:</label>
+      <textarea id="feedbackManager" name="feedbackManager" [(ngModel)]="mission.feedbackManager"></textarea>
+    </div>
+    <button type="submit">Ajouter</button>
+  </form>
+  

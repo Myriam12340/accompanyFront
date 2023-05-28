@@ -36,7 +36,13 @@ import  { ListEntretienComponent } from '../list-entretien/list-entretien.compon
 import { EntretiensuivantComponent } from '../entretiensuivant/entretiensuivant.component';
 import { EntretientdetailComponent } from '../entretientdetail/entretientdetail.component';
 import { EvaluationComponent } from '../evaluation/evaluation.component';
+import { EvalRhIntegrationComponent } from '../eval-rh-integration/eval-rh-integration.component';
+import { MissionComponent } from '../mission/mission.component';
 export const MaterialRoutes: Routes = [
+  {path:'evaluation-Integration',component:EvalRhIntegrationComponent},
+
+  {path:'mission',component:MissionComponent},
+
   {path:'evaluation',component:EvaluationComponent},
   {path:'entretiensuivant',component:EntretiensuivantComponent},
 {path:'entretientdetail',component :EntretientdetailComponent},
