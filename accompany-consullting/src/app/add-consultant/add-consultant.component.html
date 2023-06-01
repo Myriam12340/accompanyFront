@@ -1,7 +1,8 @@
+<div class="scrollable-content">
 
 <mat-card>
     <mat-card-content>
-      <mat-card-title>Bienvenue</mat-card-title>
+      <mat-card-title style="text-align: center;">Bienvenue</mat-card-title>
       <mat-chip-list class="mat-chip-list-stacked" *ngIf="sp==true">
           <mat-chip id="sp" *ngFor="let aColor of availableColors"
           (focus)="color = aColor.color" color="{{aColor.color}}" selected="true">
@@ -13,9 +14,9 @@
 
 
 
-    <mat-card-subtitle>Ajouter Consultant</mat-card-subtitle>
+    <mat-card-subtitle style="text-align: center;">Ajouter Consultant</mat-card-subtitle>
 
-
+  
 
 
 
@@ -252,4 +253,4 @@
 
 
 
-    </mat-card-content></mat-card>
+    </mat-card-content></mat-card></div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MissionRh } from '../mission-rh';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-eval-rh-integration',
@@ -9,9 +10,20 @@ import { MissionRh } from '../mission-rh';
 export class EvalRhIntegrationComponent implements OnInit {
   formulaireData: MissionRh = new MissionRh();
   formulairesDupliques: MissionRh[] = [];
-  constructor() { }
+  consultantnom : string;
+  constructor(private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+     
+      const nom = params['nom'];
+
+    
+      this.consultantnom = nom ;
+      console.log("nom"+this.consultantnom);
+      // Utilisez l'ID du consultant comme nécessaire
+    });
+
   }
   dupliquerFormulaire() {
     const nouveauFormulaire = new MissionRh();

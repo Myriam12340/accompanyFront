@@ -83,8 +83,12 @@ isNextEvaluationToday(consultant: Consultant): boolean {
   const today = moment().startOf('day');
   return nextEvaluationDate.isSame(today, 'day') ||nextEvaluationDate3.isSame(today, 'day') ;
 }
-evaluerConsultant(consultantId: number) {
-  this.router.navigate(['/mission'], { queryParams: { consultantId: consultantId } });
+
+  evaluerConsultant(consultantId: number, nom: string , prenom: string , date_integration : string  , grade : string ) {
+    this.router.navigate(['/mission'], {
+      queryParams: { consultantId: consultantId, nom: nom , prenom: prenom  ,date_integration : date_integration , grade : grade}
+    });
+
 }
 
 

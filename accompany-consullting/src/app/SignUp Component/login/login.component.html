@@ -1,7 +1,9 @@
 
-<form class="login" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+
+  <div class="container" >
+<form class="login" #loginForm="ngForm" (ngSubmit)="login(loginForm)" style="display: inline-block; width: auto;" >
   <div class="fadeIn first text-center">
-    <img src="assets/images/users/login.png" width="100 px " id="icon" alt="User Icon" />
+    <img src="assets/images/Logo-HD.png" width="700 px " id="icon" alt="User Icon" />
   </div>
   <input type="email" id="email" name="email" ngModel class="form-control" placeholder="Email" required autofocus>
   <input type="password" id="password" name="password" ngModel class="form-control" placeholder="Password" required>
@@ -12,4 +14,4 @@
  
   <button  type="submit" [disabled]="!loginForm.valid">Login</button>
 </form>
-
+</div>

@@ -1,5 +1,10 @@
+.mission {
+  width: max-content;/* Adjust the width to your desired value */
+  
+   
+ }
 .mission-table {
-    width: 100%;
+
     border-collapse: collapse;
   }
   
@@ -16,7 +21,7 @@
   }
   
   .mission-table input[type="text"] {
-    width: 100%;
+    
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -36,3 +41,15 @@
     cursor: not-allowed;
   }
   
+td {
+    border: 1px solid #333;
+    background-color: #fff;
+}
+
+thead {
+    background-color: #23d1e8;
+    color: #fff;
+}
+
+ 
+

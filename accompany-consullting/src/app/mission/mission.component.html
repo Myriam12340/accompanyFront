@@ -1,50 +1,181 @@
-<table class="mission-table">
+
+
+
+<table style="width:80% ,  border 1px solid black;" >
+  <thead style="background-color: rgb(0, 128, 255);">
   <tr>
-    <td>
-      <form [formGroup]="missionForm" (ngSubmit)="submitForm()">
-        <div>
-          <label for="titre">Titre :</label>
-          <input type="text" id="titre" formControlName="titre" required>
-        </div>
-        <div>
-          <label for="roleC">Rôle et responsabilite  Consultant :</label>
-          <input type="text" id="roleC" formControlName="roleC" required>
-          <label for="roleC">Rôle et responsabilite  Rh :</label>
-
-          <input type="text" id="roleRH" formControlName="roleRH" required>
-
-        </div>
+    <th>Nom et prénom du collaborateur</th>
+    <th>Date d'intégration</th>
+    <th>Intitulé du Poste occupé</th>
+  </tr></thead>
+  <tr>
+    <td> {{consultantnom}} {{consultantprenom}} </td>
+    <td>Maria Anders</td>
+    <td>{{grade}}</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="background-color: rgb(0, 128, 255); color: aliceblue;font-family: sans-serif;font-size: large; ">HR BP</td>
+    <td>{{rh}}</td>
     
-        <div>
-          <label for="relationClientRH">Relation Client RH :</label>
-          <input type="text" id="relationClientRH" formControlName="relationClientRH" required>
-        </div>
-        <div>
-          <label for="relationClientC">Relation Client Consultant :</label>
-          <input type="text" id="relationClientC" formControlName="relationClientC" required>
-        </div>
-        <div>
-          <label for="chargeRH">Charge RH :</label>
-          <input type="text" id="chargeRH" formControlName="chargeRH" required>
-        </div>
-        <div>
-          <label for="chargeC">Charge Consultant :</label>
-          <input type="text" id="chargeC" formControlName="chargeC" required>
-        </div>
-        <div>
-          <label for="satisficationRH">Satisfaction RH :</label>
-          <input type="text" id="satisficationRH" formControlName="satisficationRH" required>
-        </div>
-        <div>
-          <label for="satisficationC">Satisfaction Consultant :</label>
-          <input type="text" id="satisficationC" formControlName="satisficationC" required>
-        </div>
-
-        <button type="submit" [disabled]="!missionForm.valid">Ajouter la mission</button>
-      </form>
-    </td>
   </tr>
 </table>
 
+
+
+<br>
+
+
+
+
+<table style="width:80%">
+  <thead>
+  <tr>
+      <th colspan="3" >REX RH intégration</th>
+      
+    </tr></thead>
+    <tr>
+      <th>Notre processus de recrutement</th>
+      <th colspan="2"><div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar text-bg-warning" style="width: 75%">75%</div>
+  </div></th>
   
+    </tr>
   
+    
+  </table>
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>REX Projets  {{consultantnom}} </h2>
+
+<div  >
+ 
+  <form [formGroup]="missionForm" (ngSubmit)="submitForm()" class="mission" >
+    <table *ngFor="let form of missionForms" style="width:100%">
+      <thead>
+        <tr>
+          <th colspan="3">Mission : <input type="text" id="titre" formControlName="titre" required>
+            <span>chef de projet:</span> <input type="text" id="manager" formControlName="manager" required>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr >
+          <td>Critères</td>
+          <td>Consultant</td>
+          <td>HR BP</td>
+        </tr>
+        <tr>
+          <td>Roles et responsabilités</td>
+          <td>
+            <select id="roleC" formControlName="roleC" required>
+              <option value="">Sélectionnez une option</option>
+              <option value="Très satisfait">Très satisfait</option>
+              <option value="Satisfait">Satisfait</option>
+              <option value="Moyennement satisfait">Moyennement satisfait</option>
+              <option value="Insuffisant">Insuffisant</option>
+              <option value="">-</option>
+            </select>
+          </td>
+          <td>
+            <select id="roleRH" formControlName="roleRH" required>
+              <option value="">Sélectionnez une option</option>
+              <option value="Très satisfait">Très satisfait</option>
+              <option value="Satisfait">Satisfait</option>
+              <option value="Moyennement satisfait">Moyennement satisfait</option>
+              <option value="Insuffisant">Insuffisant</option>
+              <option value="">-</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Relation avec client</td>
+          <td>
+            <select id="relationClientC" formControlName="relationClientC" required>
+              <option value="">Sélectionnez une option</option>
+              <option value="Très satisfait">Très satisfait</option>
+              <option value="Satisfait">Satisfait</option>
+              <option value="Moyennement satisfait">Moyennement satisfait</option>
+              <option value="Insuffisant">Insuffisant</option>
+              <option value="">-</option>
+            </select>
+          </td>
+          <td>
+            <select id="relationClientRH" formControlName="relationClientRH" required>
+              <option value="">Sélectionnez une option</option>
+              <option value="Très satisfait">Très satisfait</option>
+              <option value="Satisfait">Satisfait</option>
+              <option value="Moyennement satisfait">Moyennement satisfait</option>
+              <option value="Insuffisant">Insuffisant</option>
+              <option value="">-</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Charge (surcharge / Baisse de charge)</td>
+          <td>
+            <select id="chargeC" formControlName="chargeC" required>
+              <option value="">Sélectionnez une option</option>
+              <option value="Très satisfait">Très satisfait</option>
+              <option value="Satisfait">Satisfait</option>
+              <option value="Moyennement satisfait">Moyennement satisfait</option>
+              <option value="Insuffisant">Insuffisant</option>
+              <option value="">-</option>
+            </select>
+          </td>
+          <td>
+            <select id="chargeRH" formControlName="chargeRH" required>
+              <option value="">Sélectionnez une option</option>
+              <option value="Très satisfait">Très satisfait</option>
+              <option value="Satisfait">Satisfait</option>
+              <option value="Moyennement satisfait">Moyennement satisfait</option>
+              <option value="Insuffisant">Insuffisant</option>
+              <option value="">-</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Satisfaction Globale</td>
+          <td>
+            <select id="satisficationC" formControlName="satisficationC" required>
+              <option value="">Sélectionnez une option</option>
+              <option value="Très satisfait">Très satisfait</option>
+              <option value="Satisfait">Satisfait</option>
+              <option value="Moyennement satisfait">Moyennement satisfait</option>
+              <option value="Insuffisant">Insuffisant</option>
+              <option value="">-</option>
+            </select>
+          </td>
+          <td>
+            <select id="satisficationRH" formControlName="satisficationRH" required>
+              <option value="">Sélectionnez une option</option>
+              <option value="Très satisfait">Très satisfait</option>
+              <option value="Satisfait">Satisfait</option>
+              <option value="Moyennement satisfait">Moyennement satisfait</option>
+              <option value="Insuffisant">Insuffisant</option>
+              <option value="">-</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="submit" [disabled]="missionForm.invalid">
+      <span class="button-icon">+</span> Ajouter la mission
+    </button>
+  </form>
+  <button type="button" (click)="addForm()" class="add-form-button">
+    <span class="button-icon">+</span> Ajouter un formulaire
+  </button>
+</div>
+
+
+
