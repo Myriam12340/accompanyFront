@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ConsultantService } from '../Model/consultant/consultant.service';
 import { Consultant } from '../Model/consultant';
+import { EmailMessage } from '../Model/email-message';
+import { MailService } from '../service/mail.service';
 
 @Component({
   selector: 'app-mission',
@@ -15,6 +17,9 @@ import { Consultant } from '../Model/consultant';
   styleUrls: ['./mission.component.css']
 })
 export class MissionComponent implements OnInit {
+  formCount = 2 ;
+
+  consultantData: any;
   missionForms: FormGroup[] = [];
 
   missionForm: FormGroup;
@@ -34,10 +39,24 @@ consultantinfo : any ;
 private consultantservice : ConsultantService,
     private Missionservice: MissionService,
     private authService: AuthService,
-    private router: Router
+    private router: Router, private consultantService: ConsultantService,private emailService: MailService
   ) {}
-
+  email: EmailMessage = {
+    fromName: '',
+    fromEmail: '',
+    toName: '',
+    toEmail: '',
+    subject: '',
+    body: ''
+  };
   ngOnInit(): void {
+
+
+    this.consultantService.getConsultantData().subscribe(data => {
+      this.consultantData = data;
+
+      // Utilisez les données du consultant dans le composant EvaluationRHComponent
+    });
 
     this.route.queryParams.subscribe((params) => {
       const consultantId = params['consultantId '];
@@ -105,7 +124,7 @@ private consultantservice : ConsultantService,
     this.mission.satisficationC = this.missionForm.get('satisficationC')?.value;
     this.mission.satisficationRH = this.missionForm.get('satisficationRH')?.value;
     this.mission.titre = this.missionForm.get('titre')?.value;
-    this.mission.consultant = this.consultant;
+    this.mission.consultant = this.consultantData.consultantId;
 
     this.authService.getUserByEmail(this.missionForm.get('manager')?.value).subscribe(
       (user) => {
@@ -131,9 +150,23 @@ private consultantservice : ConsultantService,
         console.log('Error getting user by email:', error);
       }
     );
+
+    this.email.fromName = this.rh;
+  this.email.fromEmail = this.userProfile.email; // Update with appropriate value
+  this.email.toName = 'Manager'; // Update with appropriate value
+  this.email.toEmail = this.missionForm.get('manager')?.value;
+  this.email.subject = 'Evaluation de mission : ⭐  '+this.missionForm.get('titre')?.value ; // Update with appropriate value
+  this.email.body = ' Cher responsable d équipe,J ai effectué une évaluation pour la mission : '+ this.missionForm.get('titre')?.value +" de lun de vos membres déquipe "+this.consultantData.nom +" "+this.consultantData.prenom+ "\n  Cordialement "
+  
+  +this.rh
+;
+  this.sendEmail();
   }
+  
+  
   addForm() {
-    const duplicatedForm = this.fb.group({
+    this.formCount++;
+    const newForm = this.fb.group({
       manager: [''],
       titre: ['', Validators.required],
       roleC: ['', Validators.required],
@@ -147,10 +180,22 @@ private consultantservice : ConsultantService,
       noteManager: [''],
       feedbackManager: [''],
     });
-  
-    this.missionForms.push(duplicatedForm);
+    this.missionForms.push(newForm);
   }
-  
 
- 
+  sendEmail() {
+    this.emailService.sendEmail(this.email).subscribe(
+      () => {
+        console.log('Email sent successfully');
+       
+      
+      
+
+
+      },
+      (error) => {
+        console.log('Error sending email:', error);
+      }
+    );
+  }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {  Observable} from 'rxjs'
+import {  BehaviorSubject, Observable} from 'rxjs'
 import { ConsultantModule } from './consultant.module';
 
 @Injectable({
@@ -10,12 +10,18 @@ export class ConsultantService {
 
 
 
-
+  private consultantData = new BehaviorSubject<any>(null);
 
   readonly APIurl ="http://localhost:60734/api";
   constructor(private http:HttpClient) { }
 
- 
+  setConsultantData(data: any) {
+    this.consultantData.next(data);
+  }
+
+  getConsultantData() {
+    return this.consultantData.asObservable();
+  }
   
   getConsultantlist():Observable<ConsultantModule[]>{
     return this.http.get<any>(this.APIurl+'/Consultants');

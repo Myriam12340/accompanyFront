@@ -1,37 +1,326 @@
-<p>{{consultantnom }}</p>
+<mat-card>
 
-<form>
-  <div *ngFor="let formulaire of formulairesDupliques; let i = index" class="formulaire-container">
-    <h4>Formulaire {{ i + 1 }} - Mission numéro :</h4>
-    <input type="text" [(ngModel)]="formulaire.missionNumero" name="missionNumero" placeholder="Mission numéro">
-
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="responsable">Responsable</label>
-        <select class="form-control" [(ngModel)]="formulaire.Roles_res" name="Roles_res">
-          <option value="Insuffisant">Insuffisant</option>
-          <option value="Moyennement satisfait">Moyennement satisfait</option>
-          <option value="Satisfait">Satisfait</option>
-          <option value="Très satisfait">Très satisfait</option>
-          <option value="-">-</option>
-        </select>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="consultant">Consultant</label>
-        <select class="form-control" [(ngModel)]="formulaire.Roles_resC" name="Roles_resC">
-          <option value="Insuffisant">Insuffisant</option>
-          <option value="Moyennement satisfait">Moyennement satisfait</option>
-          <option value="Satisfait">Satisfait</option>
-          <option value="Très satisfait">Très satisfait</option>
-          <option value="-">-</option>
-        </select>
-      </div>
+<mat-toolbar style="background-color: #1347a4;">
+  <mat-toolbar-row>
+    <div class="image-3d">
+      <img src="assets/images/bilan.png" alt="Bilan RH 1à3 mois">
     </div>
+    <span style="margin-left: auto;margin-right: auto;color: aliceblue;">Bilan RH  d' {{ consultantData.evaluationType }}
+    </span>
+  </mat-toolbar-row>
 
-    <!-- Ajoutez d'autres champs selon vos besoins -->
+</mat-toolbar>
+
+<mat-card>
+<table style="width: 100%; border-collapse: collapse; border: 1px solid #000;">
+  <thead style="background-color: #1347a4;">
+    <tr>
+      <th class="th">Nom et prénom du collaborateur</th>
+      <th class="th">Date d'intégration</th>
+      <th class="th">Intitulé du Poste occupé</th>
+    </tr>
+  </thead>
+  <tr>
+    <td class="th_contenu">{{ consultantData.nom }} {{ consultantData.prenom }}</td>
+    <td class="th_contenu">Maria Anders</td>
+    <td class="th_contenu">{{ consultantData.grade }}</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="background-color:#1e5d6b;; color: aliceblue; font-family: sans-serif; font-size: large; border: 1px solid #000;">HR BP</td>
+    <td class="th_contenu">{{rh}}</td>
+  </tr>
+</table>
+</mat-card>
+<form [formGroup]="evaluationForm" (ngSubmit)="onSubmit()">
+  <app-mission></app-mission>
+<!-- ----------------------------1 partie -------------------------->
+<mat-card *ngIf="consultantData.evaluationType === 'Intégration 3 mois'">
+  <mat-toolbar color="accent" >
+    <mat-toolbar-row>
+      <span>REX Aspects RH
+      </span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <br>
+  <table style="width: 100%; ">
+    <thead style="background-color:#1e5d6b;color: azure;">
+      <tr>
+        <th>Critéres</th>
+        <th>Consultant</th>
+        <th>HR BP </th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <tr >
+        <td>Gestion ADM RH</td>
+        <td > <select id="roleC" formControlName="admC" >
+          <option value="">Sélectionnez une option</option>
+          <option value="Très satisfait">Très satisfait</option>
+          <option value="Satisfait">Satisfait</option>
+          <option value="Moyennement satisfait">Moyennement satisfait</option>
+          <option value="Insuffisant">Insuffisant</option>
+          <option value="">-</option>
+        </select></td>
+        <td> <select formControlName="admRH">
+          <option value="">Sélectionnez une option</option>
+          <option value="Très satisfait">Très satisfait</option>
+          <option value="Satisfait">Satisfait</option>
+          <option value="Moyennement satisfait">Moyennement satisfait</option>
+          <option value="Insuffisant">Insuffisant</option>
+          <option value="">-</option>
+        </select> </td>
+      </tr>
+      <tr >
+        <td>Communication </td>
+        <td> <select formControlName="communicationC" >
+          <option value="">Sélectionnez une option</option>
+          <option value="Très satisfait">Très satisfait</option>
+          <option value="Satisfait">Satisfait</option>
+          <option value="Moyennement satisfait">Moyennement satisfait</option>
+          <option value="Insuffisant">Insuffisant</option>
+          <option value="">-</option>
+        </select></td>
+        <td> <select formControlName="communicationRH">
+          <option value="">Sélectionnez une option</option>
+          <option value="Très satisfait">Très satisfait</option>
+          <option value="Satisfait">Satisfait</option>
+          <option value="Moyennement satisfait">Moyennement satisfait</option>
+          <option value="Insuffisant">Insuffisant</option>
+          <option value="">-</option>
+        </select> </td>
+      </tr>
+      <tr >
+        <td>Esprit d'équipe</td>
+        <td> <select id="roleC" formControlName="esprit_equipeC">
+          <option value="">Sélectionnez une option</option>
+          <option value="Très satisfait">Très satisfait</option>
+          <option value="Satisfait">Satisfait</option>
+          <option value="Moyennement satisfait">Moyennement satisfait</option>
+          <option value="Insuffisant">Insuffisant</option>
+          <option value="">-</option>
+        </select></td>
+        <td> <select formControlName="esprit_equipeRH" >
+          <option value="">Sélectionnez une option</option>
+          <option value="Très satisfait">Très satisfait</option>
+          <option value="Satisfait">Satisfait</option>
+          <option value="Moyennement satisfait">Moyennement satisfait</option>
+          <option value="Insuffisant">Insuffisant</option>
+          <option value="">-</option>
+        </select> </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+   </mat-card>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!------------------------------partie 2 -->
+
+
+
+  <mat-card *ngIf="consultantData.evaluationType === 'Intégration 1 mois'">
+  <mat-toolbar color="accent">
+    <mat-toolbar-row>
+      <span>REX RH intégration
+      </span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <table>
+ 
+    <tbody>
+      <tr >
+        <td> Notre processus de recrutement </td>
+        <td>
+          <mat-slider [min]="min" [max]="max" tickInterval="5" #slider color="accent" formControlName="processusR"></mat-slider>
+          {{slider.value}}
+        </td>
+        
+      </tr> 
+
+      <tr >
+        <td> La communication en interne </td>
+        <td><mat-slider [min]="min" [max]="max" tickInterval="5" #slider1 color="accent"formControlName="communication_interne"></mat-slider>
+          {{slider1.value}}
+           </td>
+      </tr>
+
+
+      <tr >
+        <td>Les relations avec l’équipe </td>
+        <td><mat-slider [min]="min" [max]="max" tickInterval="5" #slider3 color="accent"formControlName="relation"></mat-slider>
+          {{slider3.value}}
+           </td>
+      </tr>
+      <tr >
+        <td>Les rapports avec les managers ou chefs de missions </td>
+        <td><mat-slider [min]="min" [max]="max" tickInterval="5" #slider4 color="accent"formControlName="rapport"></mat-slider>
+          {{slider4.value}}
+           </td>
+      </tr>
+      <tr >
+        <td>Les outils de Travail</td>
+        <td><mat-slider [min]="min" [max]="max" tickInterval="5" #slider5 color="accent"formControlName="outils"></mat-slider>
+          {{slider5.value}}
+           </td>
+      </tr>
+      <tr >
+        <td>La participation aux PI/T24</td>
+        <td><mat-slider [min]="min" [max]="max" tickInterval="5" #slider6 color="accent"formControlName="pt24"></mat-slider>
+          {{slider6.value}}
+           </td>
+      </tr>
+      <tr >
+        <td>Les formations chez Accompany</td>
+        <td><mat-slider [min]="min" [max]="max" tickInterval="5" #slider7 color="accent"formControlName="formation"></mat-slider>
+          {{slider7.value}}
+           </td>
+      </tr>
+      <tr >
+        <td>Process RH</td>
+        <td><mat-slider [min]="min" [max]="max" tickInterval="5" #slider8 color="accent"formControlName="processRH"></mat-slider>
+          {{slider8.value}}
+           </td>
+      </tr>
+
+    </tbody>
+  </table>
+  
+
+
+
+
+
+
+
+
+</mat-card>
+
+
+
+<!-- ----------------------------3 partie -------------------------->
+<mat-card *ngIf="consultantData.evaluationType === 'Intégration 3 mois'">
+  <mat-toolbar color="accent">
+    <mat-toolbar-row>
+      <span>Il faut travailler 
+      </span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <br>
+  <table style="width: 100%; ">
+    <thead style="background-color:#1e5d6b; color: azure;">
+     
+      <tr >
+        <th>Critéres</th>
+        <th>Consultant</th>
+        <th>HR BP </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr >
+        <td>Participation aux Projets Internes</td>
+        <td><select formControlName="projet_interneC">
+          <option value="">Sélectionnez une option</option>
+          <option value="Très satisfait">Très satisfait</option>
+          <option value="Satisfait">Satisfait</option>
+          <option value="Moyennement satisfait">Moyennement satisfait</option>
+          <option value="Insuffisant">Insuffisant</option>
+          <option value="">-</option>
+        </select></td>
+        <td><select formControlName="projet_interneRH">
+          <option value="">Sélectionnez une option</option>
+          <option value="Très satisfait">Très satisfait</option>
+          <option value="Satisfait">Satisfait</option>
+          <option value="Moyennement satisfait">Moyennement satisfait</option>
+          <option value="Insuffisant">Insuffisant</option>
+          <option value="">-</option>
+        </select> </td>
+      </tr>
+      <tr >
+        <td>Participation au développement Commercial</td>
+        <td><select formControlName="dev_commercialC" >
+          <option value="">Sélectionnez une option</option>
+          <option value="Très satisfait">Très satisfait</option>
+          <option value="Satisfait">Satisfait</option>
+          <option value="Moyennement satisfait">Moyennement satisfait</option>
+          <option value="Insuffisant">Insuffisant</option>
+          <option value="">-</option>
+        </select></td>
+        <td><select formControlName="dev_commercialRH" >
+          <option value="">Sélectionnez une option</option>
+          <option value="Très satisfait">Très satisfait</option>
+          <option value="Satisfait">Satisfait</option>
+          <option value="Moyennement satisfait">Moyennement satisfait</option>
+          <option value="Insuffisant">Insuffisant</option>
+          <option value="">-</option>
+        </select></td>
+      </tr>
+      <tr >
+        <td>Participation vie du cabinet 
+           (Proposition de CV, formation, partage de conaissances…)</td>
+        <td><select formControlName="vie_cabinetC" >
+          <option value="">Sélectionnez une option</option>
+          <option value="Très satisfait">Très satisfait</option>
+          <option value="Satisfait">Satisfait</option>
+          <option value="Moyennement satisfait">Moyennement satisfait</option>
+          <option value="Insuffisant">Insuffisant</option>
+          <option value="">-</option>
+        </select></td>
+        <td><select formControlName="vie_cabinetRH">
+          <option value="">Sélectionnez une option</option>
+          <option value="Très satisfait">Très satisfait</option>
+          <option value="Satisfait">Satisfait</option>
+          <option value="Moyennement satisfait">Moyennement satisfait</option>
+          <option value="Insuffisant">Insuffisant</option>
+          <option value="">-</option>
+        </select> </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+   </mat-card>
+
+
+
+
+
+
+
+
+   
+
+   <div class="example-button-row">
+    <mat-action-row class="rows">
+      <button type="submit" class="btn btn-primary btn-sm">Terminer
+        <mat-icon>open_in_new</mat-icon>
+      </button>
+      <button class="btn btn-danger btn-sm" (click)="annuler()" aria-label="Home">Annuler
+        <mat-icon>home</mat-icon>
+      </button>
+    </mat-action-row>
   </div>
-
-  <!-- Bouton pour dupliquer le formulaire -->
-  <button type="button" (click)="dupliquerFormulaire()">Dupliquer le formulaire</button>
+  
 </form>
-<app-mission></app-mission>
+</mat-card>
+
+⭐ 

@@ -15,6 +15,7 @@ export class EvaluationComponent implements OnInit {
   consultants: Consultant[];
   integrationConsultants: Consultant[] = [];
   dataSource = new MatTableDataSource();
+  public evaluationType: string;
 
   constructor(private consultantService: ConsultantService , private router: Router) {}
 
@@ -89,6 +90,19 @@ isNextEvaluationToday(consultant: Consultant): boolean {
       queryParams: { consultantId: consultantId, nom: nom , prenom: prenom  ,date_integration : date_integration , grade : grade}
     });
 
+}
+evaluerConsultant1(consultantId: number, nom: string, prenom: string, date_integration: string, grade: string, evaluationType: string) {
+  const consultantData = {
+    consultantId: consultantId,
+    nom: nom,
+    prenom: prenom,
+    date_integration: date_integration,
+    grade: grade,
+    evaluationType: evaluationType
+  };
+
+  this.consultantService.setConsultantData(consultantData);
+  this.router.navigate(['/evaluation-Integration']);
 }
 
 

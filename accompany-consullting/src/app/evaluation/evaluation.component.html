@@ -42,6 +42,10 @@
         <button mat-icon-button color="primary" (click)="evaluerConsultant(consultant.id,consultant.nom, consultant.prenom , consultant.date_integration , consultant.grade)">
           <mat-icon>play_arrow</mat-icon>
         </button>
+        <button mat-icon-button color="red" (click)="evaluerConsultant1(consultant.id, consultant.nom, consultant.prenom, consultant.date_integration, consultant.grade, consultant.isI3 ? 'Intégration 3 mois' : 'Intégration 1 mois')">
+          <mat-icon>play_arrow</mat-icon>
+          {{ consultant.isI3 && !consultant.isI1 ? 'Intégration 3 mois' : consultant.isI1 && !consultant.isI3 ? 'Intégration 1 mois' : '' }}
+        </button>
       </td>
     </ng-container>
   

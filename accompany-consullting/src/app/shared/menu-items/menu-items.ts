@@ -10,7 +10,7 @@ var MENUITEMS;
 
 
 MENUITEMS = [
-  /*{ state: 'dashboard', name: 'Dashboard', type: 'link', icon: 'av_timer' },
+  { state: 'dashboard', name: 'Dashboard', type: 'link', icon: 'av_timer' },
   { state: 'button', type: 'link', name: 'Buttons', icon: 'crop_7_5' },
   { state: 'grid', type: 'link', name: 'Grid List', icon: 'view_comfy' },
   { state: 'lists', type: 'link', name: 'Lists', icon: 'view_list' },
@@ -39,7 +39,7 @@ MENUITEMS = [
   },
   
   { state: 'dashboard', type: 'link', name: 'Rapport Statistique ', icon: 'assignment_turned_in' },
-  */
+  
 
   {
     state: 'evaluation',
@@ -64,7 +64,7 @@ MENUITEMS = [
 
  
   { state: 'listconsultants', type: 'link', name: 'Liste des consultants ', icon: 'assistant' },
- /* { state: 'toolbar', type: 'link', name: 'Toolbar', icon: 'voicemail' },
+  { state: 'toolbar', type: 'link', name: 'Toolbar', icon: 'voicemail' },
   {
     state: 'progress-snipper',
     type: 'link',
@@ -92,7 +92,7 @@ MENUITEMS = [
     type: 'link',
     name: 'Slide Toggle',
     icon: 'all_inclusive'
-  }*/
+  }
 ];
 
 if ( sessionStorage.getItem("roles") == '["ROLE_RESPONSABLE"]')

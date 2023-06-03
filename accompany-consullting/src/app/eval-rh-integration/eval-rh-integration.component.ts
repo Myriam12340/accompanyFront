@@ -1,6 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { MissionRh } from '../mission-rh';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild  } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConsultantService } from '../Model/consultant/consultant.service';
+import { AuthService } from '../service/Authentication Service/auth.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { EvaluationService } from '../service/evaluation.service';
+import { Evaluation } from '../Model/evaluation';
+import { MissionComponent } from '../mission/mission.component'; 
+import { EmailMessage } from '../Model/email-message';
 
 @Component({
   selector: 'app-eval-rh-integration',
@@ -8,41 +14,131 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./eval-rh-integration.component.css']
 })
 export class EvalRhIntegrationComponent implements OnInit {
-  formulaireData: MissionRh = new MissionRh();
-  formulairesDupliques: MissionRh[] = [];
+  email: EmailMessage = {
+    fromName: '',
+    fromEmail: '',
+    toName: '',
+    toEmail: '',
+    subject: '',
+    body: ''
+  };
   consultantnom : string;
-  constructor(private route: ActivatedRoute) { }
+  
+  demo: number=0;
+  val = 50;
+  min = 1;
+  max = 5;
+  //envoyer parmettre 
+  consultantData: any;
+  rh : any ; 
+  userProfile:any;  
+  evaluationForm: FormGroup;
+@ViewChild(MissionComponent) missionComponent: MissionComponent;
+
+evaluation : Evaluation = new Evaluation();
+  constructor(  private router:Router, private evaluationservice:EvaluationService,private formBuilder: FormBuilder , private route: ActivatedRoute , private consultantService: ConsultantService, private authService: AuthService,) { }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-     
-      const nom = params['nom'];
 
-    
-      this.consultantnom = nom ;
-      console.log("nom"+this.consultantnom);
-      // Utilisez l'ID du consultant comme nécessaire
+    this.consultantService.getConsultantData().subscribe(data => {
+      this.consultantData = data;
+
+      // Utilisez les données du consultant dans le composant EvaluationRHComponent
     });
 
+// pour requiper le nom de user connececte 
+    if (sessionStorage.getItem("jwt")) {
+      this.authService.getUserProfile(localStorage.getItem("jwt")).subscribe(
+        userProfile => {
+          this.userProfile = userProfile;
+          console.log(this.userProfile);
+          this.rh= userProfile.userName;
+        },
+        error => console.error(error)
+      );
+    }
+
+
+
+//creation form builder 
+this.evaluationForm = this.formBuilder.group({
+ 
+  processusR: [],
+  communication_interne: [],
+  relation: [],
+  rapport: [],
+  outils: [],
+  pt24: [],
+  formation: [],
+  processRH: [],
+  admC: [],
+  admRH: [],
+  communicationC: [],
+  communicationRH: [],
+  esprit_equipeC: [],
+  esprit_equipeRH: [],
+  projet_interneC: [],
+  dev_commercialC: [],
+  vie_cabinetC: [],
+  projet_interneRH: [],
+  dev_commercialRH: [],
+  vie_cabinetRH: []
+});
+
+
+
   }
-  dupliquerFormulaire() {
-    const nouveauFormulaire = new MissionRh();
-    // Copiez les valeurs du formulaire initial dans le nouveau formulaire
-    nouveauFormulaire.Roles_res = this.formulaireData.Roles_res;
-    nouveauFormulaire.Roles_resC = this.formulaireData.Roles_resC;
-    nouveauFormulaire.Diffucultés = this.formulaireData.Diffucultés;
 
-    nouveauFormulaire.Planification = this.formulaireData.Planification;
-    nouveauFormulaire.PlanificationC = this.formulaireData.PlanificationC;
-    nouveauFormulaire.DiffucultésC = this.formulaireData.DiffucultésC;
-    nouveauFormulaire.Points = this.formulaireData.Points;
-
-
-
-    // Ajoutez d'autres propriétés selon vos besoins
+  onSubmit() {
+    // Handle form submission
+    console.log(this.evaluationForm.value);
   
-    // Ajoutez le nouveau formulaire au tableau des formulaires dupliqués
-    this.formulairesDupliques.push(nouveauFormulaire);
+    // Assign form values to evaluation object
+    this.evaluation.processusR = this.evaluationForm.get('processusR')?.value;
+    this.evaluation.communicationinterne = this.evaluationForm.get('communication_interne')?.value;
+    this.evaluation.relation = this.evaluationForm.get('relation')?.value;
+    this.evaluation.rapport = this.evaluationForm.get('rapport')?.value;
+    this.evaluation.outils = this.evaluationForm.get('outils')?.value;
+    this.evaluation.pt24 = this.evaluationForm.get('pt24')?.value;
+    this.evaluation.formation = this.evaluationForm.get('formation')?.value;
+    this.evaluation.processRH = this.evaluationForm.get('processRH')?.value;
+    this.evaluation.admC = this.evaluationForm.get('admC')?.value;
+    this.evaluation.admRH = this.evaluationForm.get('admRH')?.value;
+    this.evaluation.communicationC = this.evaluationForm.get('communicationC')?.value;
+    this.evaluation.communicationRH = this.evaluationForm.get('communicationRH')?.value;
+    this.evaluation.espritequipeC = this.evaluationForm.get('esprit_equipeC')?.value;
+    this.evaluation.espritequipeRH = this.evaluationForm.get('esprit_equipeRH')?.value;
+    this.evaluation.projetinterneC = this.evaluationForm.get('projet_interneC')?.value;
+    this.evaluation.devcommercialC = this.evaluationForm.get('dev_commercialC')?.value;
+    this.evaluation.viecabinetC = this.evaluationForm.get('vie_cabinetC')?.value;
+    this.evaluation.projetinterneRH = this.evaluationForm.get('projet_interneRH')?.value;
+    this.evaluation.devcommercialRH = this.evaluationForm.get('dev_commercialRH')?.value;
+    this.evaluation.viecabinetRH = this.evaluationForm.get('vie_cabinetRH')?.value;
+    this.evaluation.hr = this.userProfile.id ;
+    this.evaluation.type_eval = this.consultantData.evaluationType ;
+    console.log(this.evaluation);
+
+
+    this.evaluationservice.addeval(this.evaluation).subscribe(
+      response => {
+        console.log('eval ajoutée avec succès !');
+        // Réinitialiser le formulaire
+        this.evaluation = new Evaluation();
+        this.evaluationForm.reset();
+      },
+      error => {
+        console.log('Une erreur s\'est produite lors de l\'ajout de la mission :', error);
+      }
+    );
+    this.missionComponent.submitForm();
+
   }
+
+  
+ 
+
+  annuler(){
+    this.router.navigate(['/evaluation'])}
+  
   
 }
