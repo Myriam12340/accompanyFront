@@ -6,5 +6,6 @@ export class MissionRh {
     Roles_resC : string
     PlanificationC : String 
     DiffucultésC : string 
+    nom : string; 
     
 }

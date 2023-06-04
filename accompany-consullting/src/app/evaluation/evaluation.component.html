@@ -1,5 +1,12 @@
 
-  <h2 class="title">Liste des Evaluations </h2>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<mat-card>
+    <div class="p-20 bg-info position-relative">
+        <h4 class="card-title text-white m-0">Liste des consultants</h4>
+     
+      </div>
 
   <div>
   <table class="table mat-elevation-z8 consultant-table" mat-table [dataSource]="integrationConsultants">
@@ -39,10 +46,8 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef class="thead-info"> <span class="table-title">Action</span> </th>
       <td mat-cell *matCellDef="let consultant" [ngClass]="{'highlight-row': isNextEvaluationToday(consultant)}">
-        <button mat-icon-button color="primary" (click)="evaluerConsultant(consultant.id,consultant.nom, consultant.prenom , consultant.date_integration , consultant.grade)">
-          <mat-icon>play_arrow</mat-icon>
-        </button>
-        <button mat-icon-button color="red" (click)="evaluerConsultant1(consultant.id, consultant.nom, consultant.prenom, consultant.date_integration, consultant.grade, consultant.isI3 ? 'Intégration 3 mois' : 'Intégration 1 mois')">
+      
+        <button mat-icon-button color="primary" (click)="evaluerConsultant1(consultant.id, consultant.nom, consultant.prenom, consultant.date_integration, consultant.grade, consultant.isI3 ? 'Intégration 3 mois' : 'Intégration 1 mois')">
           <mat-icon>play_arrow</mat-icon>
           {{ consultant.isI3 && !consultant.isI1 ? 'Intégration 3 mois' : consultant.isI1 && !consultant.isI3 ? 'Intégration 1 mois' : '' }}
         </button>
@@ -52,3 +57,4 @@
   
   </table>
 </div>
+</mat-card>

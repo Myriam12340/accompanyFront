@@ -38,7 +38,13 @@ import { EntretientdetailComponent } from '../entretientdetail/entretientdetail.
 import { EvaluationComponent } from '../evaluation/evaluation.component';
 import { EvalRhIntegrationComponent } from '../eval-rh-integration/eval-rh-integration.component';
 import { MissionComponent } from '../mission/mission.component';
+import { ListmissionComponent } from '../listmission/listmission.component';
+import { ManagerEvalComponent } from '../manager-eval/manager-eval.component';
 export const MaterialRoutes: Routes = [
+  
+  {path:'eval_mission', component:ManagerEvalComponent},
+
+  {path:'list_missions', component:ListmissionComponent},
   {path:'evaluation-Integration',component:EvalRhIntegrationComponent},
 
   {path:'mission',component:MissionComponent},

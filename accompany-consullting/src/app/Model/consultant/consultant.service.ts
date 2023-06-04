@@ -35,4 +35,11 @@ export class ConsultantService {
   updateConsultant(id: number, val: any){
     return this.http.put(`${this.APIurl}/Consultants/${id}`, val);
   }
+  getConsultant2(consultantId: number) {
+    const url = `${this.APIurl}/Consultants/${consultantId}`;
+    return this.http.get(url);
+  }
+
+ 
+  
 }

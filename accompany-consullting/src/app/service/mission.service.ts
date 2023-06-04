@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MissionRh } from '../mission-rh';
-import { Observable } from 'rxjs';
-import { entretient } from '../Model/entretient';
 import { Mission } from '../mission';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +10,23 @@ export class MissionService {
 
   private baseUrl = 'http://localhost:60734/api/Missions';
 
-  constructor(
-    private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  /** POST: add a new entretien intial */
   addMission(viewModel: Mission): Observable<Mission> {
     return this.http.post<Mission>(this.baseUrl, viewModel);
+  }
+
+  getlistmission(manager: number): Observable<Mission[]> {
+    return this.http.get<Mission[]>(`${this.baseUrl}/manager/${manager}`);
+  }
+
+  getMission(missionId: number): Observable<Mission> {
+    const url = `${this.baseUrl}/${missionId}`;
+    return this.http.get<Mission>(url);
+  }
+
+  updateMission(id: number, mission: Mission): Observable<Mission> {
+    const url = `${this.baseUrl}/${id}`;
+    return this.http.put<Mission>(url, mission);
   }
 }

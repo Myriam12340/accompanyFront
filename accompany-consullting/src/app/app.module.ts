@@ -44,6 +44,8 @@ import { EntretientdetailComponent } from './entretientdetail/entretientdetail.c
 import { EvaluationComponent } from './evaluation/evaluation.component';
 import { EvalRhIntegrationComponent } from './eval-rh-integration/eval-rh-integration.component';
 import { MissionComponent } from './mission/mission.component';
+import { ListmissionComponent } from './listmission/listmission.component';
+import { ManagerEvalComponent } from './manager-eval/manager-eval.component';
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
 }
@@ -79,6 +81,8 @@ export function tokenGetter() {
           EvaluationComponent,
           EvalRhIntegrationComponent,
           MissionComponent,
+          ListmissionComponent,
+          ManagerEvalComponent,
           
   ],
   imports: [

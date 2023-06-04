@@ -22,7 +22,7 @@
   </thead>
   <tr>
     <td class="th_contenu">{{ consultantData.nom }} {{ consultantData.prenom }}</td>
-    <td class="th_contenu">Maria Anders</td>
+    <td class="th_contenu">{{consultantData.date_integration| date:'dd-MM-yyyy'}}</td>
     <td class="th_contenu">{{ consultantData.grade }}</td>
   </tr>
   <tr>
@@ -323,4 +323,3 @@
 </form>
 </mat-card>
 
-⭐ 

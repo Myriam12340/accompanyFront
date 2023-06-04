@@ -10,7 +10,7 @@ var MENUITEMS;
 
 
 MENUITEMS = [
-  { state: 'dashboard', name: 'Dashboard', type: 'link', icon: 'av_timer' },
+ /* { state: 'dashboard', name: 'Dashboard', type: 'link', icon: 'av_timer' },
   { state: 'button', type: 'link', name: 'Buttons', icon: 'crop_7_5' },
   { state: 'grid', type: 'link', name: 'Grid List', icon: 'view_comfy' },
   { state: 'lists', type: 'link', name: 'Lists', icon: 'view_list' },
@@ -39,39 +39,44 @@ MENUITEMS = [
   },
   
   { state: 'dashboard', type: 'link', name: 'Rapport Statistique ', icon: 'assignment_turned_in' },
-  
-
+  */
+  {
+    state: 'list_missions',
+    type: 'link',
+    name: 'Missions',
+    icon: 'featured_play_list'
+  },
   {
     state: 'evaluation',
     type: 'link',
     name: 'evaluation',
-    icon: 'blur_circular'
+    icon: 'notifications_active'
   },
   {
     state: 'list-entretien',
     type: 'link',
     name: 'Entretiens',
-    icon: 'blur_circular'
+    icon: 'elevator'
   },
   {
     state: 'evaluationlist',
     type: 'link',
-    name: 'Anniversaire',
-    icon: 'blur_circular'
+    name: 'Anniversaire ',
+    icon: '✺︎'
   },
   
   
 
  
-  { state: 'listconsultants', type: 'link', name: 'Liste des consultants ', icon: 'assistant' },
-  { state: 'toolbar', type: 'link', name: 'Toolbar', icon: 'voicemail' },
-  {
+  { state: 'listconsultants', type: 'link', name: 'Liste des consultants ', icon: 'assignment_ind' },
+
+  /*{
     state: 'progress-snipper',
     type: 'link',
     name: 'Progress snipper',
     icon: 'border_horizontal'
   },
-  
+    { state: 'toolbar', type: 'link', name: 'Toolbar', icon: 'voicemail' },
   {
     state: 'progress',
     type: 'link',
@@ -126,8 +131,8 @@ else if ( sessionStorage.getItem("roles") == '["ROLE_CLIENT"]')
     type: 'link',
     name: 'Mes Réservation',
     icon: 'assignment_turned_in'
-  }];
-}
+  }*/];
+
 
 @Injectable()
 export class MenuItems implements OnInit{

@@ -1,0 +1,30 @@
+
+thead {
+    background-color: #23d1e8;
+    color: #fff;
+}
+
+ input{
+  margin-left: 100px;
+  margin-right: 100px ;
+ }
+ inputlargeur{
+  width: 1000px ; 
+ }
+
+ .mission-info {
+  display: flex;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.chef-projet-info {
+  display: flex;
+  margin-right: 100px;
+  align-items: center;
+}
+
+.chef-projet-info span {
+  margin-right: 50px;
+  
+}

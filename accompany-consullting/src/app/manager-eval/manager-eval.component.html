@@ -1,0 +1,115 @@
+<mat-card>
+    
+    <div>
+      <form [formGroup]="missionForm" (ngSubmit)="onclique()">
+  
+        <table style="width: 100%;">
+            <td colspan="6">
+                <mat-toolbar style="background-color: #1e5d6b; color: antiquewhite;">
+                  <mat-toolbar-row>
+              
+                 
+                        <div class="row">
+                          <div class="col-8">
+                            <span>Titre : </span>
+                        </div>
+                          <div class="col-4">
+                            <p>{{ missionForm.get('titre')?.value }}</p>                          </div>
+                        </div>
+
+                  </mat-toolbar-row>
+                  
+                </mat-toolbar>
+            
+              </td>
+              <br>
+          <tbody>
+            <tr style="background-color: #20c4d8; color: aliceblue; ">
+                <td>Critères</td>
+                <td>Consultant</td>
+                <td>HR BP</td>
+              </tr>
+            <tr>
+              <td>Roles et responsabilités </td>
+              <td>{{ missionForm.get('roleC')?.value }}</td>
+              <td>{{ missionForm.get('roleRH')?.value }}</td>
+            </tr>
+            <tr>
+              <td>Relation avec client</td>
+              <td>{{ missionForm.get('relationClientC')?.value }}</td>
+              <td>{{ missionForm.get('relationClientRH')?.value }}</td>
+            </tr>
+            <tr>
+              <td>Charge (surcharge / Baisse de charge)</td>
+              <td>{{ missionForm.get('chargeC')?.value }}</td>
+              <td>{{ missionForm.get('chargeRH')?.value }}</td>
+            </tr>
+            <tr>
+              <td>Satisfaction Globale</td>
+              <td>{{ missionForm.get('satisficationC')?.value }}</td>
+              <td>{{ missionForm.get('satisficationRH')?.value }}</td>
+            </tr>
+            <tr>
+              <td colspan="6">
+                <mat-toolbar style="background-color: #1e5d6b; color: antiquewhite;">
+                  <mat-toolbar-row>
+                <span>Votre avis ⭐ </span>
+                  </mat-toolbar-row>
+                </mat-toolbar>
+            
+              </td>
+        
+            </tr>
+        
+          </tbody>
+        </table>
+        <br>
+        <table>
+            <tr>
+              <th style="background-color: #20c4d8;color: aliceblue; text-align: center;">
+                <label for="exampleFormControlInput1" class="form-label">Donnez Votre Note</label>
+              </th>
+              <th class="mw-100" style="width: 50%;">
+                <input type="text" class="form-control border" id="noteManager" formControlName="noteManager" required placeholder="Note">
+              </th>
+            </tr>
+            <br>
+            <tr>
+              <th style="background-color: #20c4d8; color: aliceblue; text-align: center;">
+                <label class="form-label">Donnez votre feedback
+                <mat-icon class="post_add">post_add</mat-icon> </label>
+              </th>
+              <th>
+                <div style="margin-left : 120px;">
+                  <textarea class="form-control border" placeholder="Leave a comment here" id="floatingTextarea2" formControlName="feedbackManager" required style="height: 100px ; width: 500px ;"></textarea>
+                </div>
+              </th>
+            </tr>
+          </table>
+          
+          
+        <br>
+       
+        <!-- Button to add a new form -->
+        <div style="text-align: center;">
+            <mat-action-row class="rows">
+              <button mat-raised-button color="primary" (click)="onclique()">Terminer
+                <mat-icon>open_in_new</mat-icon>
+              </button>
+          
+              <span style="margin: 0 10px;"></span> <!-- Ajout d'un espace vertical de 10px -->
+          
+              <button class="btn btn-danger btn-sm" (click)="annuler()" aria-label="Home">Annuler
+                <mat-icon>home</mat-icon>
+              </button>
+            </mat-action-row>
+          </div>
+          
+      
+      </form>
+    </div>
+  </mat-card>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  
