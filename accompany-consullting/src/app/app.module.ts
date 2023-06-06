@@ -46,6 +46,7 @@ import { EvalRhIntegrationComponent } from './eval-rh-integration/eval-rh-integr
 import { MissionComponent } from './mission/mission.component';
 import { ListmissionComponent } from './listmission/listmission.component';
 import { ManagerEvalComponent } from './manager-eval/manager-eval.component';
+import { EvalCompetanceComponent } from './eval-competance/eval-competance.component';
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
 }
@@ -83,6 +84,7 @@ export function tokenGetter() {
           MissionComponent,
           ListmissionComponent,
           ManagerEvalComponent,
+          EvalCompetanceComponent,
           
   ],
   imports: [

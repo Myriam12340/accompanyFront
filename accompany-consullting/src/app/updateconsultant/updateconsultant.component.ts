@@ -52,7 +52,8 @@ export class UpdateconsultantComponent implements OnInit {
     // Récupérer l'objet consultant correspondant à l'id passé en paramètre (par exemple en utilisant le service consultantService)
     console.log(this.c.nom);
     this.consultantForm = this.fb.group({
-
+      salaire: [this.
+        c.salaire, Validators.required],
       nom: [this.
         c.nom, Validators.required],
       prenom: [this.c.prenom, Validators.required],

@@ -29,4 +29,7 @@ export class MissionService {
     const url = `${this.baseUrl}/${id}`;
     return this.http.put<Mission>(url, mission);
   }
+  getlistmissionconsultant(consultant: number): Observable<Mission[]> {
+    return this.http.get<Mission[]>(`${this.baseUrl}/consultant/${consultant}`);
+  }
 }

@@ -1,4 +1,5 @@
 export class Evaluation {
+    id : number;
     hr: number;
     processusR: number;
     communicationinterne: number;

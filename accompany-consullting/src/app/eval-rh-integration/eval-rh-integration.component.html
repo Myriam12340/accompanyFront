@@ -32,8 +32,8 @@
 </table>
 </mat-card>
 <form [formGroup]="evaluationForm" (ngSubmit)="onSubmit()">
-  <app-mission></app-mission>
-<!-- ----------------------------1 partie -------------------------->
+  <app-mission [evaluationId]="evaluation.id"></app-mission>
+  <!-- ----------------------------1 partie -------------------------->
 <mat-card *ngIf="consultantData.evaluationType === 'Intégration 3 mois'">
   <mat-toolbar color="accent" >
     <mat-toolbar-row>

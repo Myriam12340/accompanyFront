@@ -47,42 +47,47 @@ export class EvaluationComponent implements OnInit {
         const evaluationDate1MonthMinus15Days = evaluationDate1Month.clone().subtract(15, 'days');
         const evaluationDate3Month = integrationDate.clone().add(3, 'month');
         const evaluationDate3MonthMinus15Days = evaluationDate3Month.clone().subtract(15, 'days');
-        
+        const evaluationDate6Month = integrationDate.clone().add(6, 'month');
+        const evaluationDate6MonthMinus15Days = evaluationDate6Month.clone().subtract(15, 'days');
+  
         const today = moment();
   
         if (today.isSameOrAfter(evaluationDate1MonthMinus15Days, 'day') && 
         today.isSameOrBefore(evaluationDate1Month, 'day')) {
           consultant.isI1 = true;
           consultant.prochain_entretien = evaluationDate1Month.format('DD-MM-yyyy');
-          
         } 
         else if (today.isSameOrAfter(evaluationDate3MonthMinus15Days, 'day') 
         && today.isSameOrBefore(evaluationDate3Month, 'day')) {
-
-        
-        
           consultant.isI3 = true;
           consultant.prochain_entretien = evaluationDate3Month.format('DD-MM-yyyy');
-
+        }
+        else if (today.isSameOrAfter(evaluationDate6MonthMinus15Days, 'day') 
+        && today.isSameOrBefore(evaluationDate6Month, 'day')) {
+          consultant.isI6 = true;
+          consultant.prochain_entretien = evaluationDate6Month.format('DD-MM-yyyy');
         }
   
-        return consultant.isI1 || consultant.isI3;
-      
-    });
+        return consultant.isI1 || consultant.isI3 || consultant.isI6;
+      });
+  
       this.integrationConsultants = filteredConsultants;
       console.log(this.integrationConsultants);
-    
+    }
   }
   
   
-}
+  
+
 
 isNextEvaluationToday(consultant: Consultant): boolean {
   const nextEvaluationDate = moment(consultant.date_integration, 'YYYY-MM-DDTHH:mm:ss').add(1, 'month');
   const nextEvaluationDate3 = moment(consultant.date_integration, 'YYYY-MM-DDTHH:mm:ss').add(3, 'month');
+  const nextEvaluationDate6 = moment(consultant.date_integration, 'YYYY-MM-DDTHH:mm:ss').add(6, 'month');
+
 
   const today = moment().startOf('day');
-  return nextEvaluationDate.isSame(today, 'day') ||nextEvaluationDate3.isSame(today, 'day') ;
+  return nextEvaluationDate.isSame(today, 'day') ||nextEvaluationDate3.isSame(today, 'day')||nextEvaluationDate6.isSame(today, 'day') ;
 }
 
   evaluerConsultant(consultantId: number, nom: string , prenom: string , date_integration : string  , grade : string ) {
@@ -103,6 +108,21 @@ evaluerConsultant1(consultantId: number, nom: string, prenom: string, date_integ
 
   this.consultantService.setConsultantData(consultantData);
   this.router.navigate(['/evaluation-Integration']);
+}
+
+
+eval_competance(consultantId: number, nom: string, prenom: string, date_integration: string, grade: string, evaluationType: string) {
+  const consultantData = {
+    consultantId: consultantId,
+    nom: nom,
+    prenom: prenom,
+    date_integration: date_integration,
+    grade: grade,
+    evaluationType: evaluationType
+  };
+
+  this.consultantService.setConsultantData(consultantData);
+  this.router.navigate(['/eval_competance']);
 }
 
 

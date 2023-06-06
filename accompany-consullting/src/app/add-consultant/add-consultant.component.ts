@@ -39,7 +39,7 @@ export class AddConsultantComponent implements OnInit {
       fonction:["",Validators.required],
       contrat:["",Validators.required],
      
-
+      salaire:["",Validators.required],
 societe:["",Validators.required],
 date_integration: ["", Validators.required],
 business_unit:["",Validators.required],

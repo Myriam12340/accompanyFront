@@ -40,8 +40,10 @@ import { EvalRhIntegrationComponent } from '../eval-rh-integration/eval-rh-integ
 import { MissionComponent } from '../mission/mission.component';
 import { ListmissionComponent } from '../listmission/listmission.component';
 import { ManagerEvalComponent } from '../manager-eval/manager-eval.component';
+import { EvalCompetanceComponent } from '../eval-competance/eval-competance.component';
 export const MaterialRoutes: Routes = [
   
+  {path:'eval_competance', component:EvalCompetanceComponent},
   {path:'eval_mission', component:ManagerEvalComponent},
 
   {path:'list_missions', component:ListmissionComponent},

@@ -14,4 +14,6 @@ export class Mission {
     noteManager: string | null;
     feedbackManager: string;
     nom : string ; 
+    evaluation : number ; 
+    nomManager:string ; 
 }

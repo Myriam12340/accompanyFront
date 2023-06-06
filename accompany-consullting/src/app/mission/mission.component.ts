@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MissionService } from '../service/mission.service';
 import { Mission } from '../mission';
 import { FormBuilder, FormGroup, Validators , ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +17,8 @@ import { MailService } from '../service/mail.service';
   styleUrls: ['./mission.component.css']
 })
 export class MissionComponent implements OnInit {
+  @Input() evaluationId: number ;
+
   formCount = 2 ;
 
   consultantData: any;
@@ -115,7 +117,7 @@ private consultantservice : ConsultantService,
 
   }
 
-  submitForm() {
+  submitForm( ) {
     this.mission.chargeC = this.missionForm.get('chargeC')?.value;
     this.mission.chargeRH = this.missionForm.get('chargeRH')?.value;
     this.mission.relationClientC = this.missionForm.get('relationClientC')?.value;
@@ -127,7 +129,7 @@ private consultantservice : ConsultantService,
     this.mission.satisficationRH = this.missionForm.get('satisficationRH')?.value;
     this.mission.titre = this.missionForm.get('titre')?.value;
     this.mission.consultant = this.consultantData.consultantId;
-  
+    this.mission.evaluation = this.evaluationId;
     this.authService.getUserByEmail(this.missionForm.get('manager')?.value).subscribe(
       (user) => {
         this.m = user;

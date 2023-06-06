@@ -39,7 +39,13 @@ export class ConsultantService {
     const url = `${this.APIurl}/Consultants/${consultantId}`;
     return this.http.get(url);
   }
-
+  updateConsultantContract(consultantId: number, contratValue: string): Observable<any> {
+    const url = `${this.APIurl}/Consultants/contract/${consultantId}`;
+    const body = `"${contratValue}"`; // Wrap the contratValue in double quotes to send it as a JSON string
+    return this.http.put(url, body, { headers: { 'Content-Type': 'application/json' } });
+  }
+  
+  
  
   
 }

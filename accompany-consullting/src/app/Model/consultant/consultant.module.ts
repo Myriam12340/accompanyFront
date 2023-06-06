@@ -16,6 +16,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 })
 export class ConsultantModule {
   id: number;
+  salaire : number;
   nom: string;
   prenom: string;
   adress: string;
@@ -38,6 +39,7 @@ export class ConsultantModule {
   isPro:boolean;
   isI1 : Boolean ;
   isI3 : boolean ;
+  isI6 : boolean ;
   prochain_entretien: string; // Nouvelle propriété
 
  }
