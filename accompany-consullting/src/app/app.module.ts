@@ -47,6 +47,7 @@ import { MissionComponent } from './mission/mission.component';
 import { ListmissionComponent } from './listmission/listmission.component';
 import { ManagerEvalComponent } from './manager-eval/manager-eval.component';
 import { EvalCompetanceComponent } from './eval-competance/eval-competance.component';
+import { DemandeComponent } from './demande/demande.component';
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
 }
@@ -85,6 +86,7 @@ export function tokenGetter() {
           ListmissionComponent,
           ManagerEvalComponent,
           EvalCompetanceComponent,
+          DemandeComponent,
           
   ],
   imports: [

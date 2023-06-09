@@ -31,5 +31,13 @@ export class EvaluationService {
   addevalC(viewModel: EvalComp): Observable<EvalComp> {
     return this.http.post<EvalComp>(this.url, viewModel);
   }
-  
+  getlistevalcompetance():Observable<EvalComp[]>{
+    return this.http.get<any>(this.baseUrl);
+  }
+  getevaluationlist():Observable<Evaluation[]>{
+    return this.http.get<any>(this.baseUrl);
+  }
+  getevalcompetance():Observable<EvalComp[]>{
+    return this.http.get<any>(this.url);
+  }
 }

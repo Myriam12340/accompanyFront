@@ -95,6 +95,7 @@ export class EvalRhIntegrationComponent implements OnInit {
     console.log(this.evaluationForm.value);
 
     // Assign form values to evaluation object
+
     this.evaluation.processusR = this.evaluationForm.get('processusR')?.value;
     this.evaluation.communicationinterne = this.evaluationForm.get('communication_interne')?.value;
     this.evaluation.relation = this.evaluationForm.get('relation')?.value;
@@ -116,6 +117,7 @@ export class EvalRhIntegrationComponent implements OnInit {
     this.evaluation.devcommercialRH = this.evaluationForm.get('dev_commercialRH')?.value;
     this.evaluation.viecabinetRH = this.evaluationForm.get('vie_cabinetRH')?.value;
     this.evaluation.hr = this.userProfile.id;
+    this.evaluation.consultant = this.consultantData.consultantId ;
     this.evaluation.type_eval = this.consultantData.evaluationType;
     console.log(this.evaluation);
 

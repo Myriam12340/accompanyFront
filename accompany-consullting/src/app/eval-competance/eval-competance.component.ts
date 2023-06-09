@@ -179,8 +179,8 @@ export class EvalCompetanceComponent implements OnInit {
           console.log(selectedConsultant);
           const dialogConfig = new MatDialogConfig();
           dialogConfig.data = { consultant: selectedConsultant };
-          dialogConfig.width = '1300px'; // Définir la largeur de la boîte de dialogue
-          dialogConfig.height = '1000px';
+          dialogConfig.width = '1000px'; // Définir la largeur de la boîte de dialogue
+         
 
           const dialogRef = this.dialog.open(ConsultantdetailComponent, dialogConfig);
 

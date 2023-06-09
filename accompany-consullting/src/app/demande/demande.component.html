@@ -1,0 +1,119 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<mat-card>
+    <div>
+        <mat-toolbar color="accent">
+            <mat-toolbar-row style="text-align: center;">
+                <span style="margin-left: auto;margin-right: auto;color: aliceblue;text-align: center;">
+                    <i class="fa fa-calendar" aria-hidden="true"></i> Demande de congé
+                </span>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <br>
+
+
+        <form [formGroup]="demandeForm" (ngSubmit)="submitDemandeConge()">
+
+            <mat-card>
+                <mat-toolbar style="background-color: #5F9EA0; color:white;">
+                    <mat-toolbar-row style="text-align: center;">
+                        <span><i class="fa fa-info-circle"></i> Informations</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+                <br>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="demandeur">Demandeur: <i class="fa fa-user"></i> </label>
+                        <input type="text" id="demandeur" value={{nomconsultant}} disabled>
+                        <label for="demandeur"> Poste: <i class="fa fa-briefcase"></i> </label>
+                        <input type="text" id="demandeur" value={{posteconsultant}} disabled>
+                        
+                        <label for="validateur">Validateur: <i class="fa fa-check"></i> </label>
+                        <input type="text" id="validateur" formControlName="validateur">
+
+
+                          
+                    </div>
+                </div>
+            </mat-card>
+            <br>
+
+            <mat-card>
+                <mat-toolbar style="background-color: #5F9EA0; color:white;">
+                    <mat-toolbar-row style="text-align: center;">
+                        <span><i class="fa fa-hourglass"></i> Solde de congé actuel</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+                <br>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="soldeConge"> Solde de congé:</label>
+                        <input type="text" id="soldeConge" value="{{solde}}" disabled>
+
+                        <label for="soldeMaladie"> Solde de maladie:</label>
+                        <input type="text" id="soldeMaladie" value="{{soldemaldie}}" disabled>
+                    </div>
+                </div>
+            </mat-card>
+            <br>
+
+            <mat-card>
+                <mat-toolbar style="background-color: #5F9EA0; color:white;">
+                    <mat-toolbar-row style="text-align: center;">
+                        <span><i class="fa fa-calendar"></i> Période de congé</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+                <br>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="dateDebut"> Date de début:</label>
+                        <input type="date" id="dateDebut" formControlName="dateDebut" (input)="calculateDuree()">
+
+                        <label for="dateFin"> Date de fin:</label>
+                        <input type="date" id="dateFin" formControlName="dateFin" (input)="calculateDuree()" >
+
+                        <label for="demandeur"><i class="fa fa-clock-o"></i> Durée:</label>
+                        <input type="text" id="duree" [value]="duree >= 0 ? duree : 0" disabled>
+                        <div *ngIf="demandeForm.hasError('invalidDates')" class="error-message">
+                            <span style="color:#f95959;font-size: large;"><i class="fa fa-exclamation-circle"></i> Les dates sont invalides. Veuillez vous
+                                assurer que la date de début est inférieure à la date de fin.</span>
+                        </div>
+
+                    </div>
+                </div>
+            </mat-card>
+            <br>
+
+            <mat-card>
+                <mat-toolbar style="background-color: #5F9EA0; color:white;">
+                    <mat-toolbar-row style="text-align: center;">
+                        <span><i class="fa fa-list-alt"></i> Congés Exceptionnels </span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+                <br>
+            
+                <div class="row">
+                    <div class="col">
+                        <input type="radio" id="congesExceptionnels" name="type" value="Congés Exceptionnels" formControlName="type">
+                        <label for="congesExceptionnels">Congés Exceptionnels</label><br>
+                    </div>
+                    <div class="col">
+                        <input type="radio" id="congesMaladie" name="type" value="Congés Maladie" formControlName="type">
+                        <label for="congesMaladie">Congés Maladie</label><br>
+                    </div>
+                </div>
+                
+            </mat-card>
+            
+            <br>
+
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-paper-plane"></i> Envoyer la demande
+            </button>
+
+        </form>
+    </div>
+</mat-card>

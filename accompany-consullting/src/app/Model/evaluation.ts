@@ -1,6 +1,7 @@
 export class Evaluation {
     id : number;
     hr: number;
+    consultant: number;
     processusR: number;
     communicationinterne: number;
     relation: number;
@@ -24,7 +25,7 @@ export class Evaluation {
     devcommercialRH: string;
     viecabinetRH: string;
     type_eval:string ; 
-  
+  nomconsultant : string ;
   
   }
   

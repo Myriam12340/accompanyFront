@@ -45,7 +45,10 @@ export class ConsultantService {
     return this.http.put(url, body, { headers: { 'Content-Type': 'application/json' } });
   }
   
-  
+  getConsultantbyemail(email: string) {
+    const url = `${this.APIurl}/Consultants/email/${email}`;
+    return this.http.get(url);
+  }
  
   
 }

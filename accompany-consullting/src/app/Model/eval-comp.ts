@@ -8,5 +8,6 @@ export class EvalComp {
     public decision: string;
     public contrat: string;
     public consultant: number;
+    nomconsultant : string ;
 }
 

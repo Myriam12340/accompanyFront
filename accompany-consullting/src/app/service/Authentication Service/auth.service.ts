@@ -91,4 +91,11 @@ e : any ;
   }
 
   
+  searchUsers(searchTerm: string): Observable<UserProfile[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.getToken()}`
+    });
+
+    return this.http.get<UserProfile[]>(`${this.apiUrl}/email/?search=${searchTerm}`, { headers });
+  }
 }
