@@ -1,15 +1,20 @@
 import { Injectable, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/service/Authentication Service/auth.service';
 
 export interface Menu {
   state: string;
   name: string;
   type: string;
   icon: string;
+ 
 }
 var MENUITEMS;
 
 
 MENUITEMS = [
+
+
+  
  /* { state: 'dashboard', name: 'Dashboard', type: 'link', icon: 'av_timer' },
   { state: 'button', type: 'link', name: 'Buttons', icon: 'crop_7_5' },
   { state: 'grid', type: 'link', name: 'Grid List', icon: 'view_comfy' },
@@ -40,6 +45,39 @@ MENUITEMS = [
   
   { state: 'dashboard', type: 'link', name: 'Rapport Statistique ', icon: 'assignment_turned_in' },
   */
+  { state: 'button', type: 'link', name: 'Buttons', icon: 'crop_7_5' },
+  { state: 'listconsultants', type: 'link', name: 'Liste des consultants ', icon: 'assignment_ind' },
+  {
+    state: 'demande',
+    name: 'Deamnde conge',
+    type:'link'
+    
+  },
+  {
+    state: 'listconge',
+    name: 'list conge',
+    type:'link'
+  },
+  {
+    state: 'Conge',
+    type: 'sub',
+    name: 'Dropdown',
+    icon: 'arrow_drop_down',
+    children: [
+      {
+        state: 'demande',
+        name: 'Deamnde conge'
+        
+      },
+      {
+        state: 'listconge',
+        name: 'list conge'
+      },
+      // Add more submenu items as needed
+    ]
+  },
+
+
   {
     state: 'list_missions',
     type: 'link',
@@ -68,8 +106,7 @@ MENUITEMS = [
   
 
  
-  { state: 'listconsultants', type: 'link', name: 'Liste des consultants ', icon: 'assignment_ind' },
-
+  
   /*{
     state: 'progress-snipper',
     type: 'link',

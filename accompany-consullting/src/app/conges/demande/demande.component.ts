@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Conge } from '../Model/conge';
-import { CongeService } from '../service/conge.service';
-import { AuthService } from '../service/Authentication Service/auth.service';
-import { ConsultantService } from '../Model/consultant/consultant.service';
-import { Consultant } from '../Model/consultant';
+import { Conge } from '../../Model/conge';
+import { CongeService } from '../../service/conge.service';
+import { AuthService } from '../../service/Authentication Service/auth.service';
+import { ConsultantService } from '../../Model/consultant/consultant.service';
+import { Consultant } from '../../Model/consultant';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { EmailMessage } from '../Model/email-message';
-import { MailService } from '../service/mail.service';
+import { EmailMessage } from '../../Model/email-message';
+import { MailService } from '../../service/mail.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-demande',
@@ -44,7 +45,7 @@ export class DemandeComponent implements OnInit {
     body: ''
   };
   toname:string;
-  constructor(private emailService: MailService, private congeService: CongeService, private authService: AuthService, private consultantservice: ConsultantService, private formBuilder: FormBuilder,) {
+  constructor(private router: Router,private emailService: MailService, private congeService: CongeService, private authService: AuthService, private consultantservice: ConsultantService, private formBuilder: FormBuilder,) {
     this.form = new FormGroup({
     })
   }
@@ -94,7 +95,8 @@ export class DemandeComponent implements OnInit {
 
 
 
-  submitDemandeConge(): void {
+  submitDemandeConge(besoin :string): void {
+    if(besoin =="envoyer"){
     this.conge.dateDebut = this.demandeForm.get('dateDebut')?.value;
     this.conge.dateFin = this.demandeForm.get('dateFin')?.value;
     this.conge.type = this.demandeForm.get('type')?.value;
@@ -103,12 +105,12 @@ export class DemandeComponent implements OnInit {
     this.conge.etat = "En attente";
     this.email.toEmail = this.demandeForm.get('validateur')?.value;
 
-    this.authService.getUserByEmail(this.demandeForm.get('validateur')?.value).subscribe(
+    this.consultantservice.getConsultantbyemail(this.demandeForm.get('validateur')?.value).subscribe(
       (user) => {
         this.validateur = user;
         const userId = this.validateur.id;
         console.log("m:" + this.validateur.id);
-        this.conge.validateur = userId;
+        this.conge.validateur = this.validateur.id;
         console.log(this.conge);
         this.congeService.demande(this.conge)
           .subscribe(response => {
@@ -152,9 +154,42 @@ export class DemandeComponent implements OnInit {
           console.error(error); // Gérez l'erreur de la requête
         }
       );
-      
+    }
+    else if (besoin == "enregister")
+    {
+      this.conge.dateDebut = this.demandeForm.get('dateDebut')?.value;
+      this.conge.dateFin = this.demandeForm.get('dateFin')?.value;
+      this.conge.type = this.demandeForm.get('type')?.value;
+      this.conge.demandeur = this.cosultantid;
+      this.conge.etat = "pas envoyer";
+  
+      this.consultantservice.getConsultantbyemail(this.demandeForm.get('validateur')?.value).subscribe(
+        (user) => {
+          this.validateur = user;
+          const userId = this.validateur.id;
+          console.log("m:" + this.validateur.id);
+          this.conge.validateur = userId;
+          console.log(this.conge);
+          this.congeService.demande(this.conge)
+            .subscribe(response => {
+              this.conge = new Conge();
+  
+              this.demandeForm.reset();
+              // Gérer la réponse du service
+              console.log(response);
+            });
+  
+  
+        });
+    }
 
   }
+ 
+
+
+      
+
+  
 
   //pour calcler dure 
   calculateDuree(): void {
@@ -196,5 +231,7 @@ export class DemandeComponent implements OnInit {
     );
   }
 
-
+  Annuler(){
+    this.router.navigate(['/listconge'])
+  }
 }

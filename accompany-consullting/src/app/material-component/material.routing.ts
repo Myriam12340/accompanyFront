@@ -41,8 +41,13 @@ import { MissionComponent } from '../mission/mission.component';
 import { ListmissionComponent } from '../listmission/listmission.component';
 import { ManagerEvalComponent } from '../manager-eval/manager-eval.component';
 import { EvalCompetanceComponent } from '../eval-competance/eval-competance.component';
-import { DemandeComponent } from '../demande/demande.component';
+import { DemandeComponent } from '../conges/demande/demande.component';
+import { ListcongeComponent } from '../conges/listconge/listconge.component';
+import { ConsulterdemandeComponent } from '../conges/consulterdemande/consulterdemande.component';
 export const MaterialRoutes: Routes = [
+  {path :'detailconge',component:ConsulterdemandeComponent},
+  {path : 'listconge', component: ListcongeComponent},
+
   {path : 'demande', component: DemandeComponent},
   {path:'eval_competance', component:EvalCompetanceComponent},
   {path:'eval_mission', component:ManagerEvalComponent},

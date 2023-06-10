@@ -12,7 +12,7 @@
         <br>
 
 
-        <form [formGroup]="demandeForm" (ngSubmit)="submitDemandeConge()">
+        <form [formGroup]="demandeForm" >
 
             <mat-card>
                 <mat-toolbar style="background-color: #5F9EA0; color:white;">
@@ -24,10 +24,10 @@
 
                 <div class="row">
                     <div class="col">
-                        <label for="demandeur">Demandeur: <i class="fa fa-user"></i> </label>
-                        <input type="text" id="demandeur" value={{nomconsultant}} disabled>
+                        <label for="demandeur">Demandeur: <i class="fa fa-user" ></i> </label>
+                        <input type="text" id="demandeur" value={{nomconsultant}} disabled style="cursor: not-allowed;">
                         <label for="demandeur"> Poste: <i class="fa fa-briefcase"></i> </label>
-                        <input type="text" id="demandeur" value={{posteconsultant}} disabled>
+                        <input type="text" id="demandeur" value={{posteconsultant}} disabled style="cursor: not-allowed;">
                         
                         <label for="validateur">Validateur: <i class="fa fa-check"></i> </label>
                         <input type="text" id="validateur" formControlName="validateur">
@@ -50,10 +50,10 @@
                 <div class="row">
                     <div class="col">
                         <label for="soldeConge"> Solde de congé:</label>
-                        <input type="text" id="soldeConge" value="{{solde}}" disabled>
+                        <input type="text" id="soldeConge" value="{{solde}}" disabled style="cursor: not-allowed;">
 
                         <label for="soldeMaladie"> Solde de maladie:</label>
-                        <input type="text" id="soldeMaladie" value="{{soldemaldie}}" disabled>
+                        <input type="text" id="soldeMaladie" value="{{soldemaldie}}" disabled style="cursor: not-allowed;">
                     </div>
                 </div>
             </mat-card>
@@ -76,7 +76,7 @@
                         <input type="date" id="dateFin" formControlName="dateFin" (input)="calculateDuree()" >
 
                         <label for="demandeur"><i class="fa fa-clock-o"></i> Durée:</label>
-                        <input type="text" id="duree" [value]="duree >= 0 ? duree : 0" disabled>
+                        <input type="text" id="duree" [value]="duree >= 0 ? duree : 0" disabled style="cursor: not-allowed;">
                         <div *ngIf="demandeForm.hasError('invalidDates')" class="error-message">
                             <span style="color:#f95959;font-size: large;"><i class="fa fa-exclamation-circle"></i> Les dates sont invalides. Veuillez vous
                                 assurer que la date de début est inférieure à la date de fin.</span>
@@ -108,12 +108,22 @@
                 
             </mat-card>
             
-            <br>
+           
 
-            <button type="submit" class="btn btn-primary">
-                <i class="fa fa-paper-plane"></i> Envoyer la demande
-            </button>
-
+            <div class="row col-12 justify-content-center mb-4" style="margin-top: 2em;">
+                <div class="btn-group" role="group">
+                    <button type="submit" class="btn btn-primary mr-2">
+                        <i class="fa fa-floppy-o" aria-hidden="true" (click)="submitDemandeConge('enregister')"></i> Enregistrer
+                    </button>
+                    <button type="submit" mat-raised-button color="accent" class="mr-2" (click)="submitDemandeConge('envoyer')">
+                        <i class="fa fa-paper-plane"></i> Envoyer la demande
+                    </button>
+                    <button type="button" mat-raised-button style="background-color: #f95959; color: azure;" (click)="Annuler()">
+                        <mat-icon>cancel</mat-icon> Annuler
+                    </button>
+                </div>
+            </div>
+            
         </form>
     </div>
 </mat-card>

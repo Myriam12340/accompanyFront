@@ -47,7 +47,9 @@ import { MissionComponent } from './mission/mission.component';
 import { ListmissionComponent } from './listmission/listmission.component';
 import { ManagerEvalComponent } from './manager-eval/manager-eval.component';
 import { EvalCompetanceComponent } from './eval-competance/eval-competance.component';
-import { DemandeComponent } from './demande/demande.component';
+import { DemandeComponent } from './conges/demande/demande.component';
+import { ListcongeComponent } from './conges/listconge/listconge.component';
+import { ConsulterdemandeComponent } from './conges/consulterdemande/consulterdemande.component';
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
 }
@@ -87,6 +89,8 @@ export function tokenGetter() {
           ManagerEvalComponent,
           EvalCompetanceComponent,
           DemandeComponent,
+          ListcongeComponent,
+          ConsulterdemandeComponent,
           
   ],
   imports: [
