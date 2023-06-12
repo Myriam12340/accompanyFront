@@ -1,26 +1,30 @@
+<mat-card>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class="p-20 bg-info position-relative">
-    <h4 class="card-title text-white m-0">Liste conges 
+    <h4 class="card-title text-white m-0">Mes congés 
     </h4>
 </div>
 
 <br>
 <div class="row col-12">
     <div class="btn-group" role="group">
-        <button type="button" class="btn btn-primary mr-2" (click)="currentState = 'tous'; filterConges()">
-            <img src="assets\images\liste-de-travail.gif" alt="tous" width="24" height="24">
-            tous
+        <button type="button" class="btn btn-primary mr-2" style=" border-radius: 10px;" (click)="currentState = 'tous'; filterConges()">
+            <mat-icon> format_list_bulleted</mat-icon>
+
+            Tous mes demandes
         </button>
 
-        <button type="button" class="btn btn-primary mr-2" (click)="currentState = 'historique'; filterConges()">
-            <i class="fa fa-tasks"></i> historique
+        <button type="button" class="btn btn-primary mr-2" style=" border-radius: 10px;" (click)="currentState = 'historique'; filterConges()">
+            <mat-icon>lock</mat-icon>
+            historique de mes demandes
         </button>
 
-        <button type="button" class="btn btn-primary mr-2" (click)="currentState = 'En attente'; filterConges()">
-            <i class="fa fa-bell-o"></i> les demande encours
+        <button type="button" class="btn btn-primary mr-2" style=" border-radius: 10px;" (click)="currentState = 'En attente'; filterConges()">
+            <mat-icon>lock_open</mat-icon>
+            Mes demandes encours
         </button>
     </div>
 
@@ -29,7 +33,8 @@
 <div class="row col-12">
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-outline-primary mr-2" (click)="demande()">
-        <i class="fa fa-check-circle"></i> Demande de congé
+        <mat-icon>add_circle</mat-icon>
+ Demande de congé
       </button>
       
       
@@ -65,20 +70,25 @@
                 <!--pour les demandes pas envoyer-->
                 <button mat-button class="btn btn-outline-success mr-2" *ngSwitchCase="'pas envoyer'"(click)="envoyerDemande(conge)"><mat-icon>send</mat-icon>
                     Envoyer</button>
+
+
                 <button mat-button class="btn btn-outline-primary mr-2"
                     *ngSwitchCase="'pas envoyer'" (click)=" congedata(
-                    cosultantid,username, conge.dateDebut,conge.dateFin,conge.validateurnom,conge.etat )"><mat-icon>visibility</mat-icon> Consulter</button>
-                <button mat-button class="btn btn-outline-danger mr-2" *ngSwitchCase="'pas envoyer'" (click)="annulerDemande(conge)"><mat-icon>cancel</mat-icon>
+                 conge,'bydemandeur')"><mat-icon>visibility</mat-icon> Consulter</button>
+              
+              
+                 <button mat-button class="btn btn-outline-danger mr-2" *ngSwitchCase="'pas envoyer'" (click)="annulerDemande(conge)"><mat-icon>cancel</mat-icon>
                     Annuler</button>
+
+                    
                 <!--pour les demandes en attente-->
                 <button mat-button class="btn btn-outline-primary mr-2"
                     *ngSwitchCase="'En attente'"(click)=" congedata(
-                        cosultantid,username, conge.dateDebut,conge.dateFin,conge.validateurnom,conge.etat )"><mat-icon>visibility</mat-icon> Consulter</button>
+                    conge,'bydemandeur')"><mat-icon>visibility</mat-icon> Consulter</button>
                 <button mat-button class="btn btn-outline-danger mr-2" *ngSwitchCase="'En attente'"(click)="annulerDemande(conge)"><mat-icon>cancel</mat-icon>
                     Annuler</button>
                 <!--pour les autres cas demande-->
-                <button mat-button class="btn btn-outline-primary mr-2" *ngSwitchDefault (click)=" congedata(
-                    cosultantid,username, conge.dateDebut,conge.dateFin,conge.validateurnom,conge.etat )"><mat-icon>visibility</mat-icon>
+                <button mat-button class="btn btn-outline-primary mr-2" *ngSwitchDefault (click)=" congedata(conge,'bydemandeur')"><mat-icon>visibility</mat-icon>
                     Consulter</button>
 
 
@@ -89,3 +99,4 @@
     <mat-header-row *matHeaderRowDef="[ 'dateDebut', 'dateFin', 'etat' ,'validateur','actions']"></mat-header-row>
     <mat-row *matRowDef="let row; columns: [ 'dateDebut', 'dateFin', 'etat','validateur','actions']"></mat-row>
 </mat-table>
+</mat-card>

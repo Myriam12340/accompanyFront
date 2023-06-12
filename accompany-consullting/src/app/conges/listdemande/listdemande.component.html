@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="p-20 bg-info position-relative">
+  <h4 class="card-title text-white m-0">Liste des demandes de congés</h4>
+</div>
+
+<mat-table [dataSource]="filteredConges" >
+  <ng-container matColumnDef="demandeurnom">
+     <mat-header-cell *matHeaderCellDef>Demandeur</mat-header-cell>
+    <mat-cell *matCellDef="let conge">{{ conge.demandeurnom }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="dateDebut">
+    <mat-header-cell *matHeaderCellDef>Date de début</mat-header-cell>
+    <mat-cell *matCellDef="let conge">{{ conge.dateDebut | date }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="dateFin">
+    <mat-header-cell *matHeaderCellDef>Date de fin</mat-header-cell>
+    <mat-cell *matCellDef="let conge">{{ conge.dateFin | date }}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="duree">
+    <mat-header-cell *matHeaderCellDef>Durée</mat-header-cell>
+    <mat-cell *matCellDef="let conge">{{ conge.duree }} jours</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="etat">
+    <mat-header-cell *matHeaderCellDef>État</mat-header-cell>
+    <mat-cell *matCellDef="let conge">
+      {{conge.etat}}
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+    <mat-cell *matCellDef="let conge">
+    
+     <button mat-button class="btn btn-outline-primary mr-2"  (click)=" congedata(
+   conge,'byvalidateur')"><mat-icon>visibility</mat-icon>
+      Consulter</button>
+    </mat-cell>
+
+
+
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="['demandeurnom', 'dateDebut', 'dateFin','duree', 'etat','actions']"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: ['demandeurnom', 'dateDebut', 'dateFin','duree', 'etat','actions'];"></mat-row>
+</mat-table>

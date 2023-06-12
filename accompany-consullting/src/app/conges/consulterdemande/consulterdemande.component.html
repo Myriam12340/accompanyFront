@@ -1,18 +1,19 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <mat-card>
     <div>
         <mat-toolbar color="accent">
             <mat-toolbar-row style="text-align: center;">
                 <span style="margin-left: auto;margin-right: auto;color: aliceblue;text-align: center;">
-                    <i class="fa fa-calendar" aria-hidden="true"></i> Demande de congé
+                    <i class="fa fa-calendar" aria-hidden="true"></i> Demande de congé 
                 </span>
             </mat-toolbar-row>
         </mat-toolbar>
         <br>
 
 
-        <form  >
+        <form>
 
             <mat-card>
                 <mat-toolbar style="background-color: #5F9EA0; color:white;">
@@ -24,16 +25,20 @@
 
                 <div class="row">
                     <div class="col">
-                        <label for="demandeur">Demandeur: <i class="fa fa-user" ></i> </label>
-                        <input type="text" id="demandeur" value={{congedata.username}} disabled style="cursor: not-allowed;">
-                        <label for="demandeur"> Poste: <i class="fa fa-briefcase"></i> </label>
-                        <input type="text" id="demandeur" value=""disabled style="cursor: not-allowed;">
-                        
+                        <label for="demandeur">Demandeur: <i class="fa fa-user"></i> </label>
+                        <input type="text" id="demandeur" value={{username}} disabled
+                            style="cursor: not-allowed;">
+
+
                         <label for="validateur">Validateur: <i class="fa fa-check"></i> </label>
-                        <input type="text" id="validateur" value={{congedata.validateurnom}}>
+                        <input type="text" id="validateur" value={{validateurname}}>
+                        <label for="demandeur"> Etat: <i class="fa fa-briefcase"></i> </label>
+                        <input type="text" id="demandeur" [value]="data.conge.etat" disabled style="cursor: not-allowed; color: aliceblue;"
+  [ngStyle]="{ 'background-color': getEtatColor(data.conge.etat) }">
 
 
-                          
+
+
                     </div>
                 </div>
             </mat-card>
@@ -50,10 +55,10 @@
                 <div class="row">
                     <div class="col">
                         <label for="soldeConge"> Solde de congé:</label>
-                        <input type="text" id="soldeConge"  disabled style="cursor: not-allowed;">
+                        <input type="text" id="soldeConge" disabled style="cursor: not-allowed;" value={{solde}}>
 
                         <label for="soldeMaladie"> Solde de maladie:</label>
-                        <input type="text" id="soldeMaladie" disabled style="cursor: not-allowed;">
+                        <input type="text" id="soldeMaladie" disabled style="cursor: not-allowed;" value={{soldemaldie}}>
                     </div>
                 </div>
             </mat-card>
@@ -70,13 +75,14 @@
                 <div class="row">
                     <div class="col">
                         <label for="dateDebut"> Date de début:</label>
-                        <input type="date" id="dateDebut" >
+                        <input type="text" id="dateDebut" value={{datedebut}}>
 
                         <label for="dateFin"> Date de fin:</label>
-                        <input type="date" id="dateFin"  >
+                        <input type="text" id="dateFin" value={{datefin}}>
 
                         <label for="demandeur"><i class="fa fa-clock-o"></i> Durée:</label>
-                            
+
+                        <input type="text" id="dateFin" value={{duree}}>
 
                     </div>
                 </div>
@@ -90,34 +96,43 @@
                     </mat-toolbar-row>
                 </mat-toolbar>
                 <br>
-            
-                <div class="row">
+
+              
+                      
                     <div class="col">
-                        <input type="radio" id="congesExceptionnels" name="type" value="Congés Exceptionnels" >
-                        <label for="congesExceptionnels">Congés Exceptionnels</label><br>
+                        <input type="text" id="congesMaladie" name="type" value={{data.conge.type}}>
                     </div>
-                    <div class="col">
-                        <input type="radio" id="congesMaladie" name="type" value="Congés Maladie" >
-                        <label for="congesMaladie">Congés Maladie</label><br>
-                    </div>
-                </div>
-                
+
             </mat-card>
-            
-           
+
+
 
             <div class="row col-12 justify-content-center mb-4" style="margin-top: 2em;">
                 <div class="btn-group" role="group">
-                    
-                    <button type="submit" mat-raised-button color="accent" class="mr-2" >
+                    <button class="mr-2" mat-button mat-button mat-raised-button  color="accent" style=" color: azure;" *ngIf="data.consulterby === 'bydemandeur' && data.conge.etat === 'pas envoyer'" (click)="envoyer()">
                         <i class="fa fa-paper-plane"></i> Envoyer la demande
-                    </button>
-                    <button type="button" mat-raised-button style="background-color: #f95959; color: azure;" (click)="Annuler()">
-                        <mat-icon>cancel</mat-icon> Annuler
-                    </button>
+                      </button>
+                  <button class="mr-2" mat-button mat-raised-button style="background-color: #f95959; color: azure;" *ngIf="data.consulterby === 'bydemandeur' && (data.conge.etat === 'pas envoyer' || data.conge.etat === 'En attente')" (click)="annulerDemande(data.conge)">
+                  <mat-icon>cancel</mat-icon> Annuler
+                  </button>
+                  
+
+                  <button class="mr-2" mat-button mat-button mat-raised-button style="background-color: #42b883; color: azure;"  *ngIf="data.consulterby === 'byvalidateur'"(click)="valider(data.conge)">
+                    <mat-icon>check_circle_outline</mat-icon>
+                    Valider
+                  </button>
+                  <button class="mr-2" mat-button mat-raised-button style="background-color: #f95959; color: azure;" *ngIf="data.consulterby === 'byvalidateur'"(click)="annulerDemande(data.conge)">
+                    <mat-icon>highlight_off</mat-icon>
+                    Refuse
+                  </button>
+                  <button class="mr-2" mat-button color="accent" style="background-color: #090909; color: azure;"(click)="retour()">
+                    <mat-icon>input</mat-icon>
+                    Retour à la liste
+                   </button>
                 </div>
-            </div>
-            
+              </div>
+              
+
         </form>
     </div>
 </mat-card>

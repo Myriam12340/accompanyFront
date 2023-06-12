@@ -25,14 +25,28 @@ export class CongeService {
     }
     
 
+
+    getCongelist():Observable<Conge[]>{
+      return this.http.get<any>(this.baseUrl);
+    }
+
   
    demande(viewModel: Conge): Observable<Conge> {
     return this.http.post<Conge>(this.baseUrl, viewModel);
   }
   
+
+
   
   getCongeByDemandeurId(demandeurId: number): Observable<Conge[]> {
     const url = `${this.baseUrl}/GetCongeParDemandeur/${demandeurId}`;
+    return this.http.get<Conge[]>(url);
+  }
+
+
+
+  getCongeByValidateurId(validateurId: number): Observable<Conge[]> {
+    const url = `${this.baseUrl}/GetCongeParValidateur/${validateurId}`;
     return this.http.get<Conge[]>(url);
   }
   

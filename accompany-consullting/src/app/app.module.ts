@@ -50,6 +50,8 @@ import { EvalCompetanceComponent } from './eval-competance/eval-competance.compo
 import { DemandeComponent } from './conges/demande/demande.component';
 import { ListcongeComponent } from './conges/listconge/listconge.component';
 import { ConsulterdemandeComponent } from './conges/consulterdemande/consulterdemande.component';
+import { ListdemandeComponent } from './conges/listdemande/listdemande.component';
+import { CongeshrComponent } from './conges/congeshr/congeshr.component';
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
 }
@@ -91,6 +93,8 @@ export function tokenGetter() {
           DemandeComponent,
           ListcongeComponent,
           ConsulterdemandeComponent,
+          ListdemandeComponent,
+          CongeshrComponent,
           
   ],
   imports: [

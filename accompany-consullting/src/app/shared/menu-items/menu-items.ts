@@ -42,22 +42,12 @@ MENUITEMS = [
     name: 'Lister Annonce',
     icon: 'blur_circular'
   },
-  
+    { state: 'button', type: 'link', name: 'Buttons', icon: 'crop_7_5' },
   { state: 'dashboard', type: 'link', name: 'Rapport Statistique ', icon: 'assignment_turned_in' },
   */
-  { state: 'button', type: 'link', name: 'Buttons', icon: 'crop_7_5' },
+
   { state: 'listconsultants', type: 'link', name: 'Liste des consultants ', icon: 'assignment_ind' },
-  {
-    state: 'demande',
-    name: 'Deamnde conge',
-    type:'link'
-    
-  },
-  {
-    state: 'listconge',
-    name: 'list conge',
-    type:'link'
-  },
+  
   {
     state: 'Conge',
     type: 'sub',
@@ -104,7 +94,32 @@ MENUITEMS = [
   },
   
   
-
+  {
+    state: 'les conges',
+    name: 'les conges',
+    type:'link',
+    icon:'find_in_page'
+    
+  },
+  {
+    state: 'demande',
+    name: 'demande de congé',
+    type:'link', icon:'note_add'
+    
+  },
+  
+  {
+    state: 'listconge',
+    name: 'Mes congés',
+    type:'link',
+    icon:'face'
+  },
+  {
+    state: 'listdemandes',
+    name: 'list demande des congés',
+    type:'link'
+    , icon:'playlist_add_check'
+  },
  
   
   /*{

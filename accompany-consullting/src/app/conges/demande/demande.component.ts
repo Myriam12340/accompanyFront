@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 })
 export class DemandeComponent implements OnInit {
   //declaration des variables
+  demandeur:any;
   conge: Conge = new Conge();
   userProfile: any;
   demandeForm: FormGroup;
@@ -58,17 +59,18 @@ export class DemandeComponent implements OnInit {
           this.userProfile = userProfile;
           console.log(this.userProfile);
           this.emailuser = this.userProfile.email;
-          this.cosultantid = this.userProfile.id;
           this.email.fromEmail = this.userProfile.email;
 
           this.consultantservice.getConsultantbyemail(this.emailuser).subscribe(
             (response) => {
+             
               this.consultant = response;
               console.log(this.consultant);
               this.nomconsultant = this.consultant.nom + " " + this.consultant.prenom;
               this.posteconsultant = this.consultant.grade + " " + this.consultant.fonction// Faites quelque chose avec les données du consultant
               this.solde = this.consultant.soldeConge;
               this.soldemaldie = this.consultant.soldeMaladie;
+              this.demandeur = this.consultant.id ;
             },
             (error) => {
               console.error(error); // Gérez l'erreur de la requête
@@ -101,7 +103,7 @@ export class DemandeComponent implements OnInit {
     this.conge.dateFin = this.demandeForm.get('dateFin')?.value;
     this.conge.type = this.demandeForm.get('type')?.value;
     this.conge.validateur = this.demandeForm.get('validateur')?.value;
-    this.conge.demandeur = this.cosultantid;
+    this.conge.demandeur = this.demandeur;
     this.conge.etat = "En attente";
     this.email.toEmail = this.demandeForm.get('validateur')?.value;
 
@@ -154,13 +156,14 @@ export class DemandeComponent implements OnInit {
           console.error(error); // Gérez l'erreur de la requête
         }
       );
+      
     }
     else if (besoin == "enregister")
     {
       this.conge.dateDebut = this.demandeForm.get('dateDebut')?.value;
       this.conge.dateFin = this.demandeForm.get('dateFin')?.value;
       this.conge.type = this.demandeForm.get('type')?.value;
-      this.conge.demandeur = this.cosultantid;
+      this.conge.demandeur = this.demandeur;
       this.conge.etat = "pas envoyer";
   
       this.consultantservice.getConsultantbyemail(this.demandeForm.get('validateur')?.value).subscribe(
@@ -182,7 +185,7 @@ export class DemandeComponent implements OnInit {
   
         });
     }
-
+    this.router.navigate(['/listconge'])
   }
  
 

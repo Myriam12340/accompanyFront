@@ -6,6 +6,8 @@ export class Conge {
     dateFin: Date;
     type: string;
     etat: string;
-    validateurnom ;
+    validateurnom :string ;
+    demandeurnom : string ;
+    duree : number ;
   }
   

@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <mat-card>
   <div class="p-20 bg-info position-relative">
@@ -10,17 +11,17 @@
   <br>
   <div class="row col-12">
     <div class="btn-group" role="group">
-      <button type="button" class="btn btn-primary mr-2" (click)="showEvaluationHistory()">
-        <img src="assets\images\liste-de-travail.gif" alt="Liste de travail" width="24" height="24">
-       integration
+      <button type="button" class="btn btn-primary mr-2" style=" border-radius: 10px;" (click)="showEvaluationHistory()">
+ 
+        <i class="fa-solid fa-people-arrows fa-lg" style="color: #eaeaf1;"></i>  integration
       </button>
 
-      <button type="button" class="btn btn-primary mr-2" (click)="showEvalcomp()">
-        <i class="fa fa-tasks"></i> Compétences
+      <button type="button" class="btn btn-primary mr-2" style=" border-radius: 10px;"  (click)="showEvalcomp()">
+        <i class="fa-solid fa-elevator fa-lg" style="color: #fcfcfd;"></i>  Compétences
       </button>
 
-      <button type="button" class="btn btn-primary mr-2" (click)="alert()">
-        <i class="fa fa-bell-o"></i> Évaluations à faire
+      <button type="button" class="btn btn-primary mr-2"style=" border-radius: 10px;" (click)="alert()">
+        <i class="fa-regular fa-bell fa-lg" style="color: #f8f9fc;"></i> Évaluations à faire
       </button>
     </div>
   </div>

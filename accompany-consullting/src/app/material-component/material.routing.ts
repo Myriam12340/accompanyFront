@@ -44,7 +44,13 @@ import { EvalCompetanceComponent } from '../eval-competance/eval-competance.comp
 import { DemandeComponent } from '../conges/demande/demande.component';
 import { ListcongeComponent } from '../conges/listconge/listconge.component';
 import { ConsulterdemandeComponent } from '../conges/consulterdemande/consulterdemande.component';
+import { ListdemandeComponent } from '../conges/listdemande/listdemande.component';
+import { CongeshrComponent } from '../conges/congeshr/congeshr.component';
 export const MaterialRoutes: Routes = [
+  {path :'les conges',component:CongeshrComponent},
+
+  {path :'listdemandes',component:ListdemandeComponent},
+
   {path :'detailconge',component:ConsulterdemandeComponent},
   {path : 'listconge', component: ListcongeComponent},
 

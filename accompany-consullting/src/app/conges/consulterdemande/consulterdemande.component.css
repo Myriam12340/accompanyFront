@@ -1,0 +1,32 @@
+input[type=text], select {
+    width: 25%;
+    padding: 6px 6px;
+    margin: 10px 2 px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+  input[type=date], select {
+    width: 25%;
+    padding: 6px 6px;
+    margin: 10px 5px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  label{
+    text-indent: 25 px;
+    font-size: medium;
+    font-family: Georgia, serif;
+    color: #24527a;
+  }
+  input[type='radio']{
+    width: 25px;
+    height: 25px;
+    border-radius: 10px;
+    padding: 20px 20px;
+    margin: 20px 20px;
+
+}

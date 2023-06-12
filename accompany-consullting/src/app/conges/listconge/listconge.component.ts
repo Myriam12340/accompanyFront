@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 import { Conge } from 'src/app/Model/conge';
 import { ConsultantService } from 'src/app/Model/consultant/consultant.service';
 import { EmailMessage } from 'src/app/Model/email-message';
@@ -21,9 +22,11 @@ filteredConges: Conge[];
 congeupdate : Conge ;
 validateur : any ;
 validateurname : any 
+consultantemail:any;
 //partie paramettre 
 grade: string;
-username : string ;
+username: string = '';
+type : any ;
 //email 
 email: EmailMessage = {
   fromName: '',
@@ -35,55 +38,72 @@ email: EmailMessage = {
 };
 day : string ;
 
+
   constructor(private emailService: MailService,private congeservice : CongeService ,  private router: Router, 
     private consultantService: ConsultantService,private authService: AuthService,) { }
-
-  ngOnInit(): void {
-    if (sessionStorage.getItem('jwt')) {
-      this.authService.getUserProfile(localStorage.getItem('jwt')).subscribe(
-        (userProfile) => {
-          this.userProfile = userProfile;
-          this.username = this.userProfile.userName ;
-          console.log(this.userProfile);
-
-          this.cosultantid = this.userProfile.id;
-          this.congeservice.getCongeByDemandeurId(this.cosultantid).subscribe(
-            (data: Conge[]) => {
-              this.conges = data;
-              console.log(this.conges);
-              this.conges.forEach(conge => {
-
-
-                this.consultantService.getConsultant2(conge.validateur).subscribe(
-                  (consultant: any) => {
-                  conge.validateurnom = consultant.nom +" "+ consultant.prenom ; 
-                    // Ajouter la propriété "consultantNom" à la mission avec vérification de la présence de la propriété 'nom'
-                  },
-                  (error) => {
-                    console.log('Une erreur s\'est produite lors de la récupération du consultant :', error);
-                  }
-                );
-              });
-            }
-          )
-        },
-        (error) => console.error(error)
-      );
+    ngOnInit(): void {
+      if (sessionStorage.getItem('jwt')) {
+        this.authService.getUserProfile(localStorage.getItem('jwt')).pipe(
+          switchMap((userProfile) => {
+            this.userProfile = userProfile;
+            console.log(this.userProfile);
+            this.consultantemail = this.userProfile.email;
+            console.log("userid");
+  
+            return this.consultantService.getConsultantbyemail(this.consultantemail);
+          })
+        ).subscribe(
+          (consultant: any) => {
+            this.cosultantid = consultant.id;
+            this.username = consultant.nom + ' ' + consultant.prenom;
+            console.log("id de user" + this.cosultantid);
+    
+            this.congeservice.getCongeByDemandeurId(this.cosultantid).subscribe(
+              (data: Conge[]) => {
+                this.conges = data;
+                console.log("list des conges de validateur " + this.conges);
+                this.conges.forEach((conge) => {
+                  this.type = conge.type;
+                  this.consultantService.getConsultant2(conge.validateur).subscribe(
+                    (consultant: any) => {
+                      conge.validateurnom = consultant.nom + ' ' + consultant.prenom;
+                    },
+                    (error) => {
+                      console.log('Une erreur s\'est produite lors de la récupération du consultant :', error);
+                    }
+                  );
+                });
+                this.filterConges(); // Call filterConges() here
+              },
+              (error) => {
+                console.log('Une erreur s\'est produite lors de la récupération des congés :', error);
+              }
+            );
+            
+             // Assign the value to username property
+          },
+          (error) => {
+            console.log('Une erreur s\'est produite lors de la récupération du consultant :', error);
+          }
+        );
+      }
+      console.log(this.conges);
+      this.currentState = "En attente";
     }
-    this.currentState = "En attente";
-    this.filterConges();
-
-
-  }
-  filterConges(): void {
-    if (this.currentState === 'tous') {
-      this.filteredConges = this.conges;
-    } else if (this.currentState === 'historique') {
-      this.filteredConges = this.conges.filter(conge => conge.etat !== 'En attente' && conge.etat !== 'pas envoyer');
-    } else if (this.currentState === 'En attente') {
-      this.filteredConges = this.conges.filter(conge => conge.etat === 'En attente' || conge.etat === 'pas envoyer');
+    
+    
+    filterConges(): void {
+      if (this.conges && this.currentState) { // Add a null check for conges array
+        if (this.currentState === 'tous') {
+          this.filteredConges = this.conges;
+        } else if (this.currentState === 'historique') {
+          this.filteredConges = this.conges.filter(conge => conge.etat !== 'En attente' && conge.etat !== 'pas envoyer');
+        } else if (this.currentState === 'En attente') {
+          this.filteredConges = this.conges.filter(conge => conge.etat === 'En attente' || conge.etat === 'pas envoyer');
+        }
+      }
     }
-  }
+    
   demande(){
     this.router.navigate(['/demande'])
   }
@@ -182,28 +202,15 @@ day : string ;
   }
   //envoier les donnees en paramettre 
   congedata(
-    consultantId: number,
-    
-    username: string,
-   
-    date_debut: Date,
-    date_fin: Date,
-    validateurnom : string ,
-    etat:string ,
-   
-
+   conge : Conge , consulterby:string
   ) {
     const congeData = {
-      consultantId: consultantId,
-      username: username,
-      date_debut: date_debut ,
-      date_fin : date_fin ,
-     
-      validateurnom:validateurnom ,
-      etat : etat 
+      conge:conge ,
+      consulterby:consulterby
     };
 
     this.congeservice.setcongeData(congeData);
+    console.log("from list"+congeData);
     this.router.navigate(['/detailconge']);
   }
 
