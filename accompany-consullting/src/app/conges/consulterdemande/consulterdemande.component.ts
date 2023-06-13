@@ -118,7 +118,7 @@ email: EmailMessage = {
     const dateFin = new Date(fin);
 
     // Calculez la différence en jours
-    const differenceEnJours = Math.floor((dateFin.getTime() - dateDebut.getTime()) / (1000 * 3600 * 24));
+    const differenceEnJours = Math.floor((dateFin.getTime() - dateDebut.getTime()) / (1000 * 3600 * 24))+1;
 
     // Mettez à jour la valeur du champ de durée
 

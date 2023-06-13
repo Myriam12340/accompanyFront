@@ -64,7 +64,7 @@ export class CongeshrComponent implements OnInit {
     const dateFin = new Date(fin);
 
     // Calculez la différence en jours
-    const differenceEnJours = Math.floor((dateFin.getTime() - dateDebut.getTime()) / (1000 * 3600 * 24));
+    const differenceEnJours = Math.floor((dateFin.getTime() - dateDebut.getTime()) / (1000 * 3600 * 24))+1;
 
   
    return differenceEnJours;

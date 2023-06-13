@@ -46,7 +46,10 @@ import { ListcongeComponent } from '../conges/listconge/listconge.component';
 import { ConsulterdemandeComponent } from '../conges/consulterdemande/consulterdemande.component';
 import { ListdemandeComponent } from '../conges/listdemande/listdemande.component';
 import { CongeshrComponent } from '../conges/congeshr/congeshr.component';
+import { CreateMissionComponent } from '../mission/create-mission/create-mission.component';
 export const MaterialRoutes: Routes = [
+  {path :'add_mission',component:CreateMissionComponent},
+
   {path :'les conges',component:CongeshrComponent},
 
   {path :'listdemandes',component:ListdemandeComponent},

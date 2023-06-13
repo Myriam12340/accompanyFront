@@ -126,7 +126,7 @@ day : string ;
     this.consultantService.getConsultant2(conge.validateur).subscribe(
       (consultant: any) => {
       this.validateur = consultant.mail ;
-         this.validateurname = consultant.nom +" "+ consultant.prenom ;// Ajouter la propriété "consultantNom" à la mission avec vérification de la présence de la propriété 'nom'
+         this.validateurname = consultant.nom +" "+ consultant.prenom ;// Ajouter la propriété "consultantNom"  avec vérification de la présence de la propriété 'nom'
          this.validateur = consultant.mail;
          this.validateurname = consultant.nom + " " + consultant.prenom;
          this.email.toEmail = this.validateur;

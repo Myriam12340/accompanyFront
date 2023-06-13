@@ -200,7 +200,7 @@ export class DemandeComponent implements OnInit {
     const dateFin = new Date(this.demandeForm.value.dateFin);
 
     // Calculez la différence en jours
-    const differenceEnJours = Math.floor((dateFin.getTime() - dateDebut.getTime()) / (1000 * 3600 * 24));
+    const differenceEnJours = Math.floor((dateFin.getTime() - dateDebut.getTime()) / (1000 * 3600 * 24))+1;
 
     // Mettez à jour la valeur du champ de durée
     this.demandeForm.patchValue({ duree: differenceEnJours });
@@ -213,7 +213,7 @@ export class DemandeComponent implements OnInit {
     const dateDebut = new Date(formGroup.get('dateDebut')?.value);
     const dateFin = new Date(formGroup.get('dateFin')?.value);
 
-    if (dateDebut && dateFin && dateDebut >= dateFin) {
+    if (dateDebut && dateFin && dateDebut > dateFin) {
       return { 'invalidDates': true };
     }
 

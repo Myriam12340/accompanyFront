@@ -18,9 +18,9 @@ export class ListmissionComponent implements OnInit {
   userProfile:any; 
   displayedColumns: string[] = ['titre', 'referent', 'actions'];
  nom : any ;
-
+ manager : any ;
+idmanager :any ;
   constructor( private router: Router,private missionservice:MissionService , private authService: AuthService , private consultantservice : ConsultantService) { }
-
   ngOnInit(): void {
     const jwt = sessionStorage.getItem('jwt');
     if (jwt) {
@@ -28,37 +28,43 @@ export class ListmissionComponent implements OnInit {
         userProfile => {
           this.userProfile = userProfile;
           console.log(this.userProfile);
-          this.rh = this.userProfile.id;
-          
-          this.missionservice.getlistmission(this.rh).subscribe(
-            (data: Mission[]) => {
-              this.missions = data;
-              this.dataSource.data = this.missions;
+          this.rh = this.userProfile.email;
+          this.consultantservice.getConsultantbyemail(this.rh).subscribe(
+            (consultant) => {
+              this.manager = consultant;
+              this.idmanager = this.manager.id;
   
-              // Pour chaque mission, récupérer le nom du consultant correspondant
-              this.missions.forEach(mission => {
-                this.consultantservice.getConsultant2(mission.consultant).subscribe(
-                  (consultant: any) => {
-                  mission.nom = consultant.nom +" "+ consultant.prenom ;  // Ajouter la propriété "consultantNom" à la mission avec vérification de la présence de la propriété 'nom'
-                  },
-                  (error) => {
-                    console.log('Une erreur s\'est produite lors de la récupération du consultant :', error);
-                  }
-                );
-              });
+              this.missionservice.getlistmission(this.idmanager).subscribe(
+                (data: Mission[]) => {
+                  this.missions = data;
+                  this.dataSource.data = this.missions;
   
-              console.log('Liste des missions :', this.missions);
+                  // Pour chaque mission, récupérer le nom du consultant correspondant
+                  this.missions.forEach(mission => {
+                    this.consultantservice.getConsultant2(mission.consultant).subscribe(
+                      (consultant: any) => {
+                        mission.nom = consultant.nom + " " + consultant.prenom; // Ajouter la propriété "consultantNom" à la mission avec vérification de la présence de la propriété 'nom'
+                      },
+                      (error) => {
+                        console.log('Une erreur s\'est produite lors de la récupération du consultant :', error);
+                      }
+                    );
+                  });
+  
+                  console.log('Liste des missions :', this.missions);
+                },
+                (error) => {
+                  console.log('Une erreur s\'est produite lors de la récupération de la liste des missions :', error);
+                }
+              );
             },
-            (error) => {
-              console.log('Une erreur s\'est produite lors de la récupération de la liste des missions :', error);
-            }
+            error => console.error(error)
           );
         },
         error => console.error(error)
       );
     }
   }
-  
   
   evaluer(missionid: number) {
     this.router.navigate(['/eval_mission'], {

@@ -146,20 +146,26 @@
   <table>
  
     <tbody>
-      <tr >
-        <td> Notre processus de recrutement </td>
-        <td>
+      <tr>
+        <td style="padding-right: 10px;">Notre processus de recrutement</td>
+        <td style="margin-left: 2px; padding-right: 10px;">
           <mat-slider [min]="min" [max]="max" tickInterval="5" #slider color="accent" formControlName="processusR"></mat-slider>
           {{slider.value}}
         </td>
-        
-      </tr> 
+        <td style="padding-left: 200px;">
+          <textarea class="form-control border" placeholder="Laissez un commentaire ici" id="floatingTextarea2" formControlName="processRH_com"required style="height: 100px; width: 500px;"></textarea>
+        </td>
+      </tr>
+      
 
       <tr >
         <td> La communication en interne </td>
         <td><mat-slider [min]="min" [max]="max" tickInterval="5" #slider1 color="accent"formControlName="communication_interne"></mat-slider>
           {{slider1.value}}
            </td>
+           <td style="padding-left: 200px;">
+            <textarea class="form-control border" placeholder="Laissez un commentaire ici" id="floatingTextarea2" formControlName="communication_interne_com" required style="height: 100px; width: 500px;"></textarea>
+          </td>
       </tr>
 
 
@@ -168,36 +174,56 @@
         <td><mat-slider [min]="min" [max]="max" tickInterval="5" #slider3 color="accent"formControlName="relation"></mat-slider>
           {{slider3.value}}
            </td>
+           <td style="padding-left: 200px;">
+            <textarea class="form-control border" placeholder="Laissez un commentaire ici" id="floatingTextarea2" formControlName="relation_com"required style="height: 100px; width: 500px;"></textarea>
+          </td>
       </tr>
       <tr >
         <td>Les rapports avec les managers ou chefs de missions </td>
         <td><mat-slider [min]="min" [max]="max" tickInterval="5" #slider4 color="accent"formControlName="rapport"></mat-slider>
           {{slider4.value}}
            </td>
+           <td style="padding-left: 200px;">
+            <textarea class="form-control border" placeholder="Laissez un commentaire ici" id="floatingTextarea2" formControlName="rapport_com" required style="height: 100px; width: 500px;"></textarea>
+          </td>
       </tr>
       <tr >
         <td>Les outils de Travail</td>
         <td><mat-slider [min]="min" [max]="max" tickInterval="5" #slider5 color="accent"formControlName="outils"></mat-slider>
           {{slider5.value}}
            </td>
+           <td style="padding-left: 200px;">
+            <textarea class="form-control border" placeholder="Laissez un commentaire ici" id="floatingTextarea2" formControlName="outils_com"required style="height: 100px; width: 500px;"></textarea>
+          </td>
       </tr>
       <tr >
         <td>La participation aux PI/T24</td>
         <td><mat-slider [min]="min" [max]="max" tickInterval="5" #slider6 color="accent"formControlName="pt24"></mat-slider>
           {{slider6.value}}
            </td>
+           <td style="padding-left: 200px;">
+            <textarea class="form-control border" placeholder="Laissez un commentaire ici" id="floatingTextarea2" formControlName="pt24_com" required style="height: 100px; width: 500px;"></textarea>
+          </td>
       </tr>
       <tr >
         <td>Les formations chez Accompany</td>
         <td><mat-slider [min]="min" [max]="max" tickInterval="5" #slider7 color="accent"formControlName="formation"></mat-slider>
           {{slider7.value}}
            </td>
+           <td style="padding-left: 200px;">
+            <textarea class="form-control border" placeholder="Laissez un commentaire ici" id="floatingTextarea2" formControlName="formation_com" required style="height: 100px; width: 500px;"></textarea>
+          </td>
+          <br>
       </tr>
       <tr >
         <td>Process RH</td>
         <td><mat-slider [min]="min" [max]="max" tickInterval="5" #slider8 color="accent"formControlName="processRH"></mat-slider>
           {{slider8.value}}
            </td>
+           <td style="padding-left: 200px;">
+            <textarea class="form-control border" placeholder="Laissez un commentaire ici" id="floatingTextarea2" formControlName="processRH_com" required style="height: 100px; width: 500px;"></textarea>
+          </td>
+          
       </tr>
 
     </tbody>
@@ -302,11 +328,18 @@
 
 
 
-
-
-
-
-
+   <mat-toolbar color="accent">
+    <mat-toolbar-row>
+      <span>Suggestion/Commentaire
+      </span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <mat-action-row class="rows d-flex align-items-center">
+    <label class="mr-4">Suggestion/Commentaire</label>
+    <textarea class="form-control border" placeholder="Laissez un commentaire ici" id="floatingTextarea2" formControlName="processRH_com" required style="height: 100px; width: 500px;"></textarea>
+  </mat-action-row>
+  
+  
    
 
    <div class="example-button-row">

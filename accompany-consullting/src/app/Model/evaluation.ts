@@ -26,6 +26,15 @@ export class Evaluation {
     viecabinetRH: string;
     type_eval:string ; 
   nomconsultant : string ;
+  processRH_com :string ;
+formation_com :string ;
+pt24_com :string ;
+outils_com :string ;
+rapport_com :string ;
+relation_com :string ;
+communication_interne_com :string ;
+processusR_com :string ;
+suggestion :string ;
   
   }
   

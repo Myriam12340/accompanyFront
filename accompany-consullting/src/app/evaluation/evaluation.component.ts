@@ -182,11 +182,11 @@ export class EvaluationComponent implements OnInit {
       (data: Evaluation[]) => {
         this.evaluations = data;
         console.log(this.evaluations);
-        this.evaluations.forEach(mission => {
-          this.consultantService.getConsultant2(mission.consultant).subscribe(
+        this.evaluations.forEach(e => {
+          this.consultantService.getConsultant2(e.consultant).subscribe(
             (consultant: any) => {
-            mission.nomconsultant = consultant.nom +" "+ consultant.prenom ; 
-            console.log (mission.nomconsultant); // Ajouter la propriété "consultantNom" à la mission avec vérification de la présence de la propriété 'nom'
+            e.nomconsultant = consultant.nom +" "+ consultant.prenom ; 
+            console.log (e.nomconsultant); // Ajouter la propriété "consultantNom"  avec vérification de la présence de la propriété 'nom'
             },
             (error) => {
               console.log('Une erreur s\'est produite lors de la récupération du consultant :', error);

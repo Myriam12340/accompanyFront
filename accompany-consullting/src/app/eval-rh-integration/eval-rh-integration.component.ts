@@ -86,7 +86,16 @@ export class EvalRhIntegrationComponent implements OnInit {
       vie_cabinetC: [],
       projet_interneRH: [],
       dev_commercialRH: [],
-      vie_cabinetRH: []
+      vie_cabinetRH: [],
+      processRH_com: [], // Nouveau champ
+      formation_com: [], // Nouveau champ
+      pt24_com: [], // Nouveau champ
+      outils_com: [], // Nouveau champ
+      rapport_com: [], // Nouveau champ
+      relation_com: [], // Nouveau champ
+      communication_interne_com: [], // Nouveau champ
+      processusR_com: [] // Nouveau champ
+      ,suggestion :[]
     });
   }
 
@@ -119,6 +128,15 @@ export class EvalRhIntegrationComponent implements OnInit {
     this.evaluation.hr = this.userProfile.id;
     this.evaluation.consultant = this.consultantData.consultantId ;
     this.evaluation.type_eval = this.consultantData.evaluationType;
+    this.evaluation.processRH_com = this.evaluationForm.get('processRH_com')?.value;
+    this.evaluation.formation_com = this.evaluationForm.get('formation_com')?.value;
+    this.evaluation.pt24_com = this.evaluationForm.get('pt24_com')?.value;
+    this.evaluation.outils_com = this.evaluationForm.get('outils_com')?.value;
+    this.evaluation.rapport_com = this.evaluationForm.get('rapport_com')?.value;
+    this.evaluation.relation_com = this.evaluationForm.get('relation_com')?.value;
+    this.evaluation.communication_interne_com = this.evaluationForm.get('communication_interne_com')?.value;
+    this.evaluation.processusR_com = this.evaluationForm.get('processusR_com')?.value;
+   this.evaluation.suggestion  = this.evaluationForm.get('suggestion')?.value ;
     console.log(this.evaluation);
 
     this.evaluationservice.addeval(this.evaluation).subscribe(

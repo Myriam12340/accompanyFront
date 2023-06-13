@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<mat-card>
+<form [formGroup]="missionForm" >
+  
+        <mat-toolbar style="background-color: #5F9EA0; color:white;">
+            <mat-toolbar-row style="text-align: center;">
+                <span><i class="fa-solid fa-people-group"></i> Créer une mission </span>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <br>
+ 
+
+    
+
+
+
+
+  <div class="row">
+    <div class="col">
+        <label for="demandeur">Titre de mission: <i class="fa fa-briefcase"></i> </label>
+        <input type="text" class="form-control" id="titreMission" formControlName="titreMission" required>
+        <label for="demandeur"> Chef de mission  <i class="fa fa-user" ></i></label>
+        <input type="text" class="form-control" id="emailManager" formControlName="emailManager" required>
+
+        <label for="nbConsultants">Nombre de consultants</label>
+        <input type="number" class="form-control" id="nbConsultants" formControlName="nbConsultants" min="0" required>
+
+          
+    </div>
+</div>
+
+
+
+
+
+
+
+<mat-toolbar style="background-color: #5F9EA0; color:white;">
+    <mat-toolbar-row style="text-align: center;">
+        <span> <i class="fa-solid fa-user-plus"></i> Les membres d'equipe </span>
+    </mat-toolbar-row>
+</mat-toolbar>
+    
+    <div *ngFor="let consultant of consultantControls; let i = index" class="form-group">
+      <label for="emailConsultant{{i}}">Email du consultant {{i+1}}</label>
+      <input type="text" class="form-control" [id]="'emailConsultant'+i" [formControlName]="'emailConsultant'+i" required>
+    </div>
+    <button type="submit" class="btn btn-primary mr-2" (click)="onSubmit()">
+        <i class="fa fa-floppy-o" aria-hidden="true" ></i> Enregistrer
+    </button>
+  </form>
+</mat-card>

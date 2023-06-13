@@ -1,19 +1,19 @@
 export class Mission {
-    id: number;
+    id: number | null;
     consultant: number;
-    manager: number;
-    titre: string | null;
-    roleRH: string;
-    roleC: string;
-    relationClientRH: string;
-    relationClientC: string;
-    chargeRH: string;
-    chargeC: string;
-    satisficationRH: string;
-    satisficationC: string;
+    manager:number;
+    titre?:string | null;
+    roleRH: string | null;
+    roleC: string | null;
+    relationClientRH: string | null;
+    relationClientC: string | null;
+    chargeRH: string | null;
+    chargeC: string | null;
+    satisficationRH: | null;
+    satisficationC: | null;
     noteManager: string | null;
-    feedbackManager: string;
-    nom : string ; 
-    evaluation : number ; 
-    nomManager:string ; 
+    feedbackManager: string | null;
+    nom : string | null;
+    evaluation : number;
+    nomManager:string | null;
 }
