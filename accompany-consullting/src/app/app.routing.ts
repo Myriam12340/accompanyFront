@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 
 import { FullComponent } from './layouts/full/full.component';
-import { AddresponsableComponent } from './material-component/addresponsable/addresponsable.component';
 import { LoginComponent } from './SignUp Component/login/login.component';
 import { RegisterComponent } from './SignUp Component/register/register.component';
 export const AppRoutes: Routes = [

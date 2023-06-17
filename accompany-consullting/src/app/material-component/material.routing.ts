@@ -6,7 +6,6 @@ import { ListsComponent } from './lists/lists.component';
 import { MenuComponent } from './menu/menu.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { StepperComponent } from './stepper/stepper.component';
-import { ExpansionComponent } from './expansion/expansion.component';
 import { ChipsComponent } from './chips/chips.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ProgressSnipperComponent } from './progress-snipper/progress-snipper.component';
@@ -16,13 +15,7 @@ import { TooltipComponent } from './tooltip/tooltip.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { SliderComponent } from './slider/slider.component';
 import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
-import { ListerannonceComponent } from '../listerannonce/listerannonce.component';
-import { ConsulterannonceComponent } from './consulterannonce/consulterannonce.component';
-import { UpdateAnnonceComponent } from './update-annonce/update-annonce.component';
-import { ListeReservationComponent } from './liste-reservation/liste-reservation.component';
-import { FacturePdfComponent } from '../facture-pdf/facture-pdf.component';
 
-import { AddresponsableComponent } from './addresponsable/addresponsable.component';
 import { HomeComponent } from '../home/home.component';
 import { ListresponsableComponent } from '../listresponsable/listresponsable.component';
 import { ConsultantComponent } from '../consultant/consultant.component';
@@ -37,7 +30,6 @@ import { EntretiensuivantComponent } from '../entretiensuivant/entretiensuivant.
 import { EntretientdetailComponent } from '../entretientdetail/entretientdetail.component';
 import { EvaluationComponent } from '../evaluation/evaluation.component';
 import { EvalRhIntegrationComponent } from '../eval-rh-integration/eval-rh-integration.component';
-import { MissionComponent } from '../mission/mission.component';
 import { ListmissionComponent } from '../listmission/listmission.component';
 import { ManagerEvalComponent } from '../manager-eval/manager-eval.component';
 import { EvalCompetanceComponent } from '../eval-competance/eval-competance.component';
@@ -46,11 +38,14 @@ import { ListcongeComponent } from '../conges/listconge/listconge.component';
 import { ConsulterdemandeComponent } from '../conges/consulterdemande/consulterdemande.component';
 import { ListdemandeComponent } from '../conges/listdemande/listdemande.component';
 import { CongeshrComponent } from '../conges/congeshr/congeshr.component';
-import { CreateMissionComponent } from '../mission/create-mission/create-mission.component';
+import { CreateMissionComponent} from '../create-mission/create-mission.component'
 import { EvalMonthComponent } from '../manager-eval/eval-month/eval-month.component';
 import { EvalMonthConsultantComponent } from '../manager-eval/eval-month/eval-month-consultant/eval-month-consultant.component';
+import { ProjetComponent } from '../projet/projet.component';
+
 export const MaterialRoutes: Routes = [
 
+  { path: 'projet', component: ProjetComponent },
   { path: 'eval-month-consultant', component: EvalMonthConsultantComponent },
 
   { path: 'eval-month', component: EvalMonthComponent },
@@ -73,7 +68,6 @@ export const MaterialRoutes: Routes = [
   {path:'list_missions', component:ListmissionComponent},
   {path:'evaluation-Integration',component:EvalRhIntegrationComponent},
 
-  {path:'mission',component:MissionComponent},
 
   {path:'evaluation',component:EvaluationComponent},
   {path:'entretiensuivant',component:EntretiensuivantComponent},
@@ -92,7 +86,7 @@ export const MaterialRoutes: Routes = [
   {path: 'listconsultants', component:ListconsultantComponent},
 
   {path: 'allusers', component:ListresponsableComponent},
-  {path: 'addresponsable', component: AddresponsableComponent},
+
   {
     path: 'button',
     component: ButtonsComponent
@@ -107,9 +101,7 @@ export const MaterialRoutes: Routes = [
     component: GridComponent
   },
 
-  {path: 'listeres',  component:  ListeReservationComponent},
   
-  {path: 'facture',  component:  FacturePdfComponent},
   {
     path: 'lists',
     component: ListsComponent
@@ -126,10 +118,7 @@ export const MaterialRoutes: Routes = [
     path: 'stepper',
     component: StepperComponent
   },
-  {
-    path: 'expansion',
-    component: ExpansionComponent
-  },
+
   {
     path: 'chips',
     component: ChipsComponent
@@ -166,18 +155,9 @@ export const MaterialRoutes: Routes = [
     path: 'slide-toggle',
     component: SlideToggleComponent
   },
-  {
-    path: 'listerannonce',
-    component: ListerannonceComponent
-  },
-  {
-    path: 'consulterannonce/:id',
-    component: ConsulterannonceComponent
-  },
-  {
-    path: 'modifierAnnonce/:annonceid',
-    component: UpdateAnnonceComponent
-  },
+
+ 
+
 
 
 ];

@@ -17,8 +17,6 @@ import { DemoMaterialModule } from './demo-material-module';
 
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
-import { ListerannonceComponent } from './listerannonce/listerannonce.component';
-import { ReservationComponent } from './reservation/reservation.component';
 import { RegisterComponent } from './SignUp Component/register/register.component';
 import { LoginComponent } from './SignUp Component/login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -43,7 +41,6 @@ import { EntretiensuivantComponent } from './entretiensuivant/entretiensuivant.c
 import { EntretientdetailComponent } from './entretientdetail/entretientdetail.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
 import { EvalRhIntegrationComponent } from './eval-rh-integration/eval-rh-integration.component';
-import { MissionComponent } from './mission/mission.component';
 import { ListmissionComponent } from './listmission/listmission.component';
 import { ManagerEvalComponent } from './manager-eval/manager-eval.component';
 import { EvalCompetanceComponent } from './eval-competance/eval-competance.component';
@@ -52,9 +49,10 @@ import { ListcongeComponent } from './conges/listconge/listconge.component';
 import { ConsulterdemandeComponent } from './conges/consulterdemande/consulterdemande.component';
 import { ListdemandeComponent } from './conges/listdemande/listdemande.component';
 import { CongeshrComponent } from './conges/congeshr/congeshr.component';
-import { CreateMissionComponent } from './mission/create-mission/create-mission.component';
+import { CreateMissionComponent } from './create-mission/create-mission.component';
 import { EvalMonthComponent } from './manager-eval/eval-month/eval-month.component';
 import { EvalMonthConsultantComponent } from './manager-eval/eval-month/eval-month-consultant/eval-month-consultant.component';
+import { ProjetComponent } from './projet/projet.component';
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
 }
@@ -66,8 +64,6 @@ export function tokenGetter() {
     AppHeaderComponent,
     SpinnerComponent,
     AppSidebarComponent,
-    ListerannonceComponent,
-    ReservationComponent,
   
    
     RegisterComponent,
@@ -89,7 +85,7 @@ export function tokenGetter() {
           EntretientdetailComponent,
           EvaluationComponent,
           EvalRhIntegrationComponent,
-          MissionComponent,
+      
           ListmissionComponent,
           ManagerEvalComponent,
           EvalCompetanceComponent,
@@ -101,6 +97,7 @@ export function tokenGetter() {
           CreateMissionComponent,
           EvalMonthComponent,
           EvalMonthConsultantComponent,
+          ProjetComponent,
           
   ],
   imports: [

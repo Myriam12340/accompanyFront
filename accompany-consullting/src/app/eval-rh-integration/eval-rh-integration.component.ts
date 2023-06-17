@@ -5,7 +5,6 @@ import { AuthService } from '../service/Authentication Service/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EvaluationService } from '../service/evaluation.service';
 import { Evaluation } from '../Model/evaluation';
-import { MissionComponent } from '../mission/mission.component';
 import { EmailMessage } from '../Model/email-message';
 import { MissionService } from '../service/mission.service';
 import { EvalMissionIntegration } from '../Model/eval-mission-integration';
@@ -37,7 +36,6 @@ export class EvalRhIntegrationComponent implements OnInit {
   mailrh: any;
   userProfile: any;
   evaluationForm: FormGroup;
-  @ViewChild(MissionComponent) missionComponent: MissionComponent;
 
   evaluation: Evaluation = new Evaluation();
   missions: any[];
@@ -199,7 +197,6 @@ export class EvalRhIntegrationComponent implements OnInit {
         this.evaluationForm.reset();
 
         // Pass the evaluation ID to the MissionComponent
-        this.missionComponent.evaluationId = evaluationId;
 
         // Call the submitForm method in MissionComponent
 

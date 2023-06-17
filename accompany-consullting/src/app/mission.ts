@@ -3,7 +3,6 @@ export class Mission {
     consultant: number;
     manager:number;
     titre?:string | null;
-   
     nom : string | null;
     nomManager:string | null;
     manageremail:string|null ;
