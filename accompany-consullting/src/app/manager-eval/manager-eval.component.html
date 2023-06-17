@@ -1,5 +1,14 @@
 <mat-card>
+  <mat-toolbar style="background-color: #5F9EA0; color: antiquewhite;">
+    <mat-toolbar-row>
+
+   
+     
+      <h6 style="margin-left: 2px;"> <span>Évaluation de performance pour le consultant  :</span>  {{ consultantnom }}</h6>
+                           
+    </mat-toolbar-row>
     
+  </mat-toolbar>
     <div>
       <form [formGroup]="missionForm" (ngSubmit)="onclique()">
   
@@ -9,14 +18,9 @@
                   <mat-toolbar-row>
               
                  
-                        <div class="row">
-                          <div class="col-8">
-                            <span>Titre : </span>
-                        </div>
-                          <div class="col-4">
-                            <p>{{ missionForm.get('titre')?.value }}</p>                          </div>
-                        </div>
-
+                   
+                    <h6 style="margin-left: 2px;"> <span>Titre:</span>  {{ titremission }}</h6>
+                                         
                   </mat-toolbar-row>
                   
                 </mat-toolbar>

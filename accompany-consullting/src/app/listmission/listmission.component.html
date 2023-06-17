@@ -2,42 +2,87 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class="p-20 bg-info position-relative">
-  <h4 class="card-title text-white m-0">Liste des missions à évaluer
-  </h4>
+  <h4 class="card-title text-white m-0">Liste des missions à évaluer</h4>
+ 
+</div>
+<br>
+<div class="row col-12">
+  <div class="btn-group" role="group">
+    
+    <button type="button"  class="btn btn-primary mr-2"  style=" border-radius: 10px;"(click)="loadEvalMissions()">
+         <i class="fa fa-history"></i> Évaluations d'intégration
+    </button>
+    <button type="button" class="btn btn-primary" style=" border-radius: 10px;" (click)="loadMonthlyEvalMissions()">
+        <i class="fa fa-clock-o"></i> Évaluations mensuelles
+    </button>
+  </div>
+</div>
+<!-- ... autres parties de votre code ... -->
+<br>
+<div *ngIf="showIntegration">
+  <table mat-table [dataSource]="evalMissions" class="mat-elevation-z8 my-table">
+    <!-- Colonne Titre -->
+    <ng-container matColumnDef="titre">
+      <th mat-header-cell *matHeaderCellDef class="my-column">Titre</th>
+      <td mat-cell *matCellDef="let evalMission" class="my-column">{{ evalMission.titre }}</td>
+    </ng-container>
 
-     
+    <!-- Colonne Référent -->
+    <ng-container matColumnDef="referent">
+      <th mat-header-cell *matHeaderCellDef class="my-column">Référent</th>
+      <td mat-cell *matCellDef="let evalMission" class="my-column">{{ evalMission.nom }}</td>
+    </ng-container>
 
+    <!-- Colonne Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="my-column">Actions</th>
+      <td mat-cell *matCellDef="let evalMission" class="my-column">
+        <!-- Ajoutez ici les actions que vous souhaitez afficher pour chaque mission -->
+        <button mat-raised-button class="btn btn-success btn-sm mr-2" (click)="evaluer(evalMission.mission,evalMission.titre,evalMission.nom)">
+          <i class="fa fa-check-circle"></i> Passe
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- En-têtes de colonne -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <!-- Lignes de données avec filtre -->
+    <tr mat-row *matRowDef="let evalMission; columns: displayedColumns" [class.hidden]="evalMission.feedbackManager !== '' && evalMission.noteManager !== null"></tr>
+  </table>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 my-table">
-  <!-- Colonne Titre -->
-  <ng-container matColumnDef="titre">
-    <th mat-header-cell *matHeaderCellDef class="my-column">Titre</th>
-    <td mat-cell *matCellDef="let mission" class="my-column">{{ mission.titre }}</td>
-  </ng-container>
+<div *ngIf="showMonthly">
+  <table mat-table [dataSource]="missions" class="mat-elevation-z8 my-table">
+    <!-- Colonne Titre -->
+    <ng-container matColumnDef="titre">
+      <th mat-header-cell *matHeaderCellDef class="my-column">Titre</th>
+      <td mat-cell *matCellDef="let mission" class="my-column">{{ mission.titre }}</td>
+    </ng-container>
 
-  <!-- Colonne Référent -->
-  <ng-container matColumnDef="referent">
-    <th mat-header-cell *matHeaderCellDef class="my-column">Référent</th>
-    <td mat-cell *matCellDef="let mission" class="my-column">{{ mission.nom }}</td>
-  </ng-container>
+    <!-- Colonne Référent -->
+    <ng-container matColumnDef="referent">
+      <th mat-header-cell *matHeaderCellDef class="my-column">Référent</th>
+      <td mat-cell *matCellDef="let mission" class="my-column">{{mission.consultant}}</td>
+    </ng-container>
 
-  <!-- Colonne Actions -->
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef class="my-column">Actions</th>
-    <td mat-cell *matCellDef="let mission" class="my-column">
-      <!-- Ajoutez ici les actions que vous souhaitez afficher pour chaque mission -->
-     
-      <button mat-raised-button class="btn btn-success btn-sm mr-2"(click)="evaluer(mission.id)">
-        <i class="fa fa-check-circle"></i> Passe
-      </button>
-    </td>
-  </ng-container>
+    <!-- Colonne Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="my-column">Actions</th>
+      <td mat-cell *matCellDef="let mission" class="my-column">
+        <!-- Ajoutez ici les actions que vous souhaitez afficher pour chaque mission -->
+        <button mat-raised-button class="btn btn-success btn-sm mr-2" (click)="evalmonth(mission.id)">
+          <i class="fa fa-check-circle"></i> Passe
+        </button>
+      </td>
+    </ng-container>
 
-  <!-- En-têtes de colonne -->
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <!-- En-têtes de colonne -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
-  <!-- Lignes de données avec filtre -->
-  <tr mat-row *matRowDef="let mission; columns: displayedColumns" [class.hidden]="mission.feedbackManager !='' && mission.noteManager != null"></tr>
-</table>
-  
+    <!-- Lignes de données avec filtre -->
+    <tr mat-row *matRowDef="let mission; columns: displayedColumns" [class.hidden]="mission.feedbackManager !== '' && mission.noteManager !== null"></tr>
+  </table>
+</div>
+
+<!-- ... autres parties de votre code ... -->

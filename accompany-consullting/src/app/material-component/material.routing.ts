@@ -47,7 +47,16 @@ import { ConsulterdemandeComponent } from '../conges/consulterdemande/consulterd
 import { ListdemandeComponent } from '../conges/listdemande/listdemande.component';
 import { CongeshrComponent } from '../conges/congeshr/congeshr.component';
 import { CreateMissionComponent } from '../mission/create-mission/create-mission.component';
+import { EvalMonthComponent } from '../manager-eval/eval-month/eval-month.component';
+import { EvalMonthConsultantComponent } from '../manager-eval/eval-month/eval-month-consultant/eval-month-consultant.component';
 export const MaterialRoutes: Routes = [
+
+  { path: 'eval-month-consultant', component: EvalMonthConsultantComponent },
+
+  { path: 'eval-month', component: EvalMonthComponent },
+
+  { path: 'evaluation/:consultantId', component: EvaluationComponent },
+
   {path :'add_mission',component:CreateMissionComponent},
 
   {path :'les conges',component:CongeshrComponent},

@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ConsultantService } from '../Model/consultant/consultant.service';
 import { ConsultantModule } from '../Model/consultant/consultant.module';
 import * as moment from 'moment';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EvaluationService } from '../service/evaluation.service';
 import { Evaluation } from '../Model/evaluation';
 import { EvalComp } from '../Model/eval-comp';
@@ -26,25 +26,42 @@ export class EvaluationComponent implements OnInit {
   evalcomps: EvalComp[]; // Evaluation competence data structure, adjust it according to your needs
   currentList :string  = "alert"; 
   evalcomp : EvalComp; 
+  consultantId :any ;
+  evaluatedConsultants: number[] = [];
+
   constructor(
     private consultantService: ConsultantService,
     private router: Router,
-    private evaluationService: EvaluationService
+    private evaluationService: EvaluationService,private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+
+    this.route.params.subscribe(params => {
+      this.consultantId = +params['consultantId'];
+      // Now you have access to the consultantId in this component
+      console.log(this.consultantId);
+    });
     this.consultantService.getConsultantlist().subscribe(
       (data: ConsultantModule[]) => {
         this.consultants = data;
         this.filterConsultants();
         this.currentList="alert";
-        this.dataSource.data = this.integrationConsultants; // Assign integrationConsultants to the dataSource
+        this.dataSource.data = this.integrationConsultants;
+         // Assign integrationConsultants to the dataSource
       },
       (error) => {
         console.log('An error occurred while retrieving the consultants list: ', error);
       }
     );
   }
+  consultantevaluer(consultantId: number, nom: string, prenom: string, dateIntegration: Date, grade: string, integration: string) {
+    // Perform the evaluation
+  
+    // Add the evaluated consultant to the evaluatedConsultants array
+    this.evaluatedConsultants.push(consultantId);
+  }
+  
 
   displayedColumns: string[] = ['nom', 'prenom', 'date_integration', 'integration'];
 
@@ -215,10 +232,10 @@ viewEvaluationCompetenceList() {
       this.evalcomps = data;
       console.log(this.evalcomps);
       // Check if evalcomps is defined and not empty
-      this.evalcomps.forEach(mission => {
-        this.consultantService.getConsultant2(mission.consultant).subscribe(
+      this.evalcomps.forEach(e => {
+        this.consultantService.getConsultant2(e.consultant).subscribe(
           (consultant: any) => {
-          mission.nomconsultant = consultant.nom +" "+ consultant.prenom ;  // Ajouter la propriété "consultantNom" à la mission avec vérification de la présence de la propriété 'nom'
+          e.nomconsultant = consultant.nom +" "+ consultant.prenom ;  // Ajouter la propriété "consultantNom" à la mission avec vérification de la présence de la propriété 'nom'
           },
           (error) => {
             console.log('Une erreur s\'est produite lors de la récupération du consultant :', error);

@@ -1,0 +1,97 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<mat-card>
+    <form [formGroup]="evalForm" >
+
+        <mat-toolbar style="background-color: #5F9EA0; color:white;">
+            <mat-toolbar-row style="text-align: center;">
+              <span><i class="fa fa-user"></i> Evaluation Mensuel pour {{ data.nom }} {{ data.prenom }} </span>
+            </mat-toolbar-row>
+          </mat-toolbar>
+          
+        <br>
+    
+        <tbody>
+            <tr>
+              <td style="color: blue; font-size: large;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Critères</td>
+              
+            </tr>
+            <tr>
+              <td>Périmètre</td>
+              <td>
+                <select  formControlName="Périmètre"  required>
+                    <option value="">Sélectionnez une option</option>
+                    <option [ngStyle]="{ 'color': getCriteriaColor('Très satisfait') }">Très satisfait</option>
+                    <option [ngStyle]="{ 'color': getCriteriaColor('Satisfait') }">Satisfait</option>
+                    <option [ngStyle]="{ 'color': getCriteriaColor('Moyennement satisfait') }">Moyennement satisfait</option>
+                    <option [ngStyle]="{ 'color': getCriteriaColor('Insuffisant') }">Insuffisant</option>
+                </select>
+                <div *ngIf="evalForm.get('Périmètre')?.invalid && evalForm.get('Périmètre')?.touched" class="error-message custom-error-message">
+                    <i class="fas fa-exclamation-circle"></i>  {{ getErrorMessage(evalForm.get('Périmètre')?.errors) }}
+                  </div>
+                  
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Délai </td>
+              <td>
+                <select formControlName="Délai" required>
+                    <option value="">Sélectionnez une option</option>
+                    <option [ngStyle]="{ 'color': getCriteriaColor('Très satisfait') }">Très satisfait</option>
+                    <option [ngStyle]="{ 'color': getCriteriaColor('Satisfait') }">Satisfait</option>
+                    <option [ngStyle]="{ 'color': getCriteriaColor('Moyennement satisfait') }">Moyennement satisfait</option>
+                    <option [ngStyle]="{ 'color': getCriteriaColor('Insuffisant') }">Insuffisant</option>
+                </select>
+                <div *ngIf="evalForm.get('Périmètre')?.invalid && evalForm.get('Périmètre')?.touched" class="error-message custom-error-message">
+                    <i class="fas fa-exclamation-circle"></i>  {{ getErrorMessage(evalForm.get('Périmètre')?.errors) }}
+                  </div>
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+                <td>Qualité </td>
+                <td>
+                    <select formControlName="Qualité" required>
+                        <option value="">Sélectionnez une option</option>
+                        <option [ngStyle]="{ 'color': getCriteriaColor('Très satisfait') }">Très satisfait</option>
+                        <option [ngStyle]="{ 'color': getCriteriaColor('Satisfait') }">Satisfait</option>
+                        <option [ngStyle]="{ 'color': getCriteriaColor('Moyennement satisfait') }">Moyennement satisfait</option>
+                        <option [ngStyle]="{ 'color': getCriteriaColor('Insuffisant') }">Insuffisant</option>
+                      </select>
+                      
+                  <div *ngIf="evalForm.get('Périmètre')?.invalid && evalForm.get('Périmètre')?.touched" class="error-message custom-error-message">
+                    <i class="fas fa-exclamation-circle"></i>  {{ getErrorMessage(evalForm.get('Périmètre')?.errors) }}
+                  </div>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Budget alloué</td>
+                <td>
+                  <select formControlName="Budge" required>
+                    <option value="">Sélectionnez une option</option>
+                    <option [ngStyle]="{ 'color': getCriteriaColor('Très satisfait') }">Très satisfait</option>
+                    <option [ngStyle]="{ 'color': getCriteriaColor('Satisfait') }">Satisfait</option>
+                    <option [ngStyle]="{ 'color': getCriteriaColor('Moyennement satisfait') }">Moyennement satisfait</option>
+                    <option [ngStyle]="{ 'color': getCriteriaColor('Insuffisant') }">Insuffisant</option>
+                  </select>
+                  <div *ngIf="evalForm.get('Périmètre')?.invalid && evalForm.get('Périmètre')?.touched" class="error-message custom-error-message">
+                    <i class="fas fa-exclamation-circle"></i>  {{ getErrorMessage(evalForm.get('Périmètre')?.errors) }}
+                  </div>
+                </td>
+                <td></td>
+              </tr>
+
+          </tbody>
+          <button type="button" class="btn btn-primary" (click)="add()">
+            Terminer l' évaluation
+          </button>
+          
+          
+    
+    </form></mat-card>

@@ -27,9 +27,10 @@
   </div>
 
   <br>
-
+  
   <div *ngIf="currentList === 'alert'">
     <table class="table mat-elevation-z8 consultant-table" mat-table [dataSource]="dataSource">
+      
       <ng-container matColumnDef="nom prenom">
         <th mat-header-cell *matHeaderCellDef class="thead-info">
           <span class="table-title">Nom & Prénom</span>

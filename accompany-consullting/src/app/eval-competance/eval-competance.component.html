@@ -1,151 +1,150 @@
 <mat-toolbar style="background-color: #1347a4;">
+  <mat-toolbar-row>
+    <div class="image-3d">
+      <img src="assets/images/bilan.png" alt="Bilan RH 1à3 mois">
+    </div>
+    <span style="margin-left: auto;margin-right: auto;color: aliceblue;">Bilan RH d' {{ consultantData.evaluationType }}</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-card>
+  <table style="width: 100%; border-collapse: collapse; border: 1px solid #000;">
+    <thead style="background-color: #1347a4;">
+      <tr>
+        <th class="th">Nom et prénom du collaborateur</th>
+        <th class="th">Date d'intégration</th>
+        <th class="th">profils consultant </th>
+      </tr>
+    </thead>
+    <tr>
+      <td class="th_contenu">{{ consultantData.nom }} {{ consultantData.prenom }}</td>
+      <td class="th_contenu">{{consultantData.date_integration| date:'dd-MM-yyyy'}}</td>
+      <td class="center d-flex justify-content-center">
+        <button type="button" class="btn btn-outline-info" (click)="onconsulte()">
+          <i class="fa fa-eye"></i> Consulter
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" style="background-color:#1e5d6b;; color: aliceblue; font-family: sans-serif; font-size: large; border: 1px solid #000;">HR BP</td>
+      <td class="th_contenu">{{hr}}</td>
+    </tr>
+  </table>
+
+  <br><br>
+
+  <mat-toolbar style="background-color: #1347a4;">
     <mat-toolbar-row>
-      <div class="image-3d">
-        <img src="assets/images/bilan.png" alt="Bilan RH 1à3 mois">
-      </div>
-      <span style="margin-left: auto;margin-right: auto;color: aliceblue;">Bilan RH d' {{ consultantData.evaluationType }}</span>
+      <span style="margin-left: auto;margin-right: auto;color: aliceblue;text-align: center;">Liste des missions</span>
     </mat-toolbar-row>
   </mat-toolbar>
-  
-  <mat-card>
-    <table style="width: 100%; border-collapse: collapse; border: 1px solid #000;">
-      <thead style="background-color: #1347a4;">
+
+  <table style="width: 100%;">
+    <ng-container *ngFor="let mission of missions">
+      <td colspan="6">
+        <mat-toolbar style="background-color: #1e5d6b; color: antiquewhite;">
+          <mat-toolbar-row>
+            <div style="text-align: center;" >
+              
+                <span >Titre: {{ mission.titre }}</span>
+              
+            </div>
+          </mat-toolbar-row>
+        </mat-toolbar>
+      </td>
+      <br>
+      <tbody>
         <tr>
-          <th class="th">Nom et prénom du collaborateur</th>
-          <th class="th">Date d'intégration</th>
-          <th class="th">profils consultant </th>
+          <td>Nom du manager</td>
+          <td>{{ mission.nomManager }}</td>
         </tr>
-      </thead>
-      <tr>
-        <td class="th_contenu">{{ consultantData.nom }} {{ consultantData.prenom }}</td>
-        <td class="th_contenu">{{consultantData.date_integration| date:'dd-MM-yyyy'}}</td>
-        <td class="center d-flex justify-content-center">
-          <button type="button" class="btn btn-outline-info" (click)="onconsulte()">
-            <i class="fa fa-eye"></i> Consulter
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2" style="background-color:#1e5d6b;; color: aliceblue; font-family: sans-serif; font-size: large; border: 1px solid #000;">HR BP</td>
-        <td class="th_contenu">{{hr}}</td>
-      </tr>
-    </table>
-  
-    <br><br>
-  
-    <mat-toolbar style="background-color: #1347a4;">
-      <mat-toolbar-row>
-        <span style="margin-left: auto;margin-right: auto;color: aliceblue;text-align: center;">Liste des missions</span>
-      </mat-toolbar-row>
-    </mat-toolbar>
-  
-    <table style="width: 100%;">
-      <ng-container *ngFor="let mission of missions">
-        <td colspan="6">
-          <mat-toolbar style="background-color: #1e5d6b; color: antiquewhite;">
+        <tr>
+          <td>feedback</td>
+          <td>{{mission.feedbackManager}}</td>
+        </tr>
+        <tr>
+          <td>note</td>
+          <td>{{mission.noteManager}}</td>
+        </tr>
+      </tbody>
+    </ng-container>
+  </table>
+
+  <br>
+
+  <form [formGroup]="evaluationForm" (ngSubmit)="onSubmit(consultant)">
+      <table>
+        <tbody>
+          <mat-toolbar style="background-color: #20dbd8;">
             <mat-toolbar-row>
-              <div style="text-align: center;" >
-                
-                  <span >Titre: {{ mission.titre }}</span>
-                
-              </div>
+              <tr>
+                <td>
+                  <label for="notemissions">Note Missions</label>
+                </td>
+                <td>
+                  <input type="number" formControlName="notemissions" id="notemissions" required>
+                </td>
+              </tr>
             </mat-toolbar-row>
           </mat-toolbar>
-        </td>
-        <br>
-        <tbody>
-          <tr>
-            <td>Nom du manager</td>
-            <td>{{ mission.nomManager }}</td>
-          </tr>
-          <tr>
-            <td>feedback</td>
-            <td>{{mission.feedbackManager}}</td>
-          </tr>
-          <tr>
-            <td>note</td>
-            <td>{{mission.noteManager}}</td>
-          </tr>
-        </tbody>
-      </ng-container>
-    </table>
-  
-    <br>
-  
-    <form [formGroup]="evaluationForm" (ngSubmit)="onSubmit()">
-        <table>
-          <tbody>
-            <mat-toolbar style="background-color: #20dbd8;">
-              <mat-toolbar-row>
-                <tr>
-                  <td>
-                    <label for="notemissions">Note Missions</label>
-                  </td>
-                  <td>
-                    <input type="number" formControlName="notemissions" id="notemissions" required>
-                  </td>
-                </tr>
-              </mat-toolbar-row>
-            </mat-toolbar>
-            <mat-toolbar style="background-color: #20a4d8;">
-              <mat-toolbar-row>
-                <tr>
-                  <td>
-                    <label for="decision">Decision</label>
-                  </td>
-                  <td>
-                    <textarea formControlName="decision" id="decision" required></textarea>
-                  </td>
-                </tr>
-              </mat-toolbar-row>
-            </mat-toolbar>
-            <mat-toolbar style="background-color: #146389;">
-              <mat-toolbar-row>
-                <tr>
-                  <td>
-                    <label for="contrat">Contrat</label>
-                  </td>
-                  <td>
-                    <mat-form-field>
-                      <mat-select formControlName="contrat">
-                        <mat-option value="Prestataire">Prestataire</mat-option>
-                        <mat-option value="CDI">CDI</mat-option>
-                        <mat-option value="CIVP">CIVP</mat-option>
-                        <mat-option value="CDD">CDD</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </td>
-                </tr>
-              </mat-toolbar-row>
-            </mat-toolbar>
-            <mat-toolbar style="background-color: #122c42;">
-              <mat-toolbar-row>
-                <tr>
-                  <td>
-                    <label for="noterh">Note RH</label>
-                  </td>
-                  <td>
-                    <input type="number" formControlName="noterh" id="noterh">
-                  </td>
-                </tr>
-              </mat-toolbar-row>
-            </mat-toolbar>
-            <mat-toolbar style="background-color: #ff0000;">
-              <mat-toolbar-row>
-                <tr>
-                  <td>
-                    <label for="notefinal">Note Final</label>
-                  </td>
-                  <td>
-                    <input type="number" formControlName="notefinal" id="notefinal" disabled>
+          <mat-toolbar style="background-color: #20a4d8;">
+            <mat-toolbar-row>
+              <tr>
+                <td>
+                  <label for="decision">Decision</label>
                 </td>
-                </tr>
-              </mat-toolbar-row>
-            </mat-toolbar>
-          </tbody>
-        </table>
-        <button type="submit">Add Evaluation</button>
-      </form>
-      
-  </mat-card>
-  
+                <td>
+                  <textarea formControlName="decision" id="decision" required></textarea>
+                </td>
+              </tr>
+            </mat-toolbar-row>
+          </mat-toolbar>
+          <mat-toolbar style="background-color: #146389;">
+            <mat-toolbar-row>
+              <tr>
+                <td>
+                  <label for="contrat">Contrat</label>
+                </td>
+                <td>
+                  <mat-form-field>
+                    <mat-select formControlName="contrat">
+                      <mat-option value="Prestataire">Prestataire</mat-option>
+                      <mat-option value="CDI">CDI</mat-option>
+                      <mat-option value="CIVP">CIVP</mat-option>
+                      <mat-option value="CDD">CDD</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </mat-toolbar-row>
+          </mat-toolbar>
+          <mat-toolbar style="background-color: #122c42;">
+            <mat-toolbar-row>
+              <tr >
+                <td>
+                  <label for="noterh">Note RH</label>
+                </td>
+                <td>
+                  <input type="number" formControlName="noterh" id="noterh">
+                </td>
+              </tr>
+            </mat-toolbar-row>
+          </mat-toolbar>
+          <mat-toolbar style="background-color: #ff0000;">
+            <mat-toolbar-row>
+              <tr>
+                <td>
+                  <label for="notefinal">Note Final</label>
+                </td>
+                <td>
+                  <input type="number" formControlName="notefinal" id="notefinal" disabled>
+              </td>
+              </tr>
+            </mat-toolbar-row>
+          </mat-toolbar>
+        </tbody>
+      </table>
+      <button type="submit" mat-raised-button color="accent" class="mr-2">Enregistrer   <i class="fa fa-paper-plane"></i></button>
+    </form>
+    
+</mat-card>

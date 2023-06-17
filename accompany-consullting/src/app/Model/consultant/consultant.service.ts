@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {  BehaviorSubject, Observable} from 'rxjs'
 import { ConsultantModule } from './consultant.module';
 
@@ -51,4 +51,16 @@ export class ConsultantService {
   }
  
   
+  updateCongeEtat(id: number, etatModifier: string): Observable<any> {
+    const url = `${this.APIurl}/Consultants/etat/${id}/${etatModifier}`;
+    const body = { etatModifier };
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+console.log (etatModifier);
+    return this.http.put(url,id);
+  }
 }

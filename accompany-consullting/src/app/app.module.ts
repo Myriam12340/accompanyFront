@@ -53,6 +53,8 @@ import { ConsulterdemandeComponent } from './conges/consulterdemande/consulterde
 import { ListdemandeComponent } from './conges/listdemande/listdemande.component';
 import { CongeshrComponent } from './conges/congeshr/congeshr.component';
 import { CreateMissionComponent } from './mission/create-mission/create-mission.component';
+import { EvalMonthComponent } from './manager-eval/eval-month/eval-month.component';
+import { EvalMonthConsultantComponent } from './manager-eval/eval-month/eval-month-consultant/eval-month-consultant.component';
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
 }
@@ -97,6 +99,8 @@ export function tokenGetter() {
           ListdemandeComponent,
           CongeshrComponent,
           CreateMissionComponent,
+          EvalMonthComponent,
+          EvalMonthConsultantComponent,
           
   ],
   imports: [

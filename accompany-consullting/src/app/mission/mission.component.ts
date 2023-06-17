@@ -102,34 +102,16 @@ private consultantservice : ConsultantService,
     this.missionForm = this.fb.group({
       manager: [''],
       titre: ['', Validators.required],
-      roleC: ['', Validators.required],
-      roleRH: ['', Validators.required],
-      relationClientRH: ['', Validators.required],
-      relationClientC: ['', Validators.required],
-      chargeRH: ['', Validators.required],
-      chargeC: ['', Validators.required],
-      satisficationRH: ['', Validators.required],
-      satisficationC: ['', Validators.required],
-      noteManager: [''],
-      feedbackManager: [''],
+     
     });
 
 
   }
 
   submitForm( ) {
-    this.mission.chargeC = this.missionForm.get('chargeC')?.value;
-    this.mission.chargeRH = this.missionForm.get('chargeRH')?.value;
-    this.mission.relationClientC = this.missionForm.get('relationClientC')?.value;
-    this.mission.relationClientRH = this.missionForm.get('relationClientRH')?.value;
-    this.mission.roleC = this.missionForm.get('roleC')?.value;
-    this.mission.roleRH = this.missionForm.get('roleRH')?.value;
-    this.mission.feedbackManager = this.missionForm.get('feedbackManager')?.value;
-    this.mission.satisficationC = this.missionForm.get('satisficationC')?.value;
-    this.mission.satisficationRH = this.missionForm.get('satisficationRH')?.value;
+    
     this.mission.titre = this.missionForm.get('titre')?.value;
     this.mission.consultant = this.consultantData.consultantId;
-    this.mission.evaluation = this.evaluationId;
     this.authService.getUserByEmail(this.missionForm.get('manager')?.value).subscribe(
       (user) => {
         this.m = user;
@@ -165,38 +147,11 @@ private consultantservice : ConsultantService,
     const consultantNom = this.consultantData.nom;
     const consultantPrenom = this.consultantData.prenom;
     const evaluationCriteria = {
-      roleC: this.missionForm.get('roleC')?.value,
-      roleRH: this.missionForm.get('roleRH')?.value,
-      relationClientC: this.missionForm.get('relationClientC')?.value,
-      relationClientRH: this.missionForm.get('relationClientRH')?.value,
-      chargeC: this.missionForm.get('chargeC')?.value,
-      chargeRH: this.missionForm.get('chargeRH')?.value,
-      satisficationC: this.missionForm.get('satisficationC')?.value,
-      satisficationRH: this.missionForm.get('satisficationRH')?.value
+    
     };
   
     const emailBody = `
-      <div style="color: #333; font-family: Arial, sans-serif;">
-        <p>Cher responsable d'équipe,</p>
-    
-        <p>J'ai effectué une évaluation pour la mission <strong>${missionTitre}</strong> de l'un de vos membres d'équipe :</p>
-    
-        <ul>
-          <li><strong>Référent :</strong> ${consultantNom} ${consultantPrenom}</li>
-          <li><strong>Évaluation du rôle :</strong> ${evaluationCriteria.roleC} (Consultant) / ${evaluationCriteria.roleRH} (RH)</li>
-          <li><strong>Évaluation de la relation avec le client :</strong> ${evaluationCriteria.relationClientC} (Consultant) / ${evaluationCriteria.relationClientRH} (RH)</li>
-          <li><strong>Évaluation de la charge :</strong> ${evaluationCriteria.chargeC} (Consultant) / ${evaluationCriteria.chargeRH} (RH)</li>
-          <li><strong>Évaluation de la satisfaction globale :</strong> ${evaluationCriteria.satisficationC} (Consultant) / ${evaluationCriteria.satisficationRH} (RH)</li>
-        </ul>
-        <p style="color:#e80000; font-family: Arial, sans-serif;" >Je vous prie de bien vouloir terminer l'évaluation de la mission ${missionTitre} . Il est essentiel d'obtenir votre précieuse contribution pour évaluer les performances de notre membre d'équipe.
-
-        Votre achèvement rapide de l'évaluation est grandement apprécié.</p>
-        
-       <p> Je vous remercie de votre coopération.</p>
-    
-        <p>Cordialement,</p>
-        <p>${this.rh}</p>
-      </div>
+   
     `;
     this.email.body = emailBody;
 
@@ -212,16 +167,7 @@ private consultantservice : ConsultantService,
     const newForm = this.fb.group({
       manager: [''],
       titre: ['', Validators.required],
-      roleC: ['', Validators.required],
-      roleRH: ['', Validators.required],
-      relationClientRH: ['', Validators.required],
-      relationClientC: ['', Validators.required],
-      chargeRH: ['', Validators.required],
-      chargeC: ['', Validators.required],
-      satisficationRH: ['', Validators.required],
-      satisficationC: ['', Validators.required],
-      noteManager: [''],
-      feedbackManager: [''],
+     
     });
     this.missionForms.push(newForm);
   }

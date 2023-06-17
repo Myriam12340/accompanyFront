@@ -37,3 +37,33 @@ label{
   font-family: Georgia, serif;
   color: #24527a;
 }
+
+input[type=text] {
+  width: 50%;
+  padding: 6px 6px;
+  margin: 10px 8px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+textarea{
+  width: 50%;
+  padding: 6px 6px;
+  margin: 10px 8px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+select
+{
+  width: 50%;
+  padding: 6px 6px;
+  margin: 10px 8px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
