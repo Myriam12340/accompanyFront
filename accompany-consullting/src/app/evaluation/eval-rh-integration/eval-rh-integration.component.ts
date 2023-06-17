@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConsultantService } from '../Model/consultant/consultant.service';
-import { AuthService } from '../service/Authentication Service/auth.service';
+import { ConsultantService } from '../../Model/consultant/consultant.service';
+import { AuthService } from '../../service/Authentication Service/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EvaluationService } from '../service/evaluation.service';
-import { Evaluation } from '../Model/evaluation';
-import { EmailMessage } from '../Model/email-message';
-import { MissionService } from '../service/mission.service';
-import { EvalMissionIntegration } from '../Model/eval-mission-integration';
-import { MailService } from '../service/mail.service';
+import { EvaluationService } from '../../service/evaluation.service';
+import { Evaluation } from '../../Model/evaluation';
+import { EmailMessage } from '../../Model/email-message';
+import { MissionService } from '../../service/mission.service';
+import { EvalMissionIntegration } from '../../Model/eval-mission-integration';
+import { MailService } from '../../service/mail.service';
 
 @Component({
   selector: 'app-eval-rh-integration',

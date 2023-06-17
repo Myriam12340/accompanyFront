@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListconsultantComponent } from 'src/app/listconsultant/listconsultant.component';
+import { ListconsultantComponent } from 'src/app/consultant/listconsultant/listconsultant.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 

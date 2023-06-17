@@ -7,7 +7,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
 //import { ConsultantdetailComponent } from 'src/app/consultantdetail/consultantdetail.component';
 
-import { AddConsultantComponent } from 'src/app/add-consultant/add-consultant.component';
+import { AddConsultantComponent } from 'src/app/consultant/add-consultant/add-consultant.component';
 import { ConsultantdetailComponent } from '../consultantdetail/consultantdetail.component';
 import { UpdateconsultantComponent } from '../updateconsultant/updateconsultant.component';
 import { PageEvent } from '@angular/material/paginator';
@@ -15,7 +15,7 @@ import { PageEvent } from '@angular/material/paginator';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { ConsultantModule } from '../Model/consultant/consultant.module';
+import { ConsultantModule } from '../../Model/consultant/consultant.module';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 

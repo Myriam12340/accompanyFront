@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListmissionComponent } from './listmission.component';
+import { MissionsManagerComponent } from './missions-manager.component';
 
-describe('ListmissionComponent', () => {
-  let component: ListmissionComponent;
-  let fixture: ComponentFixture<ListmissionComponent>;
+describe('MissionsManagerComponent', () => {
+  let component: MissionsManagerComponent;
+  let fixture: ComponentFixture<MissionsManagerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListmissionComponent ]
+      declarations: [ MissionsManagerComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListmissionComponent);
+    fixture = TestBed.createComponent(MissionsManagerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

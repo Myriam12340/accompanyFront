@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Mission } from '../mission';
 import { Observable } from 'rxjs';
-import { EvalRhIntegrationComponent } from '../eval-rh-integration/eval-rh-integration.component';
+import { EvalRhIntegrationComponent } from '../evaluation/eval-rh-integration/eval-rh-integration.component';
 import { EvalMissionIntegration } from '../Model/eval-mission-integration';
 import { EvalMensuel } from '../Model/eval-mensuel';
 

@@ -1,8 +1,8 @@
 import { Component, OnInit , Inject } from '@angular/core';
-import { MailService } from '../service/mail.service';
-import { EmailMessage } from '../Model/email-message';
+import { MailService } from '../../service/mail.service';
+import { EmailMessage } from '../../Model/email-message';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AuthService } from '../service/Authentication Service/auth.service';
+import { AuthService } from '../../service/Authentication Service/auth.service';
 
 @Component({
   selector: 'app-mail-recruteur',

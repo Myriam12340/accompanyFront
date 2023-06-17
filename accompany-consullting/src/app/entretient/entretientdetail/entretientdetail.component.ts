@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Candidat } from '../Model/candidat';
-import { EntretienService } from '../service/entretient.service';
-import { entretient } from '../Model/entretient';
-import { AuthService } from '../service/Authentication Service/auth.service';
+import { Candidat } from '../../Model/candidat';
+import { EntretienService } from '../../service/entretient.service';
+import { entretient } from '../../Model/entretient';
+import { AuthService } from '../../service/Authentication Service/auth.service';
 
 @Component({
   selector: 'app-entretientdetail',

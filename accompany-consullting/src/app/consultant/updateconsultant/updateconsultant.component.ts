@@ -1,14 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ConsultantService } from '../Model/consultant/consultant.service';
+import { ConsultantService } from '../../Model/consultant/consultant.service';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Consultant } from '../Model/consultant';
+import { Consultant } from '../../Model/consultant';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { DemoColor } from '../material-component/chips/chips.component';
+import { DemoColor } from '../../material-component/chips/chips.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 

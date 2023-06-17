@@ -6,4 +6,6 @@ export class Mission {
     nom : string | null;
     nomManager:string | null;
     manageremail:string|null ;
+    couleur: string;
+
 }

@@ -1,0 +1,32 @@
+<div *ngFor="let consultantProjet of consultantProjets">
+  <h2>{{ consultantProjet.nomConsultant }}</h2>
+  <ul>
+    <li *ngFor="let projet of consultantProjet.projets">
+      {{ projet.titre }}
+    </li>
+  </ul>
+</div>
+
+<table mat-table [dataSource]="projets" class="mat-elevation-z8 my-table" style="width: 100%;">
+
+  <ng-container matColumnDef="nomProjet">
+    <th mat-header-cell *matHeaderCellDef>Nom du projet</th>
+    <td mat-cell *matCellDef="let projet" [style.background-color]="projet.couleur">{{ projet.titre }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="dateDebut">
+    <th mat-header-cell *matHeaderCellDef>Date de début</th>
+    <td mat-cell *matCellDef="let projet">{{ projet.nomManager }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="dateFin">
+    <th mat-header-cell *matHeaderCellDef>Date de fin</th>
+    <td mat-cell *matCellDef="let projet">{{ projet.dateFin }}</td>
+  </ng-container>
+
+  <!-- Ajoutez d'autres colonnes en fonction de vos besoins -->
+
+  <tr mat-header-row *matHeaderRowDef="['nomProjet', 'dateDebut', 'dateFin']"></tr>
+  <tr mat-row *matRowDef="let projet; columns: ['nomProjet', 'dateDebut', 'dateFin']"></tr>
+
+</table>

@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Mission } from '../mission';
+import { Mission } from '../../mission';
 import { MatTableDataSource } from '@angular/material/table';
-import { MissionService } from '../service/mission.service';
-import { AuthService } from '../service/Authentication Service/auth.service';
-import { ConsultantService } from '../Model/consultant/consultant.service';
+import { MissionService } from '../../service/mission.service';
+import { AuthService } from '../../service/Authentication Service/auth.service';
+import { ConsultantService } from '../../Model/consultant/consultant.service';
 import { Router } from '@angular/router';
-import { EvalMissionIntegration } from '../Model/eval-mission-integration';
-
+import { EvalMissionIntegration } from '../../Model/eval-mission-integration';
 @Component({
-  selector: 'app-listmission',
-  templateUrl: './listmission.component.html',
-  styleUrls: ['./listmission.component.css']
+  selector: 'app-missions-manager',
+  templateUrl: './missions-manager.component.html',
+  styleUrls: ['./missions-manager.component.css']
 })
-export class ListmissionComponent implements OnInit {
+export class MissionsManagerComponent implements OnInit {
   missions: Mission[]; // Liste des missions affectées au manager
   dataSource = new MatTableDataSource();
   rh: any;

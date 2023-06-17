@@ -67,7 +67,12 @@ MENUITEMS = [
     ]
   },
 
-
+  {
+    state: 'projet',
+    type: 'link',
+    name: 'projet',
+    icon: 'featured_play_list'
+  },
   {
     state: 'list_missions',
     type: 'link',

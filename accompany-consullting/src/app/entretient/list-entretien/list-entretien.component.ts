@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { EntretienService } from '../service/entretient.service';
-import { entretient } from '../Model/entretient';
+import { EntretienService } from '../../service/entretient.service';
+import { entretient } from '../../Model/entretient';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { EntretientComponent } from '../entretient/entretient.component';
-import { AuthService } from '../service/Authentication Service/auth.service';
-import { Candidat } from '../Model/candidat';
+import { EntretientComponent } from '../entretient.component';
+import { AuthService } from '../../service/Authentication Service/auth.service';
+import { Candidat } from '../../Model/candidat';
 import { concat } from 'rxjs-compat/operator/concat';
 import { Router } from '@angular/router';
 

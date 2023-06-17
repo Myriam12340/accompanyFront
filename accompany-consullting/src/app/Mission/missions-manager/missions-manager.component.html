@@ -20,7 +20,7 @@
 <!-- ... autres parties de votre code ... -->
 <br>
 <div *ngIf="showIntegration">
-  <table mat-table [dataSource]="evalMissions" class="mat-elevation-z8 my-table">
+  <table mat-table [dataSource]="evalMissions" class="mat-elevation-z8 my-table" style="width: 100%;">
     <!-- Colonne Titre -->
     <ng-container matColumnDef="titre">
       <th mat-header-cell *matHeaderCellDef class="my-column">Titre</th>
@@ -53,7 +53,7 @@
 </div>
 
 <div *ngIf="showMonthly">
-  <table mat-table [dataSource]="missions" class="mat-elevation-z8 my-table">
+  <table mat-table [dataSource]="missions" class="mat-elevation-z8 my-table" style="width: 100%;">
     <!-- Colonne Titre -->
     <ng-container matColumnDef="titre">
       <th mat-header-cell *matHeaderCellDef class="my-column">Titre</th>

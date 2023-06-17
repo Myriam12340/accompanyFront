@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConsultantService } from '../Model/consultant/consultant.service';
-import { Consultant } from '../Model/consultant';
-import { DemoColor } from '../material-component/chips/chips.component';
+import { ConsultantService } from '../../Model/consultant/consultant.service';
+import { Consultant } from '../../Model/consultant';
+import { DemoColor } from '../../material-component/chips/chips.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';

@@ -7,7 +7,7 @@ import { F } from '@angular/cdk/keycodes';
 import { EntretientViewModel } from '../Model/entretient-view-model';
 import { AuthService } from '../service/Authentication Service/auth.service'
 import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import { MailRecruteurComponent } from '../mail-recruteur/mail-recruteur.component';
+import { MailRecruteurComponent } from './mail-recruteur/mail-recruteur.component';
 import { User } from '../Model/user';
 import { Router } from '@angular/router';
 import { DemoColor } from '../material-component/chips/chips.component';

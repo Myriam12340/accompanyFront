@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConsultantService } from '../Model/consultant/consultant.service';
-import { EvaluationService } from '../service/evaluation.service';
+import { ConsultantService } from '../../Model/consultant/consultant.service';
+import { EvaluationService } from '../../service/evaluation.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EvalComp } from '../Model/eval-comp';
-import { AuthService } from '../service/Authentication Service/auth.service';
-import { Mission } from '../mission';
-import { MissionService } from '../service/mission.service';
+import { EvalComp } from '../../Model/eval-comp';
+import { AuthService } from '../../service/Authentication Service/auth.service';
+import { Mission } from '../../mission';
+import { MissionService } from '../../service/mission.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ConsultantdetailComponent } from '../consultantdetail/consultantdetail.component';
-import { EvalMissionIntegration } from '../Model/eval-mission-integration';
+import { ConsultantdetailComponent } from '../../consultant/consultantdetail/consultantdetail.component';
+import { EvalMissionIntegration } from '../../Model/eval-mission-integration';
 
 @Component({
   selector: 'app-eval-competance',
