@@ -7,19 +7,16 @@
       <div class="col-md-3">
         <div class="card">
           <div class="card-body text-center">
-
-
-            <ng-container *ngIf="consultant.genre === 'Masculin'; else femaleImage">
-              <img class="mg-fluid rounded-circle mb-3" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+            <ng-container *ngIf="imgurl">
+              <img [src]="imgurl"class="mg-fluid rounded-circle mb-3" width="100%">
+              
             </ng-container>
-            <ng-template #femaleImage>
-              <img class="img-fluid rounded-circle mb-3" width="150px" src="https://img.icons8.com/?size=512&id=912rt74nJqQV&format=png">
-            </ng-template>
-            <h4 class="card-title">{{consultant.nom}}&{{consultant.prenom}}</h4>
            
+            <h4 class="card-title">{{consultant.nom}} {{consultant.prenom}}</h4>
           </div>
         </div>
       </div>
+      
       <div class="col-md-9">
         <div class="card">
           <div class="card-body">

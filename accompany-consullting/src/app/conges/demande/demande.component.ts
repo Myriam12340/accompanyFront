@@ -97,6 +97,7 @@ certif:any;
       type: ['', Validators.required],
       duree:[''],
       typeDuree: [''],
+      cc:['']
 
     }, { validators: this.dateValidation });
 
@@ -170,13 +171,15 @@ this.conge.certif = this.certif;
 
 
       });
-
+      
+      this.email.CcEmail= this.demandeForm.get('cc')?.value;
 
       this.consultantservice.getConsultantbyemail(this.demandeForm.get('validateur')?.value).subscribe(
         (response) => {
           this.consultant = response;
           console.log(this.consultant);
           this.toname = this.consultant.nom + " " + this.consultant.prenom;
+       
 
           this.email.fromName = this.userProfile.userName;
           this.email.toName = this.toname;

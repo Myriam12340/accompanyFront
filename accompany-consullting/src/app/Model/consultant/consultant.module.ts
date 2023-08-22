@@ -43,5 +43,5 @@ export class ConsultantModule {
   prochain_entretien: string; // Nouvelle propriété
   nb : number;
   competance:boolean;
-
+photo : string ;
  }

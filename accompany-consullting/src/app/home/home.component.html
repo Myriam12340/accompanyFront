@@ -9,13 +9,18 @@
                     <h4 class="text-right">Profile </h4>
                     
                 </div>
+                <div *ngIf="!imgurl">
                 <ng-container *ngIf="user.genre === 'Masculin'; else femaleImage">
                   <img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
                 </ng-container>
                 <ng-template #femaleImage>
                   <img class="rounded-circle mt-5" width="150px" src="https://img.icons8.com/?size=512&id=912rt74nJqQV&format=png">
-                </ng-template>
-                             
+                </ng-template> 
+            </div>
+                <ng-container *ngIf="imgurl">
+                    <img [src]="imgurl"class="mg-fluid rounded-circle mb-3" width="80%">
+                    
+                  </ng-container>          
                 <span class="font-weight-bold">{{username}}</span><span class="text-black-50">{{email}}</span><span> </span></div>
         </div>
         <div class="col-md-5 border-right">

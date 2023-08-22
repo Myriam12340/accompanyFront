@@ -43,7 +43,7 @@ cv:string;
       prenom: ['', Validators.required],
       tel1: ['', Validators.required],
       tel2: ['', Validators.required],
-      competance:[''],
+      Competance:[''],
       email: ['', [Validators.required, Validators.email]],
      avis:[''],
 
@@ -94,7 +94,7 @@ async addEntretien(): Promise<void> {
   this.candidat.email = this.entretienForm.get('email')?.value;
   this.candidat.tel1 = this.entretienForm.get('tel1')?.value;
   this.candidat.tel2 = this.entretienForm.get('tel2')?.value;
-  this.candidat.Competance = this.entretienForm.get('competance')?.value; // Fix typo 'Competance'
+  this.candidat.Competance = this.entretienForm.get('Competance')?.value; // Fix typo 'Competance'
   this.candidat.CvPdfUrl = this.entretienForm.get('cvPdf')?.value;
   this.entretient.avis = this.entretienForm.get('avis')?.value;
   this.entretient.descriptionPoste = this.entretienForm.get('descriptionPoste')?.value;
@@ -115,12 +115,14 @@ async addEntretien(): Promise<void> {
     (entretient) => {
       console.log(entretient);
       console.log(this.candidat)
-     
+      this.router.navigate(['/list-entretien']);
+
     },
     (error) => {
       console.error(error);
     }
   );
+
 }
 
 

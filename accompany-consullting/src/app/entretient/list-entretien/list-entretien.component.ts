@@ -45,6 +45,39 @@ role : any ;
         error => console.error(error)
       );
     }
+
+
+  
+
+  }
+  getall(){
+
+    this.entretienService.getallentretien().subscribe(
+      (entretients :any )=> {
+        console.log("all",entretients);
+      },
+      error => console.error(error)
+    );
+  }
+  showStandByEntretiens(): void {
+    this.entretienService.getallentretien().subscribe((data: any) => {
+      this.entretients = data.filter((entretien: any) => entretien.statut === "standby");
+  
+      this.entretients.forEach(e => {
+        this.authService.getUser(e.recruteur).subscribe((recruteurData) => {
+          this.recruteur = recruteurData;
+          e.nom_recruteur = this.recruteur.userName;
+        });
+  
+        this.entretienService.getCandidat(e.candidat).subscribe((candidatData) => {
+          this.candidat = candidatData;
+          e.nom_candidat = this.candidat.nom + " " + this.candidat.prenom;
+        });
+      });
+  
+      this.dataSource.data = this.entretients;
+      console.log(data);
+    });
   }
   
 

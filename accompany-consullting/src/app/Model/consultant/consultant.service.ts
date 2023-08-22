@@ -96,6 +96,8 @@ console.log (soldeconge);
     return this.http.put(url,id);
   }
 
-
+  uploadFile(formData: FormData): Observable<any> {
+    return this.http.post(`${this.APIurl}/Consultants/upload`, formData);
+  }
 
 }

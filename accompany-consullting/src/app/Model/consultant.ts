@@ -30,7 +30,7 @@ competance:boolean;
 
 prochain_entretien: string; // Nouvelle propriété
 
-
+photo:string;
 }
 
 

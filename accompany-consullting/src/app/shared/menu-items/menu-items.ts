@@ -53,12 +53,7 @@ export class MenuItems {
                 type: 'link',
                 icon: 'playlist_add_check'
               }
-              , {
-                state: 'listconge',
-                name: 'Mes congés',
-                type: 'link',
-                icon: 'face'
-              }
+              , 
             );
           } else if (role === "admin") {
             this.MENUITEMS.push(
@@ -146,12 +141,7 @@ type: 'link', name: 'Liste du personnels ',
                 name: 'Projet',
                 icon: 'featured_play_list'
               },
-              {
-                state: 'evaluation',
-                type: 'link',
-                name: 'Évaluation',
-                icon: 'notifications_active'
-              },
+            
               {
                 state: 'list-entretien',
                 type: 'link',

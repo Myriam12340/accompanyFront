@@ -21,9 +21,13 @@
     <button type="button"  class="btn btn-primary mr-2"  style=" border-radius: 10px;"(click)="filteredEntretiensbyaction('Historique')">
          <i class="fa fa-history"></i> Historique
     </button>
-    <button type="button" class="btn btn-primary" style=" border-radius: 10px;" (click)="allentretien()">
+    <button type="button" class="btn btn-primary mr-2" style=" border-radius: 10px;" (click)="allentretien()">
         <i class="fa fa-clock-o"></i> Entretien à faire
     </button>
+    <div class="col-1" *ngIf="role=== 'admin'">
+      <button type="button" class="btn btn-primary" style="border-radius: 10px;" *ngIf="role === 'admin'" (click)="showStandByEntretiens()">
+        <i class="fa fa-file-archive-o" aria-hidden="true"></i> Stand By
+      </button></div>
   </div>
 </div>
 

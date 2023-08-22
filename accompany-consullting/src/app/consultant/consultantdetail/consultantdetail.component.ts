@@ -5,6 +5,8 @@ import { DatePipe } from '@angular/common';
 import { EntretienService } from 'src/app/service/entretient.service';
 import { entretient } from 'src/app/Model/entretient';
 import { ConsultantService } from 'src/app/Model/consultant/consultant.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-consultantdetail',
   templateUrl: './consultantdetail.component.html',
@@ -20,13 +22,16 @@ candidat:any;
 entretients: entretient[] = [];
 recruteur :any;
 recruteursuivant :any;
-
-constructor(@Inject(MAT_DIALOG_DATA) private data: any ,private entretienService:EntretienService, private consultantservice : ConsultantService ) { 
+imgurl: SafeResourceUrl;
+showPdf: boolean = false;
+photo:any;
+constructor(@Inject(MAT_DIALOG_DATA) private data: any ,private sanitizer: DomSanitizer,private http: HttpClient,private entretienService:EntretienService, private consultantservice : ConsultantService ) { 
     this.consultant = data.consultant;
 
   }
 
   ngOnInit(): void {
+    this.photo = this.consultant.photo;
 
     this.entretienService.getCandidatparemail(this.consultant.mail).subscribe((candidatData) => {
       this.candidat = candidatData;
@@ -58,7 +63,20 @@ constructor(@Inject(MAT_DIALOG_DATA) private data: any ,private entretienService
       
     });
    
-    
+    console.log("urrrrrrl",this.photo);
+    this.http.get(`http://localhost:60734/api/Consultants/download-pdf?fileName=${this.photo}`, {
+      responseType: 'arraybuffer',
+    }).subscribe(
+      (response: any) => {
+        const blob = new Blob([response], { type: 'application/image' });
+        this.imgurl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+        console.log("urrrrrrl",this.imgurl);
+
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   dateconvert(date:any):String{
@@ -72,5 +90,9 @@ constructor(@Inject(MAT_DIALOG_DATA) private data: any ,private entretienService
 
   // Formater la date en utilisant moment.js
 
+  
 
+  togglePdfViewer(): void {
+    this.showPdf = !this.showPdf;
+  }
 }

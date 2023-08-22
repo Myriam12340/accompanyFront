@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../service/Authentication Service/auth.service';
 import { Consultant } from '../Model/consultant';
 import { ConsultantService } from '../Model/consultant/consultant.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-home',
@@ -17,8 +19,10 @@ export class HomeComponent  {
     id : any ;
     role:any ;
     user: any ;
-
-  constructor(private authService: AuthService , private consultantservice: ConsultantService,) { }
+    imgurl: SafeResourceUrl;
+    showPdf: boolean = false;
+    photo:any;
+  constructor(private sanitizer: DomSanitizer,private http: HttpClient,private authService: AuthService , private consultantservice: ConsultantService,) { }
 
   ngOnInit(): void {
     const token = this.authService.getToken();
@@ -41,11 +45,25 @@ export class HomeComponent  {
           this.consultantservice.getConsultantbyemail(this.email).subscribe(
             (user) => {
               this.user = user;
-            console.log("utlisateur",this.user);
+              this.photo = this.user.photo;
+              this.http.get(`http://localhost:60734/api/Consultants/download-pdf?fileName=${this.photo}`, {
+                responseType: 'arraybuffer',
+              }).subscribe(
+                (response: any) => {
+                  const blob = new Blob([response], { type: 'application/image' });
+                  this.imgurl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+                  console.log("urrrrrrl",this.imgurl);
+          
+                },
+                (error) => {
+                  console.error(error);
+                }
+              );
             });
 
 
-
+            console.log("urrrrrrl",this.photo);
+          
 
 
 

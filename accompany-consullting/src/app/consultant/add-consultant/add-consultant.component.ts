@@ -15,6 +15,7 @@ import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 export class AddConsultantComponent implements OnInit {
   sp=false;
+  img:any;
   consultant: Consultant = new Consultant();
   myForm: FormGroup;
   step = 0;
@@ -67,12 +68,14 @@ business_unit:["",Validators.required],
       code:["",Validators.required],
       age:['', Validators.required],
        situation_amoureuse:["",Validators.required]
+       ,photo:[ this.img]
     });
 
 
   }
 
   async ajouterConsultant() {
+    
     this.consultant = this.myForm.value;
     console.log(this.myForm.value);
   
@@ -116,5 +119,27 @@ business_unit:["",Validators.required],
   prevStep() {
     this.step--;
     console.log(this.step);
+  }
+
+
+  onFileSelected(event: any) {
+    const selectedFile = event.target.files[0];
+  
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+  
+      this.consultantService.uploadFile(formData).subscribe(
+        (response) => {
+          const fileUrl = response.fileUrl;
+          this.img= fileUrl;
+          this.myForm.patchValue({ photo: fileUrl }); // Mise à jour de la valeur dans le formulaire
+          console.log('File uploaded successfully. File URL:', fileUrl);
+        },
+        (error) => {
+          console.error('Error uploading file:', error);
+        }
+      );
+    }
   }
 }

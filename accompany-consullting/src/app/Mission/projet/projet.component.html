@@ -22,12 +22,13 @@
  <button type="button"  class="btn btn-outline-info mr-2"  style=" border-radius: 10px;"(click)="loadInProgressMissions()">
   <i class="fa fa-unlock-alt"></i> En cours
 </button>
+<div class="col-1" *ngIf="role=== 'admin'">
 
 <button type="button" class="btn btn-outline-info mr-2" style="border-radius: 10px;"
         (click)="loadConsultants()" [disabled]="clique >= 1">
   <i class="fa fa-users"></i> Consultant
 </button>
-
+</div>
     
   </div>
 </div>

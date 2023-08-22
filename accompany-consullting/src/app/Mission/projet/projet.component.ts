@@ -22,6 +22,7 @@ export class ProjetComponent implements OnInit {
   missions: Mission[]; // List of missions affected to the manager
   dataSource = new MatTableDataSource<Mission>();
  clique  : number = 0;
+ role : any ;
 
   rh: any;
   userProfile: any;
@@ -54,6 +55,8 @@ export class ProjetComponent implements OnInit {
         (userProfile) => {
           this.userProfile = userProfile;
           console.log(this.userProfile);
+          this.role  = userProfile.role;
+
           this.rh = this.userProfile.email;
           this.consultantservice.getConsultantbyemail(this.rh).subscribe(
             (consultant) => {

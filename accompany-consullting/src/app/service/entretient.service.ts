@@ -77,6 +77,8 @@ getEntretienCandidat(val : number): Observable<entretient[]>{
     return this.http.post(`${this.baseUrl}/upload`, formData);
   }
 
-
+getallentretien(){
+  return this.http.get(this.baseUrl );
+}
 
 }

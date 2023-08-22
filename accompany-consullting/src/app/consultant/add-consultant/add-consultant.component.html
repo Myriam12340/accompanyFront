@@ -117,6 +117,10 @@
         <mat-error *ngIf="myForm?.get('tel2')?.hasError('numeric')">Le numéro téléphone doit comporter des chiffres</mat-error>
       </mat-form-field>
         <!-- ============================= -->
+        <div>
+          <label for="img">photo:</label>
+          <input type="file" id="photo" (change)="onFileSelected($event)" accept=".png">
+        </div>
 
       <mat-form-field>
         <mat-label>Statut</mat-label>

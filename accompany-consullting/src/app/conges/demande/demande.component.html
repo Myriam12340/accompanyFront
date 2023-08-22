@@ -35,8 +35,16 @@
 
                         <mat-error *ngIf="demandeForm?.get('validateur')?.hasError('required')">Le validateur est obligatoire</mat-error>
 
-                          
+                      
+
                     </div>
+                
+                </div>
+                <br>
+                <div class="col">
+                    <label for="cc">En CC : <i class="fa fa-check"></i> </label>
+                    
+                    <input type="text" id="cc" formControlName="cc">
                 </div>
             </mat-card>
             <br>
