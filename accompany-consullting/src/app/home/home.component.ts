@@ -22,8 +22,17 @@ export class HomeComponent  {
     imgurl: SafeResourceUrl;
     showPdf: boolean = false;
     photo:any;
-  constructor(private sanitizer: DomSanitizer,private http: HttpClient,private authService: AuthService , private consultantservice: ConsultantService,) { }
+    showPasswordFields: boolean = false; // Nouvelle variable
 
+    currentPassword: string = '';
+  newPassword: string = '';
+  constructor(private sanitizer: DomSanitizer,private http: HttpClient,private authService: AuthService , private consultantservice: ConsultantService,) { }
+  togglePasswordFields(): void {
+    this.showPasswordFields = !this.showPasswordFields;
+    // Réinitialisez les champs lorsque vous basculez l'affichage
+    this.currentPassword = '';
+    this.newPassword = '';
+  }
   ngOnInit(): void {
     const token = this.authService.getToken();
     console.log(localStorage.getItem("jwt"));
@@ -75,6 +84,24 @@ export class HomeComponent  {
 
     }
 
+  }
+  updatePassword(): void {
+    const userId =   this.id ; // Remplacez par l'ID de l'utilisateur
+    
+    this.authService.updatePassword(userId, this.currentPassword, this.newPassword)
+      .subscribe(
+        () => {
+          console.log('Mot de passe mis à jour avec succès.');
+          // Réinitialisez les champs après la mise à jour réussie
+          this.currentPassword = '';
+          this.newPassword = '';
+          // Gérez les messages de succès ici
+        },
+        error => {
+          console.error('Erreur lors de la mise à jour du mot de passe:', error);
+          // Gérez les erreurs ici
+        }
+      );
   }
 
   logout() {

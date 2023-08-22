@@ -99,4 +99,12 @@ e : any ;
 
     return this.http.get<UserProfile[]>(`${this.apiUrl}/email/?search=${searchTerm}`, { headers });
   }
+
+
+  updatePassword(id: string, currentPassword: string, newPassword: string): Observable<any> {
+    const url = `${this.apiUrl}/update-password/${id}`;
+    const body = { currentPassword, newPassword };
+
+    return this.http.put(url, body);
+  }
 }

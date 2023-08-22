@@ -115,7 +115,7 @@ type: 'link', name: 'Liste du personnels ',
             );
           }
 
-          else if (role === "manager") {
+          else if (role === "Manager") {
             this.MENUITEMS.push(
              
              
