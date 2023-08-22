@@ -30,3 +30,24 @@ input[type=text], select {
     margin: 20px 20px;
 
 }
+
+/* Styles spécifiques pour l'impression */
+@media print {
+  /* Masquer le header et le footer lors de l'impression */
+  header, footer {
+    display: none;
+  }
+
+  /* Ajuster la taille de la police pour l'impression */
+  body {
+    font-size: 12pt;
+  }
+
+  /* Appliquer des marges pour la mise en page imprimée */
+  .print-content {
+    margin: 1cm;
+    font-size: 12pt;
+  }
+  
+  /* Personnaliser d'autres éléments de mise en page si nécessaire */
+}

@@ -3,13 +3,13 @@
 
 <mat-card>
     <div class="p-20 bg-info position-relative">
-        <h4 class="card-title text-white m-0">Liste des consultants</h4>
+        <h4 class="card-title text-white m-0">Liste du personnels</h4>
      
       </div>
       <div class="search-container d-flex align-items-center justify-content-end">
         <mat-form-field appearance="fill" class="mb-0">
-          <mat-label>Rechercher un consultant</mat-label>
-          <input matInput placeholder="Nom ou prénom de consultant" [(ngModel)]="searchTerm" (keyup)="onSearch()">
+          <mat-label>Rechercher un personnel</mat-label>
+          <input matInput placeholder="Nom ou prénom du personnel" [(ngModel)]="searchTerm" (keyup)="onSearch()">
           <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchTerm" (click)="clearSearchTerm()">
             <mat-icon>search</mat-icon>
           </button>
@@ -102,11 +102,11 @@
           </div>
           </div>
     
-        <mat-paginator [length]="consultants.length"
-        [pageSize]="pageSize"
-        [pageIndex]="currentPage"
-        [pageSizeOptions]="[1, 10, 20]"
-        (page)="onPageChange($event)">
+          <mat-paginator [length]="totalConsultants"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions"
+          [pageIndex]="currentPage"
+          (page)="onPageChange($event)">
 </mat-paginator>
 
     </mat-card>

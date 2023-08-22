@@ -78,15 +78,33 @@
           <span class="table-title">Action</span>
         </th>
         <td mat-cell *matCellDef="let consultant" [ngClass]="{'highlight-row': isNextEvaluationToday(consultant)}">
-          <button mat-icon-button color="primary" *ngIf="!consultant.isI6" (click)="evaluerConsultant1(consultant.id, consultant.nom, consultant.prenom, consultant.date_integration, consultant.grade, consultant.isI3 ? 'Intégration 3 mois' : 'Intégration 1 mois')">
+         
+         <div *ngIf="!consultant.isI6 &&!consultant.isI3 ">
+         
+          <button mat-icon-button color="primary" [disabled]="consultant.nb >=1 " *ngIf="!consultant.isI6" (click)="evaluerConsultant1(consultant.id, consultant.nom, consultant.prenom, consultant.date_integration, consultant.grade, consultant.isI3 ? 'Intégration 3 mois' : 'Intégration 1 mois')">
             <mat-icon>play_arrow</mat-icon>
             {{ consultant.isI3 && !consultant.isI1 ? 'Intégration 3 mois' : consultant.isI1 && !consultant.isI3 ? 'Intégration 1 mois' : '' }}
           </button>
+        </div>
 
-          <button mat-icon-button color="primary" *ngIf="consultant.isI6 && !consultant.isI1 && !consultant.isI3" (click)="eval_competance(consultant.id, consultant.nom, consultant.prenom, consultant.date_integration, consultant.grade, 'Evaluation 6 mois')">
+        <div *ngIf="!consultant.isI6 &&!consultant.isI1 ">
+         
+          <button mat-icon-button color="primary" [disabled]="consultant.nb>= 2 " *ngIf="!consultant.isI6" (click)="evaluerConsultant1(consultant.id, consultant.nom, consultant.prenom, consultant.date_integration, consultant.grade, consultant.isI3 ? 'Intégration 3 mois' : 'Intégration 1 mois')">
             <mat-icon>play_arrow</mat-icon>
-            Evaluation 6 mois
+            {{ consultant.isI3 && !consultant.isI1 ? 'Intégration 3 mois' : consultant.isI1 && !consultant.isI3 ? 'Intégration 1 mois' : '' }}
           </button>
+        </div>
+
+
+
+          <button mat-icon-button color="primary"
+          *ngIf="consultant.isI6 && !consultant.isI1 && !consultant.isI3"
+          [disabled]="consultant.competance "
+          (click)="eval_competance(consultant.id, consultant.nom, consultant.prenom, consultant.date_integration, consultant.grade, 'Evaluation 6 mois')">
+    <mat-icon>play_arrow</mat-icon>
+    Evaluation 6 mois
+  </button>
+  
         </td>
       </ng-container>
 
@@ -124,12 +142,10 @@
           <th mat-header-cell *matHeaderCellDef class="thead-info">
             <span class="table-title">Action</span>
           </th>
-          <td mat-cell *matCellDef="let consultant" >
-          
-  
-            <button type="button" class="btn btn-primary">Consulter</button>
-  
+          <td mat-cell *matCellDef="let evaluation">
+            <button type="button" class="btn btn-primary" (click)="showintegration(evaluation)">Consulter</button>
           </td>
+          
         </ng-container>
         <!-- Ajoutez autant de colonnes que nécessaire pour les champs de l'évaluation -->
 
@@ -176,10 +192,10 @@
         <th mat-header-cell *matHeaderCellDef class="thead-info">
           <span class="table-title">Action</span>
         </th>
-        <td mat-cell *matCellDef="let consultant" >
+        <td mat-cell *matCellDef="let evalcomp " >
         
 
-          <button type="button" class="btn btn-primary">Consulter</button>
+          <button type="button" class="btn btn-primary" (click)="showcompetance(evalcomp)">Consulter</button>
 
         </td>
       </ng-container>

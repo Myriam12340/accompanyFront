@@ -47,19 +47,23 @@
             <input type="text" class="form-control" id="nbConsultants" value="{{membre.nom}}  {{membre.prenom}}" disabled style="cursor: not-allowed;">
 
 
-         <button type="submit" class="btn btn-primary mr-2" (click)="evaluer(membre.nom,membre.prenom,membre.id, mission.id, mission.manager)"
+         <button type="submit" class="btn btn-primary mr-2" (click)="evaluer(membre.nom,membre.prenom,membre.id, mission.id, mission.manager)"*ngIf="from === 'frommanager'"
   [disabled]="consultantsEvalues.includes(membre.id)">
   <i class="fas fa-check"></i> Évaluer
 </button>
-
+<button type="submit" class="btn btn-primary mr-2" (click)="consulter_eval(membre.nom,membre.prenom,membre.id, mission.id, mission.manager)"*ngIf="from === 'fromrh'"
+[disabled]="consultantsEvalues.includes(membre.id)">
+<i class="fas fa-check"></i> Voir l'eval
+</button>
               
 
           </div>
-          
-          <button class="btn btn-danger btn-sm"  aria-label="Home">Terminer
-            <mat-icon>home</mat-icon>
-          </button>
-
+          <ng-container *ngIf="from === 'frommanager'">
+            <button class="btn btn-danger btn-sm"  aria-label="Home" (click)="terimner()">Terminer
+                <mat-icon>home</mat-icon>
+              </button>
+          </ng-container>
+     
 
 
 

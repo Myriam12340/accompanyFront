@@ -67,3 +67,19 @@ select
   border-radius: 10px;
   box-sizing: border-box;
 }
+
+
+.custom-button-container {
+  margin-bottom: 20px;
+}
+
+.custom-button {
+  background-color: #1347a4;
+  color: aliceblue;
+  margin-right: 10px;
+}
+
+.custom-cancel-button {
+  background-color: #f95959;
+  color: azure;
+}

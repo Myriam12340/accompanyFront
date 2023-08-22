@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EntretienService } from '../service/entretient.service';
 import { Candidat } from '../Model/candidat';
 import { entretient } from '../Model/entretient';
-import { F } from '@angular/cdk/keycodes';
 import { EntretientViewModel } from '../Model/entretient-view-model';
 import { AuthService } from '../service/Authentication Service/auth.service'
 import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
@@ -27,6 +26,8 @@ export class EntretientComponent implements OnInit {
   u2 : any ;
   recruteur : any ;
   user: any ;
+  fileContent: string | ArrayBuffer | null = null;
+cv:string;
   availableColors: DemoColor[] = [
      
     { name: 'vous devez Remplir tous les champs ', color: 'warn' }
@@ -49,12 +50,11 @@ export class EntretientComponent implements OnInit {
      post: ['', Validators.required],
      descriptionPoste: [''],
      statut: [''],
-     cvPdf: [''] // Ajouter le champ pour le fichier PDF
+     CvPdfUrl: [''] // Ajouter le champ pour le fichier PDF
 
 
 
     });
-
 
 
     if (sessionStorage.getItem("jwt")) {
@@ -88,43 +88,39 @@ export class EntretientComponent implements OnInit {
 
 
 // Extract the logic for adding entretien to a separate method
-  async addEntretien(): Promise<void> {
-
-
+async addEntretien(): Promise<void> {
   this.candidat.nom = this.entretienForm.get('nom')?.value;
   this.candidat.Prenom = this.entretienForm.get('prenom')?.value;
   this.candidat.email = this.entretienForm.get('email')?.value;
-  this.candidat.tel1 = this.entretienForm.get('tel1')?.value ;
-  this.candidat.tel2 = this.entretienForm.get('tel2')?.value ;
-  this.candidat.competance = this.entretienForm.get('competance')?.value ;
-  this.entretient.avis =this.entretienForm.get('avis')?.value;
-  this.entretient.descriptionPoste = this.entretienForm.get('descriptionPoste')?.value ;
-  this.entretient.post = this.entretienForm.get('post')?.value ;
-  this.entretient.statut = this.entretienForm.get('statut')?.value ;
-  if (this.entretient.statut == "GO")
-  {this.entretient.valid = true }
-  this.entretient.recruteur = this.recruteur ;
+  this.candidat.tel1 = this.entretienForm.get('tel1')?.value;
+  this.candidat.tel2 = this.entretienForm.get('tel2')?.value;
+  this.candidat.Competance = this.entretienForm.get('competance')?.value; // Fix typo 'Competance'
+  this.candidat.CvPdfUrl = this.entretienForm.get('cvPdf')?.value;
+  this.entretient.avis = this.entretienForm.get('avis')?.value;
+  this.entretient.descriptionPoste = this.entretienForm.get('descriptionPoste')?.value;
+  this.entretient.post = this.entretienForm.get('post')?.value;
+  this.entretient.statut = this.entretienForm.get('statut')?.value;
+  this.entretient.traite = 'pasencore';
+  if (this.entretient.statut === 'GO') {
+    this.entretient.valid = true;
+  }
+  this.entretient.recruteur = this.recruteur;
+
+ this.candidat.CvPdfUrl = this.cv;
   const viewModel = new EntretientViewModel();
   viewModel.candidat = this.candidat;
   viewModel.entretient = this.entretient;
-  this.onFileSelected;
-  console.log(viewModel);
-  this.entretienService.addEntretien(viewModel)
-    .subscribe(entretient => {
-      console.log(entretient);
-      // réinitialiser le formulaire après ajout réussi
-    });
-    console.log(this.entretient.recruteur);
-    if (this.entretienForm.valid) {
-      await this.snackBar.open("entretient  ajouté avec succès","test", {
-        duration: 2000,
-        panelClass: ['mat-toolbar', 'mat-primary']
-      });
-      this.router.navigate(['/list-entretien']).then(() => {
-        window.location.reload();
-      }); 
-    } 
 
+  this.entretienService.addEntretien(viewModel).subscribe(
+    (entretient) => {
+      console.log(entretient);
+      console.log(this.candidat)
+     
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
 }
 
 
@@ -152,13 +148,30 @@ annuler(){
 
 
 
-//partie file 
-onFileSelected(event) {
-  const file: File = event.target.files[0];
-  this.entretienForm.get('cvPdf')?.setValue(file); // Enregistrer le fichier PDF dans le formulaire
-}
 
+  onFileSelected(event: any) {
+    const selectedFile = event.target.files[0];
+  
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+  
+      this.entretienService.uploadFile(formData).subscribe(
+        (response) => {
+          const fileUrl = response.fileUrl;
+          this.cv = fileUrl;
+          this.entretienForm.patchValue({ CvPdfUrl: fileUrl }); // Mise à jour de la valeur dans le formulaire
+          console.log('File uploaded successfully. File URL:', fileUrl);
+        },
+        (error) => {
+          console.error('Error uploading file:', error);
+        }
+      );
+    }
+  }
+  
+  
+  
 
-
-
+  
 }

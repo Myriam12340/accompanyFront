@@ -41,5 +41,7 @@ export class ConsultantModule {
   isI3 : boolean ;
   isI6 : boolean ;
   prochain_entretien: string; // Nouvelle propriété
+  nb : number;
+  competance:boolean;
 
  }

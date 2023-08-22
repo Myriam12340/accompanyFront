@@ -25,6 +25,8 @@ situation_amoureuse:string;
 isI1 : Boolean ;
 isI3 : boolean ;
 isI6 : boolean ;
+nb : number;
+competance:boolean;
 
 prochain_entretien: string; // Nouvelle propriété
 

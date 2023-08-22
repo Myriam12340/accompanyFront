@@ -17,7 +17,9 @@ export class MailRecruteurComponent  {
     toName: '',
     toEmail: '',
     subject: '',
-    body: ''
+    body: '',
+    CcEmail:''
+    ,CcName:''
   };
 
   constructor(private authService: AuthService,private emailService: MailService , public dialogRef: MatDialogRef<MailRecruteurComponent>) { }

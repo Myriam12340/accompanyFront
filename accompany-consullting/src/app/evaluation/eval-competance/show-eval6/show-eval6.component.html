@@ -1,0 +1,236 @@
+
+<mat-toolbar style="background-color: #1347a4;">
+    <mat-toolbar-row>
+      <div class="image-3d">
+        <img src="assets/images/bilan.png" alt="Bilan RH 1à3 mois">
+      </div>
+      <span style="margin-left: auto;margin-right: auto;color: aliceblue;">Bilan RH d' 6 mois</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  
+  <mat-card>
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #000;">
+      <thead style="background-color: #1347a4;">
+        <tr>
+          <th class="th">Nom et prénom du collaborateur</th>
+          <th class="th">Date d'intégration</th>
+          <th class="th" >profils consultant </th>
+        </tr>
+      </thead>
+      <tr>
+        <td class="th_contenu">{{ consultantData.nom }} {{ consultantData.prenom }}</td>
+        <td class="th_contenu">{{consultantData.date_integration| date:'dd-MM-yyyy'}}</td>
+        <td class="text-center ">
+           <button type="button" mat-raised-button color="accent" style="width: 100px;" (mouseenter)="onMouseEnter()">
+            <i class="fa fa-eye"></i> Consulter
+          </button> 
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="background-color:#1e5d6b;; color: aliceblue; font-family: sans-serif; font-size: large; border: 1px solid #000;">HR BP</td>
+        <td class="th_contenu">{{hr}} </td>
+      </tr>
+    </table>
+  
+    <br><br>
+  
+    <mat-toolbar style="background-color: #1347a4;">
+      <mat-toolbar-row>
+        <span style="margin-left: auto;margin-right: auto;color: aliceblue;text-align: center;">Liste des missions</span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  
+    <div *ngFor="let mission of missions" >
+      <table style="width: 100%; border: 2px solid #24527a;">
+      <ng-container *ngIf="mission.feedbackManager !== null && mission.noteManager !== null">
+  
+      <mat-toolbar style="background-color: #1e5d6b; color: antiquewhite;">
+        <mat-toolbar-row>
+          <div class="mission-info">
+            <span>Missions:</span>
+            <mat-icon class="material-icons">assignment</mat-icon>
+            <input type="text" class="form-control" id="titre" value="{{titremission.titre}}"  disabled style="cursor: not-allowed;" required placeholder="Titre">
+          </div>
+          <div class="chef-projet-info">
+            <span>Chef de projet:</span>
+            <input type="text" class="form-control" id="manager" value="{{manager.mail}} " disabled style="cursor: not-allowed;"  placeholder="Email du chef de projet">
+          </div>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      </ng-container>
+      <table style="width: 100%;" *ngIf="mission.feedbackManager !== null && mission.noteManager !== null">
+        <thead>
+          <tr>
+            <th style="width: 33.33%; font-size:large; font-family: Georgia, serif; color: #24527a;">Critères</th>
+            <th style="width: 33.33%; font-size:large; font-family: Georgia, serif; color: #24527a;">Consultant</th>
+            <th style="width: 33.33%; font-size:large; font-family: Georgia, serif; color: #24527a;">HR BP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Roles et responsabilités</td>
+            <td>{{mission.roleC}}</td>
+            <td>{{mission.roleRH}}</td>
+          </tr>
+          <tr>
+            <td>Relation avec client</td>
+            <td>{{mission.relationClientC}}</td>
+            <td>{{mission.relationClientRH}}</td>
+          </tr>
+          <tr>
+            <td>Charge (surcharge / Baisse de charge)</td>
+            <td>{{mission.chargeC}}</td>
+            <td>{{mission.chargeRH}}</td>
+          </tr>
+          <tr>
+            <td>Satisfaction Globale</td>
+            <td>{{mission.satisficationC}}</td>
+            <td>{{mission.satisficationRH}}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+  
+      <mat-toolbar style="background-color: #1e5d6b; color: antiquewhite;">
+        <mat-toolbar-row>
+          <div class="mission-info">
+            <span>Partie Manager </span>
+            <mat-icon class="material-icons"></mat-icon>
+          </div>
+         
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <br>
+      <table style="width: 100%; ">
+        <tr>
+          <th >
+            <label for="exampleFormControlInput1" class="form-label" style="font-size: 16px;"> Note</label>
+  
+          </th>
+          <th >
+            <mat-icon class="material-icons" style="color: white; font-size: 24px; vertical-align: middle;">star_rate</mat-icon>
+            <span style="vertical-align: middle; font-size: 20px; ">{{ mission.noteManager }}</span>
+          </th>
+        </tr>
+        <tr>
+          <th >
+            <label class="form-label" style="font-size: 16px;">Feedback</label>
+          </th>
+          <th >
+            <div >
+              <mat-icon class="material-icons" style="color: white; font-size: 24px; vertical-align: middle;">post_add</mat-icon>
+              <span style="vertical-align: middle; font-size: 18px; ">{{ mission.feedbackManager }}</span>
+            </div>
+          </th>
+        </tr>
+      </table>
+      </table>
+  
+  </div>  
+  
+    <br>
+  
+   
+  
+  
+  
+  
+      <table class="custom-table">
+        <tbody>
+          <mat-toolbar  >
+            <mat-toolbar-row>
+              <tr>
+                <td>
+                  <label class="label" for="notemissions">Note Missions</label>
+                </td>
+                <td>
+                  <div class="input-icon">
+                    <input type="number"  id="notemissions" value="{{data.evaluation.notemissions}}" disabled style="cursor: not-allowed;">
+                    <i class="fa fa-star"></i>
+                  </div>
+                </td>
+              </tr>
+            </mat-toolbar-row>
+          </mat-toolbar>
+    
+          <mat-toolbar>
+            <mat-toolbar-row>
+              <tr>
+                <td>
+                  <label class="label">Note RH</label>
+                </td>
+                <td>
+                  <div class="input-icon">
+                    <input type="number"  value ="{{noterh}}"id="noterh" disabled style="cursor: not-allowed;">
+                    <i class="fa fa-star"></i>
+                  </div>
+                </td>
+              </tr>
+            </mat-toolbar-row>
+          </mat-toolbar>
+          <mat-toolbar >
+            <mat-toolbar-row>
+              <tr>
+                <td>
+                  <label class="label" >Contrat</label>
+                </td>
+                <td>
+                    <div class="input-icon">
+                    <input type="texte" value="{{data.evaluation.contrat}}" style="color:#1347a4">
+
+             </div>
+                </td>
+              </tr>
+            </mat-toolbar-row>
+          </mat-toolbar>
+          <mat-toolbar>
+            <mat-toolbar-row>
+              <td class="label-cell">
+                <label for="decision" class="label">Decision</label>
+              </td>
+              <td>
+                <div class="input-icon">
+                  <textarea id="decision" disabled style="cursor: not-allowed;">
+                    {{data.evaluation.decision}}
+                    </textarea>            
+                </div>
+              </td>
+            </mat-toolbar-row>
+          </mat-toolbar>
+          
+          <mat-toolbar class="custom-toolbar" style="background: linear-gradient(to right, #7ba7c4, #a0bad1);">
+            <mat-toolbar-row>
+              <tr>
+                <td class="label-cell">
+                  <label for="notefinal" class="label">Note Final</label>
+                </td>
+                <td>
+                  <div class="input-icon">
+                    <input type="number" value="{{data.evaluation.notefinal}}" id="notefinal"disabled style="cursor: not-allowed;">
+                    <i class="fa fa-check-circle"></i>
+                  </div>
+                </td>
+              </tr>
+            </mat-toolbar-row>
+          </mat-toolbar>
+    
+  
+    
+          
+          
+        </tbody>
+      </table>
+      <br>
+ 
+      
+  
+  
+      
+
+      
+  </mat-card>
+
+
+
+
+

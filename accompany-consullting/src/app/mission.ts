@@ -3,9 +3,14 @@ export class Mission {
     consultant: number;
     manager:number;
     titre?:string | null;
-    nom : string | null;
+    nom : string ;
     nomManager:string | null;
     manageremail:string|null ;
-    couleur: string;
+    date_debut: Date;
+    date_fin: Date;
 
+    couleur: string;
+    evaluations : any ;
+    nbeval : any ;
+ old : boolean;
 }

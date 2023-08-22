@@ -30,8 +30,10 @@
                         <input type="text" id="demandeur" value={{posteconsultant}} disabled style="cursor: not-allowed;">
                         
                         <label for="validateur">Validateur: <i class="fa fa-check"></i> </label>
+                        
                         <input type="text" id="validateur" formControlName="validateur">
 
+                        <mat-error *ngIf="demandeForm?.get('validateur')?.hasError('required')">Le validateur est obligatoire</mat-error>
 
                           
                     </div>
@@ -49,12 +51,15 @@
 
                 <div class="row">
                     <div class="col">
-                        <label for="soldeConge"> Solde de congé:</label>
-                        <input type="text" id="soldeConge" value="{{solde}}" disabled style="cursor: not-allowed;">
+                        
 
+                        <label for="soldeConge"> Solde de congé:</label>
+                        <input type="text" id="soldeConge" [value]="solde" disabled [ngClass]="{ 'text-danger': solde <= 0 }">
+                    
                         <label for="soldeMaladie"> Solde de maladie:</label>
-                        <input type="text" id="soldeMaladie" value="{{soldemaldie}}" disabled style="cursor: not-allowed;">
+                        <input type="text" id="soldeMaladie" [value]="soldemaldie" disabled [ngClass]="{ 'text-danger': soldemaldie <= 0 }">
                     </div>
+                    
                 </div>
             </mat-card>
             <br>
@@ -71,19 +76,26 @@
                     <div class="col">
                         <label for="dateDebut"> Date de début:</label>
                         <input type="date" id="dateDebut" formControlName="dateDebut" (input)="calculateDuree()">
+                   
 
                         <label for="dateFin"> Date de fin:</label>
-                        <input type="date" id="dateFin" formControlName="dateFin" (input)="calculateDuree()" >
+                        <input type="date" id="dateFin" formControlName="dateFin" (input)="calculateDuree()" [ngClass]="{ 'disabled': isDemiJourneeSelected }" >
 
                         <label for="demandeur"><i class="fa fa-clock-o"></i> Durée:</label>
-                        <input type="text" id="duree" [value]="duree >= 0 ? duree : 0" disabled style="cursor: not-allowed;">
+                        <input type="text" formControlName="duree" id="duree" [value]="duree >= 0 ? duree : 0" disabled style="cursor: not-allowed;" [ngClass]="{ 'disabled': isDemiJourneeSelected }">
                         <div *ngIf="demandeForm.hasError('invalidDates')" class="error-message">
                             <span style="color:#f95959;font-size: large;"><i class="fa fa-exclamation-circle"></i> Les dates sont invalides. Veuillez vous
                                 assurer que la date de début est inférieure à la date de fin.</span>
-                        </div>
-
+                        
                     </div>
+                    </div>
+                
+
+
                 </div>
+                <label>Demi-journée: </label>
+
+                <input type="radio" id="demiJournee" name="typeDuree"  (change)="onDemiJourneeChange()">
             </mat-card>
             <br>
 
@@ -97,14 +109,27 @@
             
                 <div class="row">
                     <div class="col">
-                        <input type="radio" id="congesExceptionnels" name="type" value="Congés Exceptionnels" formControlName="type">
-                        <label for="congesExceptionnels">Congés Exceptionnels</label><br>
+                      <input type="radio" id="congesExceptionnels" name="type" value="Congés Exceptionnels" formControlName="type"
+                        (change)="onCongesExceptionnelsSelected()">
+                      <label for="congesExceptionnels">Congés Exceptionnels</label><br>
                     </div>
                     <div class="col">
-                        <input type="radio" id="congesMaladie" name="type" value="Congés Maladie" formControlName="type">
-                        <label for="congesMaladie">Congés Maladie</label><br>
+                      <input type="radio" id="congesMaladie" name="type" value="Congés Maladie" formControlName="type"
+                        (change)="onCongesMaladieSelected()">
+                      <label for="congesMaladie">Congés Maladie</label><br>
+                  
+                      <!-- Champ de téléchargement PDF conditionnel -->
+                   
+                      
                     </div>
-                </div>
+                    <div class="col">   <div *ngIf="isCongesMaladieSelected">
+                        <label for="certif" class="custom-file-upload">
+                          Choisir un certificat médical (PDF)
+                        </label>
+                        <input type="file" id="certif" (change)="onFileSelected($event)" accept=".pdf">
+                      </div></div>
+                  </div>
+                  
                 
             </mat-card>
             

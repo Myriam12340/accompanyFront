@@ -61,23 +61,23 @@ add() {
   this.evalMensuel.consultant = this.data.consultant;
   this.evalMensuel.manager = this.data.manager;
   this.evalMensuel.mission = this.data.mission;
-  this.evalMensuel.qualité = this.evalForm.value.Qualité;
-  this.evalMensuel.délai = this.evalForm.value.Délai;
-  this.evalMensuel.périmètre = this.evalForm.value.Périmètre;
+  this.evalMensuel.qualite = this.evalForm.value.Qualité;
+  this.evalMensuel.delai = this.evalForm.value.Délai;
+  this.evalMensuel.perimetre = this.evalForm.value.Périmètre;
   this.evalMensuel.Budge = this.evalForm.value.Budge;
+  this.dialogRef.close( this.evalMensuel);
+  // this.missionservice.addeval_menusel_Mission(this.evalMensuel).subscribe(
+  //   result => {
+  //     // Handle the success response
+  //     console.log('Evaluation added successfully', result);
 
-  this.missionservice.addeval_menusel_Mission(this.evalMensuel).subscribe(
-    result => {
-      // Handle the success response
-      console.log('Evaluation added successfully', result);
-
-      this.dialogRef.close(this.evalMensuel.consultant);
-    },
-    error => {
-      // Handle the error response
-      console.error('Failed to add evaluation', error);
-    }
-  );
+  //     this.dialogRef.close( this.evalMensuel);
+  //   },
+  //   error => {
+  //     // Handle the error response
+  //     console.error('Failed to add evaluation', error);
+  //   }
+  // );
 }
 
   

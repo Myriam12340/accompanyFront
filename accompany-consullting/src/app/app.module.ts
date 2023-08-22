@@ -53,6 +53,13 @@ import { EvalMonthComponent } from './manager-eval/eval-month/eval-month.compone
 import { EvalMonthConsultantComponent } from './manager-eval/eval-month/eval-month-consultant/eval-month-consultant.component';
 import { ProjetComponent } from './Mission/projet/projet.component';
 import { MissionsManagerComponent } from './Mission/missions-manager/missions-manager.component';
+import { ConsultantEvalMissionComponent } from './Mission/projet/consultant-eval-mission/consultant-eval-mission.component';
+import { ConsutantevaluationsComponent } from './evaluation/consutantevaluations/consutantevaluations.component';
+import { ShowEvaluationIntegrationComponent } from './evaluation/show-evaluation-integration/show-evaluation-integration.component';
+import { ShowEval6Component } from './evaluation/eval-competance/show-eval6/show-eval6.component';
+import { AdminComponent } from './admin/admin.component';
+import { DashadminComponent } from './admin/dashadmin/dashadmin.component';
+import { ValidationRhComponent } from './conges/consulterdemande/validation-rh/validation-rh.component';
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
 }
@@ -98,6 +105,13 @@ export function tokenGetter() {
           EvalMonthConsultantComponent,
           ProjetComponent,
           MissionsManagerComponent,
+          ConsultantEvalMissionComponent,
+          ConsutantevaluationsComponent,
+          ShowEvaluationIntegrationComponent,
+          ShowEval6Component,
+          AdminComponent,
+          DashadminComponent,
+          ValidationRhComponent,
           
   ],
   imports: [

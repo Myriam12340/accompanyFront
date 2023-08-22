@@ -30,3 +30,30 @@ input[type=text], select {
     margin: 20px 20px;
 
 }
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+.text-danger {
+  color: red;
+}
+
+
+input[type="file"] {
+  display: none; /* Masquer l'élément de base */
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  background-color: #f1f1f1;
+  color: #333;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.custom-file-upload:hover {
+  background-color: #ddd;
+}

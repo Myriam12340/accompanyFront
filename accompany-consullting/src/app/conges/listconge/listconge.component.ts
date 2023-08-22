@@ -34,7 +34,9 @@ email: EmailMessage = {
   toName: '',
   toEmail: '',
   subject: '',
-  body: ''
+  body: '',
+  CcEmail:''
+ ,CcName:''
 };
 day : string ;
 

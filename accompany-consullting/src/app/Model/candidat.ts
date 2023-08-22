@@ -5,8 +5,8 @@ export class Candidat {
     tel1: string;
     tel2: string;
     email: string;
-    competance: string;
-    cvPdf: File; // Ajouter la propriété pour le fichier PDF
+    Competance: string;
+    CvPdfUrl: string; // Ajouter la propriété pour le fichier PDF
 
   }
   

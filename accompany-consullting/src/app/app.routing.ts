@@ -4,11 +4,13 @@ import { HomeComponent } from './home/home.component';
 import { FullComponent } from './layouts/full/full.component';
 import { LoginComponent } from './SignUp Component/login/login.component';
 import { RegisterComponent } from './SignUp Component/register/register.component';
+import { AdminComponent } from './admin/admin.component';
 export const AppRoutes: Routes = [
   {path: 'signup', component: RegisterComponent}, 
    
 
   {path: 'login', component: LoginComponent}, 
+  { path: 'adminsignup', component: AdminComponent},
 
 
   {

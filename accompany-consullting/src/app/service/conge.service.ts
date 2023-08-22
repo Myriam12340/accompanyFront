@@ -67,6 +67,12 @@ export class CongeService {
 console.log (etatModifier);
     return this.http.put(url,id);
   }
+
+
+
+  uploadFile(formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/upload`, formData);
+  }
 }
   
   

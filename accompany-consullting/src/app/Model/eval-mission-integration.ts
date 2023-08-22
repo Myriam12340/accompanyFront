@@ -1,7 +1,7 @@
 export class EvalMissionIntegration {
 
 
-        id: number | null;
+        id: number 
         consultant: number;
         manager:number;
         mission:number;

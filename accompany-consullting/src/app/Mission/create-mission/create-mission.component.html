@@ -20,18 +20,26 @@
 
 
   <div class="row">
-    <div class="col">
+   
         <label for="demandeur">Titre de mission: <i class="fa fa-briefcase"></i> </label>
         <input type="text" class="form-control" id="titreMission" formControlName="titreMission" required>
         <label for="demandeur"> Chef de mission  <i class="fa fa-user" ></i></label>
         <input type="text" class="form-control" id="emailManager" formControlName="emailManager" required>
-
-        <label for="nbConsultants">Nombre de consultants</label>
-        <input type="number" class="form-control" id="nbConsultants" formControlName="nbConsultants" min="0" required>
-
-          
+       
+       
     </div>
-</div>
+    <div class="row">
+        <label for="dateDebut"> Date de début:</label>
+        <input type="date" id="dateDebut" formControlName="date_debut" >
+
+        <label for="dateFin"> Date de fin:</label>
+        <input type="date" id="dateFin" formControlName="date_fin"  >
+
+
+       
+        </div> 
+
+
 
 
 
@@ -44,7 +52,9 @@
         <span> <i class="fa-solid fa-user-plus"></i> Les membres d'equipe </span>
     </mat-toolbar-row>
 </mat-toolbar>
-    
+<label for="nbConsultants">Nombre de consultants</label>
+<input type="number" class="form-control" id="nbConsultants" formControlName="nbConsultants" min="0" required>
+
     <div *ngFor="let consultant of consultantControls; let i = index" class="form-group">
       <label for="emailConsultant{{i}}">Email du consultant {{i+1}}</label>
       <input type="text" class="form-control" [id]="'emailConsultant'+i" [formControlName]="'emailConsultant'+i" required>

@@ -29,7 +29,7 @@ export class ListEntretienComponent implements OnInit {
   candidat : any ;
   recruteur : any ;
   candidats : Candidat[]=[];
-
+role : any ;
   constructor( private router:Router,private authService: AuthService,private entretienService:EntretienService,private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -38,8 +38,9 @@ export class ListEntretienComponent implements OnInit {
         userProfile => {
           this.id = userProfile.id;
           console.log(this.id);
+        this.role  = userProfile.role;
   
-          this.allentretien();
+        this.allentretien();
         },
         error => console.error(error)
       );
@@ -55,33 +56,7 @@ export class ListEntretienComponent implements OnInit {
   dataSource = new MatTableDataSource(this.entretients);
   displayedColumns: string[] = ['avis','statut','candidat','recruteursuivant','Action'];
   historiqueColumns: string[] = ['avis', 'statut', 'candidat', 'recruteur'];
-  allentretien() {
-    this.entretienService.getEntretienaaffecte(this.id).subscribe((data) => {
-      this.entretients = data;
-      
-      // Fetch candidate's name and store it in nom_candidat property
-      this.entretients.forEach(e => {
-//recruteur name
-this.authService.getUser(e.recruteur).subscribe((recruteurData) => {
-  this.recruteur = recruteurData;
-  console.log("hello "+ this.recruteur.nom);
 
-  e.nom_recruteur = this.recruteur.userName ;
-});
-
-
-
-        //candidat name
-        this.entretienService.getCandidat(e.candidat).subscribe((candidatData) => {
-          this.candidat = candidatData;
-          console.log("hello "+ this.candidat.nom);
-          e.nom_candidat = this.candidat.nom +" " + this.candidat.prenom;        });
-
-      });
-      this.dataSource.data = this.entretients;
-      console.log(data);
-    });
-  }
   
   public filteredEntretiensbyaction(action : string ): void {
 
@@ -119,6 +94,60 @@ else
 }
 
   }
+  showEntretiensAFaire(): void {
+    this.entretienService.getEntretienaaffecte(this.id).subscribe((data) => {
+      this.entretients = data.filter(e => e.traite === 'pasencore');
+
+      // Rest of your existing code...
+
+      this.dataSource.data = this.entretients;
+      console.log(data);
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+  allentretien() {
+    this.entretienService.getEntretienaaffecte(this.id).subscribe((data) => {
+      this.entretients = data.filter(e => e.traite === 'pasencore');
+      
+      this.entretients.forEach(e => {
+//recruteur name
+this.authService.getUser(e.recruteur).subscribe((recruteurData) => {
+  this.recruteur = recruteurData;
+  console.log("hello "+ this.recruteur.nom);
+
+  e.nom_recruteur = this.recruteur.userName ;
+});
+
+
+
+        //candidat name
+        this.entretienService.getCandidat(e.candidat).subscribe((candidatData) => {
+          this.candidat = candidatData;
+          console.log("hello "+ this.candidat.nom);
+          e.nom_candidat = this.candidat.nom +" " + this.candidat.prenom;        });
+
+      });
+      this.dataSource.data = this.entretients;
+      console.log(data);
+    });
+  }
+
+
+
+
+
+
+
+
   add(){
 
 
@@ -128,8 +157,8 @@ else
 
 
 
-  onPasseClicked(Candidat: number , recruteurSuivant : number , descriptionPoste: string , post : string ) {
-    this.router.navigate(['/entretiensuivant'], { queryParams: { Candidat ,  recruteurSuivant , descriptionPoste , post} });
+  onPasseClicked(Candidat: number , recruteurSuivant : number , descriptionPoste: string , post : string , entretien : entretient ) {
+    this.router.navigate(['/entretiensuivant'], { queryParams: { Candidat ,  recruteurSuivant , descriptionPoste , post , entretien: JSON.stringify(entretien)  } });
   }
   buttondetail(Candidat: number  , descriptionPoste : string , post : string ) {
     this.router.navigate(['/entretientdetail'], { queryParams: { Candidat  , descriptionPoste , post} });

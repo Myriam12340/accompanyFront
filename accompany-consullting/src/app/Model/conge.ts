@@ -9,5 +9,6 @@ export class Conge {
     validateurnom :string ;
     demandeurnom : string ;
     duree : number ;
+    certif:string;
   }
   

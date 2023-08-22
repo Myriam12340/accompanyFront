@@ -6,7 +6,7 @@
       <div class="row">
         <div class="col-md-6 offset-md-3 mt-5">
 
-          <form [formGroup]="entretienForm">
+          <form [formGroup]="entretienForm" >
             <div class="p-20 bg-info">
               <h4 class="card-title text-white m-0 text-center">Description du poste</h4>
             </div>
@@ -45,13 +45,15 @@
                   <input matInput placeholder="Mobile 2" name="tel2" formControlName="tel2" required>
                 </mat-form-field>
                 <mat-form-field>
-                  <input matInput placeholder="Compétence" name="competence" formControlName="competence" required>
+                  <input matInput placeholder="Compétence" name="Competance" formControlName="Competance" required>
                 </mat-form-field>
                 <div>
-                  <label>CV (PDF):</label>
-                  <input type="file" (change)="onFileSelected($event)" />
+                  <label for="cvPdf">CV (PDF):</label>
+                  <input type="file" id="cvPdf" (change)="onFileSelected($event)" accept=".pdf">
                 </div>
-              </div>
+
+                
+               </div>
             </fieldset>
 
             <!-- Avis de recruteur -->
@@ -98,3 +100,6 @@
     </div>
   </mat-card-content>
 </mat-card>
+
+
+

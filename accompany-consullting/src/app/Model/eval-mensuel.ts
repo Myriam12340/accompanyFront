@@ -3,9 +3,12 @@ export class EvalMensuel {
     consultant: number;
     manager: number;
     mission: number;
-    qualité: string;
-    délai: string;
-    périmètre: string;
+    qualite: string;
+    delai: string;
+    perimetre: string;
     Budge : string ;
+    nbeval :number ;
+    missionname:string | null;
+    managernom:string ;
   }
   

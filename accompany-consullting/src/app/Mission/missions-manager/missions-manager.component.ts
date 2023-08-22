@@ -6,6 +6,7 @@ import { AuthService } from '../../service/Authentication Service/auth.service';
 import { ConsultantService } from '../../Model/consultant/consultant.service';
 import { Router } from '@angular/router';
 import { EvalMissionIntegration } from '../../Model/eval-mission-integration';
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-missions-manager',
   templateUrl: './missions-manager.component.html',
@@ -64,33 +65,32 @@ t:any;
   
   loadMissions() {
     this.missionservice.getlistmission(this.idmanager).subscribe(
+
       (data: Mission[]) => {
         this.missions = data;
   
-        // Créez une nouvelle liste pour stocker les missions uniques à afficher
+        // Obtenir la date système
+        const currentDate = new Date();
+        const formattedCurrentDate = formatDate(currentDate, 'yyyy-MM-dd', 'en');
+  
+        // Créer une nouvelle liste pour stocker les missions uniques à afficher
         const missionsToShow: Mission[] = [];
   
         for (const mission of this.missions) {
-          // Vérifiez si la mission existe déjà dans la liste 'missionsToShow'
-          const isDuplicate = missionsToShow.some((m) => m.titre === mission.titre);
+          // Vérifier si la date de fin de la mission est supérieure à la date système
+          const missionEndDate = new Date(mission.date_fin);
+          const formattedMissionEndDate = formatDate(missionEndDate, 'yyyy-MM-dd', 'en');
   
-          // Si la mission n'est pas un duplicata, ajoutez-la à la liste 'missionsToShow'
-          if (!isDuplicate) {
-            missionsToShow.push(mission);
+          if (formattedMissionEndDate > formattedCurrentDate) {
+            // Vérifier si la mission existe déjà dans la liste 'missionsToShow'
+            const isDuplicate = missionsToShow.some((m) => m.titre === mission.titre);
+  
+            // Si la mission n'est pas un duplicata, ajouter-la à la liste 'missionsToShow'
+            if (!isDuplicate) {
+              missionsToShow.push(mission);
+            }
           }
         }
-  
-        // Pour chaque mission, récupérer le nom du consultant correspondant
-        missionsToShow.forEach((mission) => {
-          this.consultantservice.getConsultant2(mission.consultant).subscribe(
-            (consultant: any) => {
-              mission.nom = consultant.nom + ' ' + consultant.prenom; // Ajouter la propriété "consultantNom" à la mission avec vérification de la présence de la propriété 'nom'
-            },
-            (error) => {
-              console.log('Une erreur s\'est produite lors de la récupération du consultant :', error);
-            }
-          );
-        });
   
         this.dataSource.data = missionsToShow;
         this.missions = missionsToShow;
@@ -159,9 +159,9 @@ t:any;
   }
 
 
-  evalmonth(missionid: number){
+  evalmonth(missionid: number , from : string){
     this.router.navigate(['/eval-month'], {
-      queryParams: { missionid: missionid }
+      queryParams: { missionid: missionid,from:from}
     });
 }
 }

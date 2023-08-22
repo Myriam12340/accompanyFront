@@ -33,11 +33,10 @@
 <br>
 <br>
 <div class="row col-12">
-    <div class="col-1">
-        <button type="button" class="btn btn-outline-info" (click)="add()">Nouveau Recrutement</button>        </div>
-    
+  <div class="col-1" *ngIf="role=== 'admin'">
+      <button type="button" class="btn btn-outline-info" (click)="add()">Nouveau Recrutement</button>
+  </div>
 </div>
-
 <br>
 <br>
 
@@ -87,7 +86,7 @@
         <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let entretien">
           <ng-container *ngIf="entretien.valid && entretien.recruteurSuivant == id">
-            <button mat-raised-button class="btn btn-success btn-sm mr-2" (click)="onPasseClicked(entretien.candidat, entretien.recruteurSuivant, entretien.descriptionPoste, entretien.post)">
+            <button mat-raised-button class="btn btn-success btn-sm mr-2" (click)="onPasseClicked(entretien.candidat, entretien.recruteurSuivant, entretien.descriptionPoste, entretien.post,entretien)">
               <i class="fa fa-check-circle"></i> Passe
             </button>
           </ng-container>

@@ -1,32 +1,117 @@
-<div *ngFor="let consultantProjet of consultantProjets">
-  <h2>{{ consultantProjet.nomConsultant }}</h2>
-  <ul>
-    <li *ngFor="let projet of consultantProjet.projets">
-      {{ projet.titre }}
-    </li>
-  </ul>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+<mat-card>
+<div class="p-20 bg-info position-relative">
+  <h4 class="card-title text-white m-0">Liste des projets</h4>
+ 
 </div>
+<br>
+<div class="row col-12  ">
+  <div class="btn-group" role="group">
+    
+   
+    
 
-<table mat-table [dataSource]="projets" class="mat-elevation-z8 my-table" style="width: 100%;">
+    <button type="button"  class="btn btn-outline-info mr-2"  style=" border-radius: 10px;"(click)="loadAllMissions()">
+      <i class="fa fa-history"></i> Tous
+ </button>
 
-  <ng-container matColumnDef="nomProjet">
-    <th mat-header-cell *matHeaderCellDef>Nom du projet</th>
-    <td mat-cell *matCellDef="let projet" [style.background-color]="projet.couleur">{{ projet.titre }}</td>
+ <button type="button"  class="btn btn-outline-info mr-2"  style=" border-radius: 10px;"(click)="loadInProgressMissions()">
+  <i class="fa fa-unlock-alt"></i> En cours
+</button>
+
+<button type="button" class="btn btn-outline-info mr-2" style="border-radius: 10px;"
+        (click)="loadConsultants()" [disabled]="clique >= 1">
+  <i class="fa fa-users"></i> Consultant
+</button>
+
+    
+  </div>
+</div>
+<!-- ... autres parties de votre code ... -->
+<br>
+
+
+<div *ngIf="showMonthly">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 my-table" style="width: 100%;">
+    <!-- Colonne Titre -->
+    <ng-container matColumnDef="titre">
+      <th mat-header-cell *matHeaderCellDef class="my-column">Titre</th>
+      <td mat-cell *matCellDef="let mission" class="my-column">{{ mission.titre }}</td>
+    </ng-container>
+
+    <!-- Colonne Référent -->
+    <ng-container matColumnDef="date_debut">
+      <th mat-header-cell *matHeaderCellDef class="my-column">date debut</th>
+      <td mat-cell *matCellDef="let mission" class="my-column">{{mission.date_debut|date}}</td>
+    </ng-container>
+    <ng-container matColumnDef="date_fin">
+      <th mat-header-cell *matHeaderCellDef class="my-column">date fin</th>
+      <td mat-cell *matCellDef="let mission" class="my-column">{{mission.date_fin|date}}</td>
+    </ng-container>
+
+
+      <ng-container matColumnDef="evaluations">
+    <th mat-header-cell *matHeaderCellDef> Evaluations </th>
+    <td mat-cell *matCellDef="let mission"> {{ mission.nbeval }} </td>
   </ng-container>
+    <!-- Colonne Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="my-column">Actions</th>
+      <td mat-cell *matCellDef="let mission" class="my-column">
+        <!-- Ajoutez ici les actions que vous souhaitez afficher pour chaque mission -->
+        <button mat-raised-button class="btn btn-success btn-sm mr-2" (click)="evalmonth(mission.id , 'fromrh')">
+          <i class="fa fa-eye"></i> Consulter
+        </button>
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="dateDebut">
-    <th mat-header-cell *matHeaderCellDef>Date de début</th>
-    <td mat-cell *matCellDef="let projet">{{ projet.nomManager }}</td>
-  </ng-container>
+    <!-- En-têtes de colonne -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
-  <ng-container matColumnDef="dateFin">
-    <th mat-header-cell *matHeaderCellDef>Date de fin</th>
-    <td mat-cell *matCellDef="let projet">{{ projet.dateFin }}</td>
-  </ng-container>
+    <!-- Lignes de données avec filtre -->
+    <tr mat-row *matRowDef="let mission; columns: displayedColumns" [class.hidden]="mission.feedbackManager !== '' && mission.noteManager !== null"></tr>
+  </table>
+</div>
+</mat-card>
+<!-- ... autres parties de votre code ... -->
+<mat-card>
+  
+  <div *ngIf="showConsultants ">
+    <div class="p-20 bg-info position-relative">
+    <h4 class="card-title text-white m-0">Liste des consultants</h4>
+   
+  </div>
+ 
+  <table class="table table-striped">
+    <thead class="table-light ">
 
-  <!-- Ajoutez d'autres colonnes en fonction de vos besoins -->
+      <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Grade</th>
 
-  <tr mat-header-row *matHeaderRowDef="['nomProjet', 'dateDebut', 'dateFin']"></tr>
-  <tr mat-row *matRowDef="let projet; columns: ['nomProjet', 'dateDebut', 'dateFin']"></tr>
+        <th>Action</th>
+        <!-- Ajoutez d'autres en-têtes de colonnes si nécessaire -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let consultant of listconsultant">
+        <td>{{ consultant.nom }}</td>
+        <td>{{ consultant.prenom }}</td>
+        <td>{{ consultant.grade }}</td>
 
-</table>
+        <td>
+          <button type="button" class="  btn btn-success btn-sm mr-2" (click)="openConsultantEvaluationsDialog(consultant.id ,consultant.nom , consultant.prenom)">
+            <i class="fa fa-eye"></i> Consulter
+          </button>
+        </td>
+        <!-- Ajoutez d'autres cellules de données si nécessaire -->
+      </tr>
+    </tbody>
+  </table>
+</div>
+</mat-card>

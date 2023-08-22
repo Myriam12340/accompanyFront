@@ -5,5 +5,7 @@ export interface EmailMessage {
     toEmail: string;
     subject: string;
     body: string;
+    CcEmail:string;
+    CcName:string;
   }
   

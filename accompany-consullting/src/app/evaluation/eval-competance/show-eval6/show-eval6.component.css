@@ -1,0 +1,235 @@
+.tableborder {
+
+    border: 1px solid #000;
+    }
+    .image-3d {
+      perspective: 1500px; /* Contrôle la profondeur de l'effet 3D */
+      width: 150 px;
+    }
+  
+    .image-3d img {
+      transform: rotateY(2deg) rotateX(-5deg) translateZ(50px); /* Applique la transformation 3D */
+      transition: transform 0.5s ease; /* Ajoute une transition fluide */
+    }
+  
+    .image-3d img:hover {
+      transform: rotateY(2deg) rotateX(0deg) translateZ(0); /* Réinitialise la transformation au survol */
+    }
+    .th{
+      border: 1px solid #000; color: #fff;
+    }
+    .th_contenu{border: 1px solid #000;
+  }
+  .example-button-row {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .rows {
+    margin-left: auto;
+  }
+  
+  input[type=text], select {
+    width: 75%;
+    padding: 6px 6px;
+    margin: 10px 2 px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+  input[type=date], select {
+    width: 25%;
+    padding: 6px 6px;
+    margin: 10px 5px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  label{
+    text-indent: 25 px;
+    font-size: medium;
+    font-family: Georgia, serif;
+    color: #24527a;
+  }
+  input[type='radio']{
+    width: 25px;
+    height: 25px;
+    border-radius: 10px;
+    padding: 20px 20px;
+    margin: 20px 20px;
+
+}
+.left-align {
+  position: left;
+}
+
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #0a0416;
+}
+
+.custom-toolbar {
+  background-color: #a0bad1;
+  color: aliceblue;
+  padding: 8px 16px;
+}
+
+.left-align {
+  text-align: left;
+}
+
+.input-icon {
+  position: relative;
+}
+
+.input-icon input {
+  padding-left: 30px;
+  width: 100%;
+}
+
+.input-icon input {
+  width: 200%;
+  padding: 6px 6px;
+  margin: 20px 10px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
+.input-icon textarea {
+  width: 200%;
+  padding: 6px 6px;
+  margin: 20px 10px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
+.input-icon select {
+  width: 200%;
+  padding: 6px 6px;
+  margin: 20px 10px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  text-size-adjust: auto;
+  font-family: Georgia, serif;
+}
+.label-cell {
+  vertical-align: middle;
+  padding-right: 1rem; /* Ajoutez un espacement si nécessaire */
+}
+
+
+.custom-button-container {
+  margin-bottom: 20px;
+}
+
+.custom-button {
+  background-color: #1347a4;
+  color: aliceblue;
+  margin-right: 10px;
+}
+
+.custom-cancel-button {
+  background-color: #f95959;
+  color: azure;
+}
+
+
+.tableborder {
+
+  border: 1px solid #000;
+  }
+  .image-3d {
+    perspective: 1500px; /* Contrôle la profondeur de l'effet 3D */
+    width: 150 px;
+  }
+
+  .image-3d img {
+    transform: rotateY(2deg) rotateX(-5deg) translateZ(50px); /* Applique la transformation 3D */
+    transition: transform 0.5s ease; /* Ajoute une transition fluide */
+  }
+
+  .image-3d img:hover {
+    transform: rotateY(2deg) rotateX(0deg) translateZ(0); /* Réinitialise la transformation au survol */
+  }
+  .th{
+    border: 1px solid #000; color: #fff;
+  }
+  .th_contenu{border: 1px solid #000;
+}
+.example-button-row {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.rows {
+  margin-left: auto;
+}
+
+label{
+  text-indent: 25 px;
+  font-size: medium;
+  font-family: Georgia, serif;
+  color: #24527a;
+}
+
+input[type=text] {
+  width: 50%;
+  padding: 6px 6px;
+  margin: 10px 8px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+textarea{
+  width: 50%;
+  padding: 6px 6px;
+  margin: 10px 8px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+select
+{
+  width: 50%;
+  padding: 6px 6px;
+  margin: 10px 8px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+
+.custom-button-container {
+  margin-bottom: 20px;
+}
+
+.custom-button {
+  background-color: #1347a4;
+  color: aliceblue;
+  margin-right: 10px;
+}
+
+.custom-cancel-button {
+  background-color: #f95959;
+  color: azure;
+}

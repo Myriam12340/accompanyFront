@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <mat-card>
     <div>
+
         <mat-toolbar color="accent">
             <mat-toolbar-row style="text-align: center;">
                 <span style="margin-left: auto;margin-right: auto;color: aliceblue;text-align: center;">
@@ -14,6 +15,9 @@
 
 
         <form>
+           
+                <div class="print-content">
+
 
             <mat-card>
                 <mat-toolbar style="background-color: #5F9EA0; color:white;">
@@ -26,14 +30,13 @@
                 <div class="row">
                     <div class="col">
                         <label for="demandeur">Demandeur: <i class="fa fa-user"></i> </label>
-                        <input type="text" id="demandeur" value={{username}} disabled
-                            style="cursor: not-allowed;">
+                        <input type="text" id="demandeur" value={{username}} disabled style="cursor: not-allowed;">
 
 
                         <label for="validateur">Validateur: <i class="fa fa-check"></i> </label>
-                        <input type="text" id="validateur" value={{validateurname}}>
+                        <input type="text" id="validateur" value={{validateurname}} disabled style="cursor: not-allowed;">
                         <label for="demandeur"> Etat: <i class="fa fa-briefcase"></i> </label>
-                        <input type="text" id="demandeur" [value]="data.conge.etat" disabled style="cursor: not-allowed; color: aliceblue;"
+                        <input type="text" id="demandeur" value={{data.conge.etat}} disabled style="cursor: not-allowed; "
   [ngStyle]="{ 'background-color': getEtatColor(data.conge.etat) }">
 
 
@@ -54,11 +57,13 @@
 
                 <div class="row">
                     <div class="col">
-                        <label for="soldeConge"> Solde de congé:</label>
-                        <input type="text" id="soldeConge" disabled style="cursor: not-allowed;" value={{solde}}>
+                        
 
-                        <label for="soldeMaladie"> Solde de maladie:</label>
-                        <input type="text" id="soldeMaladie" disabled style="cursor: not-allowed;" value={{soldemaldie}}>
+                        <label for="soldeConge" [ngClass]="{ 'text-danger': solde <= 0 }"> Solde de congé:</label>
+                        <input type="text" id="soldeConge" [value]="solde" disabled [ngClass]="{ 'text-danger': solde <= 0 }">
+                    
+                        <label for="soldeMaladie" [ngClass]="{ 'text-danger': soldemaldie <= 0 }"> Solde de maladie:</label>
+                        <input type="text" id="soldeMaladie" [value]="soldemaldie" disabled [ngClass]="{ 'text-danger': soldemaldie <= 0 }">
                     </div>
                 </div>
             </mat-card>
@@ -75,15 +80,15 @@
                 <div class="row">
                     <div class="col">
                         <label for="dateDebut"> Date de début:</label>
-                        <input type="text" id="dateDebut" value={{datedebut}}>
+                        <input type="text" id="dateDebut" value="{{datedebut| date:'dd-MM-yyyy'}}"disabled style="cursor: not-allowed;">
 
                         <label for="dateFin"> Date de fin:</label>
-                        <input type="text" id="dateFin" value={{datefin}}>
+                        <input type="text" id="dateFin" value="{{datefin| date:'dd-MM-yyyy'}}"disabled style="cursor: not-allowed;">
 
                         <label for="demandeur"><i class="fa fa-clock-o"></i> Durée:</label>
 
-                        <input type="text" id="dateFin" value={{duree}}>
-
+                        <input type="text" id="dateFin" value="{{data.conge.duree}}"disabled style="cursor: not-allowed;">
+                        
                     </div>
                 </div>
             </mat-card>
@@ -96,16 +101,32 @@
                     </mat-toolbar-row>
                 </mat-toolbar>
                 <br>
-
-              
-                      
+                <div class="row">
                     <div class="col">
-                        <input type="text" id="congesMaladie" name="type" value={{data.conge.type}}>
-                    </div>
+                        <label for="dateDebut"> type de congé:</label>
+                 
+                    <input type="text" id="congesMaladie" name="type" value={{data.conge.type}} disabled style="cursor: not-allowed;">
 
+                        <div *ngIf="data.conge.type == 'Congés Maladie'">
+ <div id="cid_51" class="form-input-wide" data-layout="full">
+                    <button mat-raised-button class="btn btn-primary btn-sm" (click)="togglePdfViewer()" style="background-color: #4974e0; color: #ecedf3;">
+                    Consulter certif     </button>
+                    
+                    
+                   </div>  
+                   <div *ngIf="showPdf">
+                    <iframe [src]="pdfUrl" width="100%" height="500px"></iframe>
+                  </div>
+                  
+                </div>
+                        
+                    </div>
+                </div>
             </mat-card>
 
+</div>
 
+<footer>
 
             <div class="row col-12 justify-content-center mb-4" style="margin-top: 2em;">
                 <div class="btn-group" role="group">
@@ -117,7 +138,7 @@
                   </button>
                   
 
-                  <button class="mr-2" mat-button mat-button mat-raised-button style="background-color: #42b883; color: azure;"  *ngIf="data.consulterby === 'byvalidateur'"(click)="valider(data.conge)">
+                  <button class="mr-2" mat-button mat-button mat-raised-button style="background-color: #42b883; color: azure;"  *ngIf="data.consulterby === 'byvalidateur'"(click)="valider(data.conge,soldemaldie,solde)">
                     <mat-icon>check_circle_outline</mat-icon>
                     Valider
                   </button>
@@ -129,10 +150,23 @@
                     <mat-icon>input</mat-icon>
                     Retour à la liste
                    </button>
+
+
+                   <button class="mr-2" mat-button mat-raised-button style="background-color: #007bff; color: azure;" *ngIf="data.consulterby === 'byrh'"(click)="imprimer()">
+                    <mat-icon>print</mat-icon>
+                    Imprimer
+                  </button>
+
+
+
+                  <button class="mr-2" mat-button mat-raised-button style="background-color: #096549; color: azure;" *ngIf="data.consulterby === 'byrh' && data.conge.etat=='valider'"(click)="validerrh(data.conge,soldemaldie,solde)">
+                    <mat-icon>check_circle_outline</mat-icon>
+                    Valider
+                  </button>
                 </div>
               </div>
               
-
+            </footer>
         </form>
     </div>
 </mat-card>

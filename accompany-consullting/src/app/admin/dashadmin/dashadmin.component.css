@@ -1,0 +1,25 @@
+.admin-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .admin-column {
+    flex-basis: 60%; /* Ajustez la largeur des colonnes selon vos besoins */
+  }
+  
+  .admin-section {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out; /* Ajoutez une animation de transition */
+  }
+  
+
+
+
+  
+  .admin-section:hover {
+    transform: scale(1.05); /* Appliquez une transformation lors du survol */
+  }
+ 

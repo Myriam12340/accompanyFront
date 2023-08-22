@@ -1,0 +1,32 @@
+
+<mat-toolbar style="background-color: #5F9EA0; color:white;">
+  <mat-toolbar-row style="text-align: center;">
+      <span><i class="fa-solid fa-people-group"></i> Evaluation Mensuel :    </span>    {{ data.nom }} {{ data.prenom }} 
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<table class="table table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Numero d' évaluation</th>
+
+      <th scope="col">Qualité</th>
+      <th scope="col">Délai</th>
+      <th scope="col">Périmètre</th>
+      <th scope="col">Budget</th>
+      <!-- Ajoutez d'autres en-têtes de colonnes selon vos besoins -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let evaluation of evaluations">
+      <td>{{ evaluation.nbeval }}</td>
+
+      <td>{{ evaluation.qualite }}</td>
+      <td>{{ evaluation.delai }}</td>
+      <td>{{ evaluation.perimetre }}</td>
+      <td>{{ evaluation.budge }}</td>
+      <!-- Ajoutez d'autres cellules selon les propriétés de votre modèle -->
+    </tr>
+  </tbody>
+</table>

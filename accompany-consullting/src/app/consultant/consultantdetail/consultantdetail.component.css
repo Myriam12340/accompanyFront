@@ -1,3 +1,22 @@
 .scrollable-content {
     height: 800px; /* Set the desired height for the scrollable area */
   }
+
+
+  /* consultantdetail.component.css */
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 3px;
+}

@@ -26,7 +26,9 @@ export class ManagerEvalComponent implements OnInit {
     toName: '',
     toEmail: '',
     subject: '',
-    body: ''
+    body: '',
+    CcEmail:''
+    ,CcName:''
   };
 
   updatem : EvalMissionIntegration ;

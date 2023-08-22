@@ -3,8 +3,15 @@ import { ConsultantService } from 'src/app/Model/consultant/consultant.service';
 import { Mission } from 'src/app/mission';
 import { AuthService } from 'src/app/service/Authentication Service/auth.service';
 import { MissionService } from 'src/app/service/mission.service';
-import { random } from 'lodash';
 import { MatTableDataSource } from '@angular/material/table';
+import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
+import { formatDate } from '@angular/common';
+import { map } from 'rxjs/operators';
+import { Consultant } from 'src/app/Model/consultant';
+import { EvaluationService } from 'src/app/service/evaluation.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConsutantevaluationsComponent } from 'src/app/evaluation/consutantevaluations/consutantevaluations.component';
 
 @Component({
   selector: 'app-projet',
@@ -12,97 +19,213 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./projet.component.css']
 })
 export class ProjetComponent implements OnInit {
-  projets: Mission[];
-  consultantProjets: { nomConsultant: string; projets: Mission[] }[] = [];
-  dataSource: MatTableDataSource<Mission>;
+  missions: Mission[]; // List of missions affected to the manager
+  dataSource = new MatTableDataSource<Mission>();
+ clique  : number = 0;
+
+  rh: any;
+  userProfile: any;
+  displayedColumns: string[] = ['titre', 'date_debut', 'date_fin', 'evaluations', 'actions'];
+  nom: any;
+  manager: any;
+  idmanager: any; // ID of the logged-in manager
+  showIntegration: boolean = false;
+  showMonthly: boolean = true;
+  listconsultant: any[] = [];
+  showConsultants: boolean = false;
 
   constructor(
+    private router: Router,
     private missionservice: MissionService,
     private authService: AuthService,
-    private consultantservice: ConsultantService
+    private consultantservice: ConsultantService,
+    private evaluationservice:EvaluationService,
+    private dialog: MatDialog,
+
+
   ) {}
 
-  couleurs = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'];
-  couleurAleatoire: string;
-
   ngOnInit(): void {
-    this.loadMissions();
+
+   
+    const jwt = sessionStorage.getItem('jwt');
+    if (jwt) {
+      this.authService.getUserProfile(jwt).subscribe(
+        (userProfile) => {
+          this.userProfile = userProfile;
+          console.log(this.userProfile);
+          this.rh = this.userProfile.email;
+          this.consultantservice.getConsultantbyemail(this.rh).subscribe(
+            (consultant) => {
+              this.manager = consultant;
+              this.idmanager = this.manager.id;
+
+              this.loadAllMissions();
+            },
+            (error) => console.error(error)
+          );
+        },
+        (error) => console.error(error)
+      );
+    }
+    this.loadInProgressMissions();
   }
 
-  loadMissions() {
+
+ 
+  
+  // partie pour consultant 
+  loadConsultants() {
+    this.missionservice.getConsultantIdsWithEvaluations().subscribe(
+      data => {
+        for (const consultantId of data) {
+          this.consultantservice.getConsultant2(consultantId).subscribe(
+            (consultant) => {
+              this.listconsultant.push(consultant);
+              this.evaluationservice.getEvaluationsconsultant(consultantId).subscribe(
+                (evaluation) => {
+                  for (const evl of evaluation) {
+
+                    console.log("les evaluation:",evl);
+                  }
+              
+                },
+                (error) => console.error(error)
+              );
+            },
+            (error) => console.error(error)
+          );
+        }
+        console.log('Consultant IDs with evals:', this.listconsultant);
+      },
+      error => {
+        console.error('Error fetching consultant IDs with evals:', error);
+      }
+    );
+    this.showConsultants = true;
+    this.clique = this.clique+1 ; 
+  }
+
+
+  openConsultantEvaluationsDialog(consultantId: number , nom :string , prenom :string) {
+    const dialogRef = this.dialog.open(ConsutantevaluationsComponent, {
+      data: { consultantId , nom , prenom }, // Pass data to your dialog component
+    
+      width: '1000px', // Ajustez la largeur selon vos besoins
+      height: '800px', // Ajustez la hauteur selon vos besoins
+    
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      // You can perform actions after the dialog is closed if needed
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+  //partie projet 
+  loadAllMissions() {
     this.missionservice.getlistmissiontous().subscribe(
-      (data: Mission[]) => {
-        this.projets = data;
-
-        // Créez une nouvelle liste pour stocker les missions uniques à afficher
-        const missionsToShow: Mission[] = [];
-
-        for (const mission of this.projets) {
-          // Vérifiez si la mission existe déjà dans la liste 'missionsToShow'
-          const isDuplicate = missionsToShow.some((m) => m.titre === mission.titre);
-
-          // Si la mission n'est pas un duplicata, ajoutez-la à la liste 'missionsToShow'
-          if (!isDuplicate) {
-            missionsToShow.push(mission);
-          }
-        }
-
-        // Pour chaque mission, récupérer le nom du consultant correspondant
-        missionsToShow.forEach((mission) => {
-          mission.couleur = this.getRandomColor();
-
-          this.consultantservice.getConsultant2(mission.manager).subscribe(
-            (consultant: any) => {
-              mission.nomManager = consultant.nom + ' ' + consultant.prenom;
-              // Ajouter la propriété "consultantNom" à la mission avec vérification de la présence de la propriété 'nom'
-            },
-            (error) => {
-              console.log('Une erreur s\'est produite lors de la récupération du consultant :', error);
-            }
-          );
-
-          this.consultantservice.getConsultant2(mission.consultant).subscribe(
-            (consultant: any) => {
-              mission.nom = consultant.nom + ' ' + consultant.prenom;
-              // Ajouter la propriété "consultantNom" à la mission avec vérification de la présence de la propriété 'nom' de consultant
-            },
-            (error) => {
-              console.log('Une erreur s\'est produite lors de la récupération du consultant :', error);
-            }
-          );
-        });
-
-        // Regrouper les missions par consultant
-        const consultants: string[] = [];
-       // Créer la structure de données pour afficher les missions par consultant
-for (const mission of missionsToShow) {
-  if (mission.nom && !consultants.includes(mission.nom)) {
-    consultants.push(mission.nom);
-  }
-}
-
-
-        // Créer la structure de données pour afficher les missions par consultant
-        for (const consultant of consultants) {
-          const consultantProjects = {
-            nomConsultant: consultant,
-            projets: missionsToShow.filter((mission) => mission.nom === consultant)
-          };
-          this.consultantProjets.push(consultantProjects);
-        }
-
-        this.dataSource = new MatTableDataSource<Mission>(missionsToShow);
-        this.projets = missionsToShow;
-        console.log('Liste des missions :', missionsToShow);
+      (d: Mission[]) => {
+       this.dataSource.data = d;
       },
       (error) => {
-        console.log('Une erreur s\'est produite lors de la récupération de la liste des missions :', error);
+        console.log('An error occurred while retrieving the list of missions:', error);
       }
     );
   }
+  
+  loadInProgressMissions() {
+    this.missionservice.getlistmissiontous().subscribe(
+      (data: Mission[]) => {
+        this.filterAndLoadMissions(data);
+      },
+      (error) => {
+        console.log('An error occurred while retrieving the list of in-progress missions:', error);
+      }
+    );
+  }
+  
+  filterAndLoadMissions(data: Mission[]) {
+    // Get the current date
+    const currentDate = new Date();
+    const formattedCurrentDate = formatDate(currentDate, 'yyyy-MM-dd', 'en');
+  
+    // Create a new list to store unique missions to display
+    const missionsToShow: Mission[] = [];
+  
+    for (const mission of data) {
+      // Check if the mission end date is greater than the current date
+      const missionEndDate = new Date(mission.date_fin);
+      const formattedMissionEndDate = formatDate(missionEndDate, 'yyyy-MM-dd', 'en');
+  
+      if (formattedMissionEndDate > formattedCurrentDate) {
+        // Check if the mission already exists in the 'missionsToShow' list
+        const isDuplicate = missionsToShow.some((m) => m.titre === mission.titre);
+  
+        // If the mission is not a duplicate, add it to the 'missionsToShow' list
+        if (!isDuplicate) {
+          missionsToShow.push(mission);
+        }
+      }
+    }
+  
+    // For each mission, retrieve the corresponding consultant name and the evaluation count for the current month
+    const evaluationCountPromises = missionsToShow.map((mission) => {
+      return this.consultantservice.getConsultant2(mission.consultant).pipe(
+        map((consultant: any) => {
+          mission.nom = consultant.nom + ' ' + consultant.prenom; // Add the "nom" property to the mission with checking for the existence of the 'nom' property
+  
+          // Get the evaluation count for the current month
+          const elapsedMonths = this.getPassedMonths(mission);
+          mission.evaluations = elapsedMonths;
+        })
+      );
+    });
+  
+    // Wait for all evaluation retrieval promises
+    forkJoin(evaluationCountPromises).subscribe(() => {
+      this.dataSource.data = missionsToShow;
+      this.missions = missionsToShow;
+      console.log('List of missions:', missionsToShow);
+    }, (error) => {
+      console.log('An error occurred while retrieving evaluations:', error);
+    });
+  }
+  
 
-  getRandomColor(): string {
-    const randomIndex = random(0, this.couleurs.length - 1);
-    return this.couleurs[randomIndex];
+
+
+  getPassedMonths(mission: Mission): number {
+    const startDate = new Date(mission.date_debut);
+    const currentDate = new Date();
+  
+    const startYear = startDate.getFullYear();
+    const startMonth = startDate.getMonth();
+  
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+  
+    const passedYears = currentYear - startYear;
+    const passedMonths = (passedYears * 12) + (currentMonth - startMonth)+1;
+  
+    return passedMonths;
+  }
+  
+
+ 
+
+  evalmonth(missionid: number , from :string ) {
+    this.router.navigate(['/eval-month'], {
+      queryParams: { missionid: missionid , from :from}
+    });
   }
 }

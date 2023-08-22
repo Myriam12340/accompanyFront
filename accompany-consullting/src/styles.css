@@ -4,3 +4,8 @@
     width: 100px;
     height: 200px;
   }
+  @media print {
+    /* Masquer le header et le footer lors de l'impression */
+    header, footer,app-sidebar {
+      display: none;
+    }}

@@ -40,20 +40,17 @@
         </mat-expansion-panel-header>
      
 
-     <mat-form-field>
-        <input matInput placeholder="Nom" name="nom" formControlName="nom" required>
-        <div *ngIf="myForm?.get('nom').invalid && (myForm?.get('nom').dirty || myForm?.get('nom').touched)">
-          <div *ngIf="myForm?.get('nom').errors?.required">Le nom est obligatoire</div>
-          <div *ngIf="myForm?.get('nom').errors?.minLength(5)">Le nom est min</div>
-
-        </div>
-      </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Nom" name="nom" formControlName="nom" required>
+          <mat-error *ngIf="myForm?.get('nom')?.hasError('required')">Le nom est obligatoire</mat-error>
+          <mat-error *ngIf="myForm?.get('nom')?.hasError('minlength')">Le nom doit comporter au moins 3 caractères</mat-error>
+        </mat-form-field>
+        
 <!-- ========================== -->
       <mat-form-field>
         <input matInput placeholder="Prénom" name="prenom" formControlName="prenom" required>
-        <div *ngIf="myForm?.get('prenom').invalid && (myForm?.get('prenom').dirty || myForm?.get('prenom').touched)">
-          <div *ngIf="myForm?.get('prenom').errors?.required">Le prénom est obligatoire</div>
-        </div>
+        <mat-error *ngIf="myForm?.get('prenom')?.hasError('required')">Le prénom est obligatoire</mat-error>
+        <mat-error *ngIf="myForm?.get('prenom')?.hasError('minlength')">Le prénom doit comporter au moins 3 caractères</mat-error>
       </mat-form-field>
       <!-- ===================== -->
       <mat-form-field>
@@ -91,6 +88,10 @@
       <!-- ============================= -->
       <mat-form-field>
         <input matInput placeholder="CIN" name="cin" formControlName="cin" required>
+        <mat-error *ngIf="myForm?.get('cin')?.hasError('required')">Le cin est obligatoire</mat-error>
+        <mat-error *ngIf="myForm?.get('cin')?.hasError('exactLength')">Le cin doit comporter  8 caractères</mat-error>
+
+        <mat-error *ngIf="myForm?.get('cin')?.hasError('numeric')">Le cin doit comporter des chiffres</mat-error>
       </mat-form-field>
         <!-- ============================= -->
       <mat-form-field>
@@ -103,10 +104,17 @@
         <!-- ============================= -->
       <mat-form-field>
         <input matInput placeholder="Mobile 1" name="tel1" formControlName="tel1" required>
+        <mat-error *ngIf="myForm?.get('tel1')?.hasError('required')">Le numéro téléphone est obligatoire</mat-error>
+        <mat-error *ngIf="myForm?.get('tel1')?.hasError('exactLength')">Le numéro téléphone doit comporter  8 caractères</mat-error>
+
+        <mat-error *ngIf="myForm?.get('tel1')?.hasError('numeric')">Le numéro téléphone doit comporter des chiffres</mat-error>
       </mat-form-field>
         <!-- ============================= -->
       <mat-form-field>
         <input matInput placeholder="Mobile 2" name="tel2" formControlName="tel2"  >
+        <mat-error *ngIf="myForm?.get('tel2')?.hasError('exactLength')">Le numéro téléphone doit comporter  8 caractères</mat-error>
+        <mat-error *ngIf="myForm?.get('tel2')?.hasError('required')">Le numéro téléphone est obligatoire</mat-error>
+        <mat-error *ngIf="myForm?.get('tel2')?.hasError('numeric')">Le numéro téléphone doit comporter des chiffres</mat-error>
       </mat-form-field>
         <!-- ============================= -->
 
@@ -147,10 +155,16 @@
             <input matInput type="text" placeholder="fonction" name="fonction" formControlName="fonction" required>
           </mat-form-field>
             <!-- ============================= -->
-            <mat-form-field>
-                <input matInput placeholder="Grade" name="grade" formControlName="grade" required>
-              </mat-form-field>
+           
 
+
+              <mat-form-field>
+                <mat-label>Grade</mat-label>
+                <mat-select formControlName="grade">
+                  <mat-option value="Manager">manager</mat-option>
+                  <mat-option value="Consultant">consultant</mat-option>
+                </mat-select>
+              </mat-form-field>
             <!-- ============================= -->
 
 

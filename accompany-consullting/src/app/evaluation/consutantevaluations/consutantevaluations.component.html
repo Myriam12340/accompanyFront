@@ -1,0 +1,46 @@
+<div class="scrollable-content">
+<mat-toolbar style="background-color: #5F9EA0; color:white;">
+    <mat-toolbar-row style="text-align: center;">
+      <span><i class="fa-solid fa-people-group"></i> Les évaluations Mensuel :    </span>    {{ data.nom }} {{ data.prenom }} 
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+<br> <br>
+  <div *ngFor="let missionGroup of groupedEvaluations">
+
+
+    <mat-toolbar style="background-color: #007cb9; color:white;">
+        <mat-toolbar-row style="text-align: center;">
+          <span><i class="fa-solid fa-people-group"></i> Mission :    </span>   {{ missionGroup.missionname }} 
+          <br>
+          
+        </mat-toolbar-row>
+      </mat-toolbar>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+            <th scope="col">Manager</th>
+          <th scope="col">Numero d'évaluation</th>
+          <th scope="col">Qualité</th>
+          <th scope="col">Délai</th>
+          <th scope="col">Périmètre</th>
+          <th scope="col">Budget</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let evaluation of missionGroup.evaluations">
+            <td>{{ evaluation.managernom}}</td>
+          <td>{{ evaluation.nbeval }}</td>
+          <td>{{ evaluation.qualite }}</td>
+          <td>{{ evaluation.delai }}</td>
+          <td>{{ evaluation.perimetre }}</td>
+          <td>{{ evaluation.budge }}</td>
+
+        </tr>
+      </tbody>
+    </table>
+    <br> 
+
+  </div>
+</div>

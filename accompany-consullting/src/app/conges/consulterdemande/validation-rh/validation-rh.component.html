@@ -1,0 +1,24 @@
+<div class="custom-dialog">
+    <div class="custom-dialog-content">
+        <mat-toolbar style="background-color: #5F9EA0; color:white;">
+            <mat-toolbar-row style="text-align: center;">
+                <span><mat-icon>perm_contact_calendar</mat-icon> Consommer</span>
+            </mat-toolbar-row>
+        </mat-toolbar>
+
+        <div class="radio-option">
+            <input type="radio" id="soldeMaladie" name="type" value="Solde Maladie" [(ngModel)]="selectedType">
+            <label for="soldeMaladie"><i class="fas fa-clipboard-check"></i> Solde Maladie</label>
+        </div>
+        <div class="radio-option">
+            <input type="radio" id="soldeConge" name="type" value="Solde de congé" [(ngModel)]="selectedType">
+            <label for="soldeConge"><i class="fas fa-hospital-alt"></i> Solde de congé</label>
+        </div>
+    </div>
+    <button class="mr-2" mat-button mat-button mat-raised-button style="background-color: #42b883; color: azure;" (click)="valider(data.conge)">
+        <mat-icon>check_circle_outline</mat-icon>
+        Valider
+    </button>
+</div>
+
+  

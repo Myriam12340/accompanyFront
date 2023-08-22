@@ -18,6 +18,8 @@ export class CreateMissionComponent implements OnInit {
   id_manager: any;
   consultant :any ;
   id_consultant : any ;
+  date_fin:any;
+  date_debut :any ;
 
   constructor(private formBuilder: FormBuilder, private consultantService: ConsultantService, private missionService: MissionService) { }
 
@@ -25,7 +27,10 @@ export class CreateMissionComponent implements OnInit {
     this.missionForm = this.formBuilder.group({
       titreMission: [''],
       emailManager: ['', Validators.required],
-      nbConsultants: [0, [Validators.required, Validators.min(0)]]
+      nbConsultants: [0, [Validators.required, Validators.min(0)], ],
+    date_debut: ['', Validators.required],
+
+    date_fin:['',Validators.required]
     });
 
     this.onNbConsultantsChange(); // Update consultant controls initially
@@ -54,34 +59,36 @@ export class CreateMissionComponent implements OnInit {
 
   onSubmit(): void {
     console.log('Submit button clicked');
-
-   
-
+  
     // Retrieve form values
     const titreMission = this.missionForm.get('titreMission')?.value;
     const emailManager = this.missionForm.get('emailManager')?.value;
-
+    const date_debut = this.missionForm.get('date_debut')?.value;
+    const date_fin = this.missionForm.get('date_fin')?.value;
+  
     this.consultantService.getConsultantbyemail(emailManager).subscribe(
       (user) => {
         this.manager = user;
         this.id_manager = this.manager.id;
-
+  
         const nbConsultants = this.missionForm.get('nbConsultants')?.value;
         for (let i = 0; i < nbConsultants; i++) {
           const emailConsultant = this.missionForm.get('emailConsultant' + i)?.value;
-
+  
           this.consultantService.getConsultantbyemail(emailConsultant).subscribe(
             (consultant) => {
               this.consultant = consultant;
               this.id_consultant = this.consultant.id;
-
+  
+              // Utiliser les variables récupérées du formulaire
               const mission: any = {
                 titre: titreMission,
                 manager: this.id_manager,
                 consultant: this.id_consultant,
-               
+                date_debut: date_debut, // Utiliser la variable locale
+                date_fin: date_fin // Utiliser la variable locale
               };
-
+  
               this.missionService.addMission(mission).subscribe(
                 response => {
                   console.log('Mission ajoutée avec succès !');
@@ -105,4 +112,5 @@ export class CreateMissionComponent implements OnInit {
       }
     );
   }
+  
 }

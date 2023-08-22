@@ -9,6 +9,8 @@ import { EmailMessage } from '../../Model/email-message';
 import { MissionService } from '../../service/mission.service';
 import { EvalMissionIntegration } from '../../Model/eval-mission-integration';
 import { MailService } from '../../service/mail.service';
+import { ConsultantdetailComponent } from 'src/app/consultant/consultantdetail/consultantdetail.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-eval-rh-integration',
@@ -22,7 +24,9 @@ export class EvalRhIntegrationComponent implements OnInit {
     toName: '',
     toEmail: '',
     subject: '',
-    body: ''
+    body: '',
+    CcEmail:''
+    ,CcName:''
   };
   consultantnom: string;
 
@@ -41,8 +45,10 @@ export class EvalRhIntegrationComponent implements OnInit {
   missions: any[];
   eva: EvalMissionIntegration[];
   evaluations: EvalMissionIntegration[] = [];
-
+  evaluationId: number;
+old : boolean ;
   manager: any;
+  consultant:any ;
   constructor(private missionservice: MissionService,
     private router: Router,
     private evaluationservice: EvaluationService,
@@ -50,11 +56,14 @@ export class EvalRhIntegrationComponent implements OnInit {
     private route: ActivatedRoute,
     private consultantService: ConsultantService,
     private authService: AuthService, private emailService: MailService
+    ,    private dialog: MatDialog
   ) { }
+  
 
   ngOnInit() {
     this.consultantService.getConsultantData().subscribe((data) => {
       this.consultantData = data;
+      this.consultant = this.consultantData.consultantId;
 
       // Utilize the consultant data in the EvaluationRHComponent
 
@@ -129,6 +138,35 @@ export class EvalRhIntegrationComponent implements OnInit {
       (data) => {
         this.missions = data;
         this.missions.forEach((mission) => {
+           this.missionservice.getevalintegrationbyMission(mission.id).subscribe(
+
+            (evaluationM:any)=>{
+              if (evaluationM) { // Check if evaluation data exists
+
+                console.log("testet",evaluationM.feedbackManager);
+           if (evaluationM.feedbackManager == null && evaluationM.noteManager == null )
+           {
+            mission.old = true;
+           } 
+          }
+       
+
+
+            },
+            (error) => {
+              if (error.status === 404) {
+                console.log(`No evaluation found for mission ${mission.id}`);
+                mission.old = true;
+
+                // Handle this case if needed
+              } else {
+                console.log('An error occurred while fetching evaluation:', error);
+              }
+            }
+           );
+
+
+
           this.consultantService.getConsultant2(mission.manager).subscribe(
             (consultant: any) => {
               mission.nomManager = consultant.nom + ' ' + consultant.prenom;
@@ -147,6 +185,50 @@ export class EvalRhIntegrationComponent implements OnInit {
       }
     );
   }
+
+  onMouseEnter() {
+    console.log('Mouse entered the "Consulter" button');
+    this.onconsulte();
+    // Vous pouvez ajouter ici le code que vous souhaitez exécuter lorsque la souris entre sur le bouton "Consulter"
+  }
+
+  onMouseLeave() {
+    console.log('Mouse left the "Consulter" button');
+    // Vous pouvez ajouter ici le code que vous souhaitez exécuter lorsque la souris quitte le bouton "Consulter"
+  }
+
+
+  onconsulte(): void {
+    console.log(this.consultant);
+    this.consultantService.getConsultant2(this.consultant)
+      .subscribe(
+        (data) => {
+          const selectedConsultant = data;
+          console.log(selectedConsultant);
+          const dialogConfig = new MatDialogConfig();
+          dialogConfig.data = { consultant: selectedConsultant };
+          dialogConfig.width = '1000px'; // Définir la largeur de la boîte de dialogue
+         dialogConfig. height= '800px';
+
+         dialogConfig.autoFocus = true;
+
+          const dialogRef = this.dialog.open(ConsultantdetailComponent, dialogConfig);
+
+          dialogRef.afterClosed().subscribe(result => {
+            // Handle any actions after the dialog is closed, if needed
+            console.log('Dialog closed', result);
+          });
+        },
+        (error) => {
+          console.log('An error occurred while fetching the consultant:', error);
+        }
+      );
+  }
+
+
+
+
+
 
   onSubmit() {
     // Handle form submission
@@ -193,18 +275,16 @@ export class EvalRhIntegrationComponent implements OnInit {
         console.log('Evaluation added successfully!');
         // Reset the form
         this.evaluation = new Evaluation();
-        const evaluationId = response.id;
-        this.evaluationForm.reset();
+        this.evaluationId = response.id; // Storing the evaluation ID
 
+        this.evaluationForm.reset();
+        this.router.navigate(['/evaluation']);
+console.log("hhhh",this.evaluationId);
         // Pass the evaluation ID to the MissionComponent
 
         // Call the submitForm method in MissionComponent
 
-      },
-      (error) => {
-        console.log('An error occurred while adding the evaluation:', error);
-      }
-    );
+     
     this.missions.forEach((mission) => {
       const evalMissionIntegration: any = {
         // Assign properties based on the evaluationForm values
@@ -218,7 +298,8 @@ export class EvalRhIntegrationComponent implements OnInit {
         satisficationC: this.evaluationForm.get('satisficationC')?.value,
         consultant: this.consultantData.consultantId,
         manager: mission.manager,
-        mission: mission.id
+        mission: mission.id,
+        evaluation: this.evaluationId 
       };
       const emailBody = `
     <div style="color: #333; font-family: Arial, sans-serif;">
@@ -251,12 +332,15 @@ export class EvalRhIntegrationComponent implements OnInit {
         subject: 'Evaluation de mission',
 
         body: emailBody,
+        CcEmail:''
+        ,CcName:''
       };
       console.log(email);
       this.email = email; // Assign the email to a property
 
       
       this.sendEmail();
+    
       // Add the evaluation to the evaluations array
       this.evaluations.push(evalMissionIntegration);
       this.missionservice.addeval_integration_Mission(evalMissionIntegration).subscribe(
@@ -273,7 +357,12 @@ export class EvalRhIntegrationComponent implements OnInit {
         }
       );
     });
-
+    
+  },
+  (error) => {
+    console.log('An error occurred while adding the evaluation:', error);
+  }
+);
    
   }
 

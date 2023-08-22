@@ -20,13 +20,17 @@
     <tr>
       <th class="th">Nom et prénom du collaborateur</th>
       <th class="th">Date d'intégration</th>
-      <th class="th">Intitulé du Poste occupé</th>
+      <th class="th">Profil</th>
     </tr>
   </thead>
   <tr>
     <td class="th_contenu">{{ consultantData.nom }} {{ consultantData.prenom }}</td>
     <td class="th_contenu">{{consultantData.date_integration| date:'dd-MM-yyyy'}}</td>
-    <td class="th_contenu">{{ consultantData.grade }}</td>
+    <td class="text-center ">
+      <button type="button" mat-raised-button color="accent"  (mouseenter)="onMouseEnter()">
+        <i class="fa fa-eye"></i> Consulter
+      </button>
+    </td>
   </tr>
   <tr>
     <td colspan="2" style="background-color:#1e5d6b;; color: aliceblue; font-family: sans-serif; font-size: large; border: 1px solid #000;">HR BP</td>
@@ -37,7 +41,7 @@
 <form [formGroup]="evaluationForm" (ngSubmit)="onSubmit()">
   <div *ngFor="let mission of missions">
     
-    <table style="width: 100%;">
+    <table style="width: 100%;" *ngIf="mission.old">
       <td colspan="6">
         <mat-toolbar style="background-color: #1e5d6b; color: antiquewhite;">
           <mat-toolbar-row>
@@ -447,18 +451,20 @@
   </mat-action-row>
   
   
+
+
+  <div class="text-center custom-button-container">
+    <button type="submit" mat-raised-button color="accent" class="custom-button">
+      <mat-icon>check_circle</mat-icon>
+      Enregistrer  
+    </button>
+    <button type="submit" mat-raised-button class="custom-button custom-cancel-button" (click)="annuler()">
+      <mat-icon>cancel</mat-icon> Annuler 
+    </button>
+  </div>
    
 
-   <div class="example-button-row">
-    <mat-action-row class="rows">
-      <button type="submit" class="btn btn-primary btn-sm">Terminer
-        <mat-icon>open_in_new</mat-icon>
-      </button>
-      <button class="btn btn-danger btn-sm" (click)="annuler()" aria-label="Home">Annuler
-        <mat-icon>home</mat-icon>
-      </button>
-    </mat-action-row>
-  </div>
+
   
 </form>
 </mat-card>

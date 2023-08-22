@@ -13,14 +13,14 @@
       <tr>
         <th class="th">Nom et prénom du collaborateur</th>
         <th class="th">Date d'intégration</th>
-        <th class="th">profils consultant </th>
+        <th class="th" >profils consultant </th>
       </tr>
     </thead>
     <tr>
       <td class="th_contenu">{{ consultantData.nom }} {{ consultantData.prenom }}</td>
       <td class="th_contenu">{{consultantData.date_integration| date:'dd-MM-yyyy'}}</td>
-      <td class="center d-flex justify-content-center">
-        <button type="button" class="btn btn-outline-info" (click)="onconsulte()">
+      <td class="text-center ">
+        <button type="button" mat-raised-button color="accent" style="width: 100px;" (mouseenter)="onMouseEnter()">
           <i class="fa fa-eye"></i> Consulter
         </button>
       </td>
@@ -72,79 +72,119 @@
 
   <br>
 
-  <form [formGroup]="evaluationForm" (ngSubmit)="onSubmit(consultant)">
-      <table>
-        <tbody>
-          <mat-toolbar style="background-color: #20dbd8;">
-            <mat-toolbar-row>
-              <tr>
-                <td>
-                  <label for="notemissions">Note Missions</label>
-                </td>
-                <td>
-                  <input type="number" formControlName="notemissions" id="notemissions" required>
-                </td>
-              </tr>
-            </mat-toolbar-row>
-          </mat-toolbar>
-          <mat-toolbar style="background-color: #20a4d8;">
-            <mat-toolbar-row>
-              <tr>
-                <td>
-                  <label for="decision">Decision</label>
-                </td>
-                <td>
-                  <textarea formControlName="decision" id="decision" required></textarea>
-                </td>
-              </tr>
-            </mat-toolbar-row>
-          </mat-toolbar>
-          <mat-toolbar style="background-color: #146389;">
-            <mat-toolbar-row>
-              <tr>
-                <td>
-                  <label for="contrat">Contrat</label>
-                </td>
-                <td>
-                  <mat-form-field>
-                    <mat-select formControlName="contrat">
-                      <mat-option value="Prestataire">Prestataire</mat-option>
-                      <mat-option value="CDI">CDI</mat-option>
-                      <mat-option value="CIVP">CIVP</mat-option>
-                      <mat-option value="CDD">CDD</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </td>
-              </tr>
-            </mat-toolbar-row>
-          </mat-toolbar>
-          <mat-toolbar style="background-color: #122c42;">
-            <mat-toolbar-row>
-              <tr >
-                <td>
-                  <label for="noterh">Note RH</label>
-                </td>
-                <td>
-                  <input type="number" formControlName="noterh" id="noterh">
-                </td>
-              </tr>
-            </mat-toolbar-row>
-          </mat-toolbar>
-          <mat-toolbar style="background-color: #ff0000;">
-            <mat-toolbar-row>
-              <tr>
-                <td>
-                  <label for="notefinal">Note Final</label>
-                </td>
-                <td>
-                  <input type="number" formControlName="notefinal" id="notefinal" disabled>
+ 
+
+
+
+
+  <form [formGroup]="evaluationForm" (ngSubmit)="onSubmit(consultant)" class="left-align">
+    <table class="custom-table">
+      <tbody>
+        <mat-toolbar  >
+          <mat-toolbar-row>
+            <tr>
+              <td>
+                <label class="label" for="notemissions">Note Missions</label>
               </td>
-              </tr>
-            </mat-toolbar-row>
-          </mat-toolbar>
-        </tbody>
-      </table>
-      <button type="submit" mat-raised-button color="accent" class="mr-2">Enregistrer   <i class="fa fa-paper-plane"></i></button>
-    </form>
+              <td>
+                <div class="input-icon">
+                  <input type="number" formControlName="notemissions" id="notemissions" [(ngModel)]="totalMissionNotes" required>
+                  <i class="fa fa-star"></i>
+                </div>
+              </td>
+            </tr>
+          </mat-toolbar-row>
+        </mat-toolbar>
+  
+        <mat-toolbar >
+          <mat-toolbar-row>
+            <tr>
+              <td>
+                <label for="noterh" class="label">Note RH</label>
+              </td>
+              <td>
+                <div class="input-icon">
+                  <input type="number" formControlName="noterh" id="noterh">
+                  <i class="fa fa-star"></i>
+                </div>
+              </td>
+            </tr>
+          </mat-toolbar-row>
+        </mat-toolbar>
+        <mat-toolbar >
+          <mat-toolbar-row>
+            <tr>
+              <td>
+                <label for="notefinal" class="label" >Contrat</label>
+              </td>
+              <td>
+                <div class="input-icon">
+                    <select formControlName="contrat">
+                      <option value="Prestataire">Prestataire</option>
+                      <option value="CDI">CDI</option>
+                      <option value="CIVP">CIVP</option>
+                      <option value="CDD">CDD</option>
+                    </select>
+
+
+               
+                </div>
+              </td>
+            </tr>
+          </mat-toolbar-row>
+        </mat-toolbar>
+        <mat-toolbar>
+          <mat-toolbar-row>
+            <td class="label-cell">
+              <label for="decision" class="label">Decision</label>
+            </td>
+            <td>
+              <div class="input-icon">
+                <textarea formControlName="decision" id="decision" required></textarea>
+                <i class="fa fa-check-circle"></i>
+              </div>
+            </td>
+          </mat-toolbar-row>
+        </mat-toolbar>
+        
+        <mat-toolbar class="custom-toolbar" style="background: linear-gradient(to right, #7ba7c4, #a0bad1);">
+          <mat-toolbar-row>
+            <tr>
+              <td class="label-cell">
+                <label for="notefinal" class="label">Note Final</label>
+              </td>
+              <td>
+                <div class="input-icon">
+                  <input type="number" formControlName="notefinal" id="notefinal" disabled>
+                  <i class="fa fa-check-circle"></i>
+                </div>
+              </td>
+            </tr>
+          </mat-toolbar-row>
+        </mat-toolbar>
+  
+
+  
+        
+        
+      </tbody>
+    </table>
+    <br>
+    <div class="text-center custom-button-container">
+      <button type="submit" mat-raised-button color="accent" class="custom-button">
+        <mat-icon>check_circle</mat-icon>
+        Enregistrer  
+      </button>
+      <button type="submit" mat-raised-button class="custom-button custom-cancel-button" (click)="onAnnuler()">
+        <mat-icon>cancel</mat-icon> Annuler 
+      </button>
+    </div>
+    
+    
+
+
+    
+  </form>
+  
     
 </mat-card>

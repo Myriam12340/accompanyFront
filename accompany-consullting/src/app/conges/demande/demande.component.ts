@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 })
 export class DemandeComponent implements OnInit {
   //declaration des variables
+  isDemiJourneeSelected: boolean = false;
   demandeur:any;
   conge: Conge = new Conge();
   userProfile: any;
@@ -28,7 +29,7 @@ export class DemandeComponent implements OnInit {
   cosultantid: any;
   solde: any;
   soldemaldie: any;
-  duree: number = 0;
+  duree: number ;
   validateurControl = new FormControl();
   utilisateurs: any[] = [];
   term: string;
@@ -36,6 +37,10 @@ export class DemandeComponent implements OnInit {
   val: any;
   consultants: any;
   validateur: any;
+
+
+  ccEmails: string[] = [];
+
   //declaration pour partie mail 
   email: EmailMessage = {
     fromName: '',
@@ -43,14 +48,18 @@ export class DemandeComponent implements OnInit {
     toName: '',
     toEmail: '',
     subject: '',
-    body: ''
+    body: '',
+    CcEmail:''
+    ,CcName:''
   };
   toname:string;
   constructor(private router: Router,private emailService: MailService, private congeService: CongeService, private authService: AuthService, private consultantservice: ConsultantService, private formBuilder: FormBuilder,) {
     this.form = new FormGroup({
     })
   }
+  isCongesMaladieSelected: boolean = false;
 
+certif:any;
   ngOnInit(): void {
 
     if (sessionStorage.getItem('jwt')) {
@@ -86,6 +95,8 @@ export class DemandeComponent implements OnInit {
       dateDebut: ['', Validators.required],
       dateFin: ['', Validators.required],
       type: ['', Validators.required],
+      duree:[''],
+      typeDuree: [''],
 
     }, { validators: this.dateValidation });
 
@@ -94,19 +105,53 @@ export class DemandeComponent implements OnInit {
 
   }
 
+  onDemiJourneeChange() {
+    this.isDemiJourneeSelected = true;
+    
+    // Réinitialisez les champs liés à la date et à la durée si nécessaire
+    if (this.isDemiJourneeSelected) {
 
+      this.demandeForm.patchValue({
+        
+        duree: 0.5, // Mettre à jour la valeur de la durée à 0.5
+    });
+
+    }
+}
 
 
   submitDemandeConge(besoin :string): void {
+
+
+  
+    this.ccEmails.push("mariem.ksouri@sesame.com");
+
+this.ccEmails.push("mariem.ksouri@esen.tn");
+
+    
+    
     if(besoin =="envoyer"){
     this.conge.dateDebut = this.demandeForm.get('dateDebut')?.value;
-    this.conge.dateFin = this.demandeForm.get('dateFin')?.value;
+   
+    if ( this.isDemiJourneeSelected = true)
+    {
+      this.conge.dateFin = this.demandeForm.get('dateDebut')?.value;
+      this.conge.duree = 0.5 ;
+
+    }
+
+    else{
+      this.conge.dateFin = this.demandeForm.get('dateFin')?.value;
+      this.conge.duree= this.demandeForm.get('duree')?.value;
+
+    }
+
     this.conge.type = this.demandeForm.get('type')?.value;
     this.conge.validateur = this.demandeForm.get('validateur')?.value;
     this.conge.demandeur = this.demandeur;
     this.conge.etat = "En attente";
     this.email.toEmail = this.demandeForm.get('validateur')?.value;
-
+this.conge.certif = this.certif;
     this.consultantservice.getConsultantbyemail(this.demandeForm.get('validateur')?.value).subscribe(
       (user) => {
         this.validateur = user;
@@ -132,7 +177,7 @@ export class DemandeComponent implements OnInit {
           this.consultant = response;
           console.log(this.consultant);
           this.toname = this.consultant.nom + " " + this.consultant.prenom;
-      
+
           this.email.fromName = this.userProfile.userName;
           this.email.toName = this.toname;
           this.email.subject = 'Demande de congé: 💬';
@@ -141,7 +186,7 @@ export class DemandeComponent implements OnInit {
             <ul>
               <li><strong>Date de début :</strong> ${this.conge.dateDebut} <i class="fa fa-calendar"></i></li>
               <li><strong>Date de fin :</strong> ${this.conge.dateFin} <i class="fa fa-calendar"></i></li>
-              <li><strong>Durée :</strong> ${this.duree} jours  <i class="fa fa-calendar"></i></li>
+              <li><strong>Durée :</strong> ${this.conge.duree} jours  <i class="fa fa-calendar"></i></li>
               <li><strong>Type de congé :</strong> ${this.conge.type} <i class="fa fa-suitcase"></i></li>
             </ul>
             <p>Je vous prie de bien vouloir examiner ma demande et de me notifier votre décision dans les plus brefs délais.</p>
@@ -149,7 +194,7 @@ export class DemandeComponent implements OnInit {
             <p></p>`;
       
           this.email.body = body;
-      
+          
           this.sendEmail();
         },
         (error) => {
@@ -160,11 +205,24 @@ export class DemandeComponent implements OnInit {
     }
     else if (besoin == "enregister")
     {
-      this.conge.dateDebut = this.demandeForm.get('dateDebut')?.value;
+
+      if ( this.isDemiJourneeSelected = true)
+    {
+      this.conge.dateFin = this.demandeForm.get('dateDebut')?.value;
+      this.conge.duree = 0.5 ;
+
+    }
+    else{
       this.conge.dateFin = this.demandeForm.get('dateFin')?.value;
+      this.conge.duree= this.demandeForm.get('duree')?.value;
+
+    }
+      this.conge.dateDebut = this.demandeForm.get('dateDebut')?.value;
+  
       this.conge.type = this.demandeForm.get('type')?.value;
       this.conge.demandeur = this.demandeur;
       this.conge.etat = "pas envoyer";
+
   
       this.consultantservice.getConsultantbyemail(this.demandeForm.get('validateur')?.value).subscribe(
         (user) => {
@@ -185,6 +243,7 @@ export class DemandeComponent implements OnInit {
   
         });
     }
+    
     this.router.navigate(['/listconge'])
   }
  
@@ -236,5 +295,38 @@ export class DemandeComponent implements OnInit {
 
   Annuler(){
     this.router.navigate(['/listconge'])
+  }
+
+
+
+
+  //partie certif
+  onFileSelected(event: any) {
+    const selectedFile = event.target.files[0];
+  
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+  
+      this.congeService.uploadFile(formData).subscribe(
+        (response) => {
+          const fileUrl = response.fileUrl;
+          this.certif = fileUrl;
+    
+          console.log('File uploaded successfully. File URL:', fileUrl);
+        },
+        (error) => {
+          console.error('Error uploading file:', error);
+        }
+      );
+    }
+  }
+
+  onCongesMaladieSelected() {
+    this.isCongesMaladieSelected = true;
+  }
+
+  onCongesExceptionnelsSelected() {
+    this.isCongesMaladieSelected = false;
   }
 }

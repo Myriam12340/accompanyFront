@@ -1,0 +1,27 @@
+/* Dans votre fichier .css */
+
+  
+  .custom-dialog-content {
+    padding: 20px;
+  }
+  
+  .custom-dialog-title {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .radio-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .radio-option label {
+    margin-left: 10px;
+  }
+  
+  /* Style Font Awesome icons */
+  i.fas {
+    font-size: 20px;
+  }
+  

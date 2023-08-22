@@ -10,6 +10,7 @@ interface UserProfile {
   id: string;
   email: string;
   userName : String ;
+  role : string;
 }
 
 interface LoginResponse {

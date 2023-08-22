@@ -25,6 +25,7 @@ export class EvalCompetanceComponent implements OnInit {
   hr: any;
   evaluation: EvalComp = new EvalComp();
   consultant: number;
+  totalMissionNotes: number = 0;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -40,20 +41,14 @@ export class EvalCompetanceComponent implements OnInit {
 
     this.evaluationForm = this.formBuilder.group({
       noterh: [''],
-      notemissions: [{ value: 0, disabled: true }],
+      notemissions: [{  disabled: true }],
       decision: [null, Validators.required],
       contrat: [""],
-      notefinal: [{ value: 0, disabled: true }]
+      notefinal: [{ disabled: true }]
     });
     
 
-      // Subscribe to value changes of noterh and notemissions form controls
-      this.evaluationForm.get('noterh')?.valueChanges.subscribe(() => {
-        this.calculateNoteFinal();
-      });
-      this.evaluationForm.get('notemissions')?.valueChanges.subscribe(() => {
-        this.calculateNoteFinal();
-      });
+    
     this.consultantService.getConsultantData().subscribe((data) => {
       this.consultantData = data;
       console.log(this.consultantData.consultantId);
@@ -75,15 +70,33 @@ export class EvalCompetanceComponent implements OnInit {
       (missions) => {
         if (missions) {
           this.missions = missions.filter(mission => mission.feedbackManager !== '' && mission.noteManager !== null);
+          this.totalMissionNotes = this.calculateMissionNotesSum(); // Calculer la somme des notes de mission
+
           this.missions.forEach(mission => {
+            
             this.consultantService.getConsultant2(mission.manager).subscribe(
               (manager: any) => {
                 mission.nomManager = manager?.nom + ' ' + manager?.prenom;
+                
               },
               (error) => {
                 console.log('An error occurred while retrieving the manager:', error);
               }
             );
+
+
+            this.missionService.getMission(mission.mission).subscribe(
+              (m: any) => {
+                mission.titre = m.titre
+                
+              },
+              (error) => {
+                console.log('An error occurred while retrieving the manager:', error);
+              }
+            );
+
+
+
           });
     
           console.log(this.missions);
@@ -104,7 +117,13 @@ export class EvalCompetanceComponent implements OnInit {
     );
     
     
-    
+      // Subscribe to value changes of noterh and notemissions form controls
+      this.evaluationForm.get('noterh')?.valueChanges.subscribe(() => {
+        this.calculateNoteFinal();
+      });
+      this.evaluationForm.get('notemissions')?.valueChanges.subscribe(() => {
+        this.calculateNoteFinal();
+      });
 
    
   }
@@ -140,11 +159,9 @@ export class EvalCompetanceComponent implements OnInit {
         const evaluationId = response.id;
         console.log('contratValue:', contratValue);
 
-        // Update the consultant's contract if the contratValue is not null
-        if (this.evaluation.contrat) {
-          // Update the consultant's contract
-          this.updateConsultantContract(this.consultant, this.evaluation.contrat); // Call the update function only if contrat is not empty
-        }
+  
+          this.updateConsultantContract(this.consultant,  contratValue); 
+        
         // ...
       },
       (error) => {
@@ -180,6 +197,19 @@ export class EvalCompetanceComponent implements OnInit {
     return sum;
   }
   
+
+  onMouseEnter() {
+    console.log('Mouse entered the "Consulter" button');
+    this.onconsulte();
+    // Vous pouvez ajouter ici le code que vous souhaitez exécuter lorsque la souris entre sur le bouton "Consulter"
+  }
+
+  onMouseLeave() {
+    console.log('Mouse left the "Consulter" button');
+    // Vous pouvez ajouter ici le code que vous souhaitez exécuter lorsque la souris quitte le bouton "Consulter"
+  }
+
+
   onconsulte(): void {
     console.log(this.consultant);
     this.consultantService.getConsultant2(this.consultant)
@@ -190,7 +220,9 @@ export class EvalCompetanceComponent implements OnInit {
           const dialogConfig = new MatDialogConfig();
           dialogConfig.data = { consultant: selectedConsultant };
           dialogConfig.width = '1000px'; // Définir la largeur de la boîte de dialogue
-         
+         dialogConfig. height= '800px';
+
+         dialogConfig.autoFocus = true;
 
           const dialogRef = this.dialog.open(ConsultantdetailComponent, dialogConfig);
 
@@ -203,6 +235,9 @@ export class EvalCompetanceComponent implements OnInit {
           console.log('An error occurred while fetching the consultant:', error);
         }
       );
+  }
+  onAnnuler(){
+    this.router.navigate(['/evaluation']);
   }
 
 }

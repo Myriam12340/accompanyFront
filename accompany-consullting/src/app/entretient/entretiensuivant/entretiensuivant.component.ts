@@ -22,7 +22,7 @@ post : string ;
 entretienForm: FormGroup;
   entretient: entretient = new entretient();
 
-
+e:entretient;
   constructor(private route: ActivatedRoute , public snackBar: MatSnackBar, private router:Router, private authService: AuthService,
     private fb: FormBuilder,
     private entretienService: EntretienService , private dialog: MatDialog ) { }
@@ -34,6 +34,13 @@ entretienForm: FormGroup;
       const recruteurSuivant =params['recruteurSuivant']
       const post  =params['post']
       const descriptionPoste  =params['descriptionpost']
+      const entretienString = params['entretien'];
+    const entretien: entretient = JSON.parse(entretienString);
+
+    console.log('entretien:', entretien);
+
+    this.e = entretien;
+      console.log ("ee", this.e);
 
       this.descriptionPoste = this.descriptionPoste ; 
 this.post = post ;
@@ -49,6 +56,21 @@ this.recruteurid = recruteurSuivant ;
      
     });
   }
+
+  valider(entretienupdate : entretient){
+    const id = this.e.id;
+    entretienupdate.traite = 'traite';
+    this.entretienService.updateEntretient(id,entretienupdate ).subscribe(() => {
+      
+
+      
+      
+      
+      // You can also perform any other necessary operations or handle the response here
+    });
+  }
+
+
 
 
 //add 
@@ -92,8 +114,19 @@ this.entretient.descriptionPoste = this.entretienForm.get('descriptionPoste')?.v
       });
       this.router.navigate(['/list-entretien']).then(() => {
         window.location.reload();
-      }); 
+      });
+      
     } 
+
+///update
+    const id = this.e.id;
+    const entretienupdate = this.e ;
+    entretienupdate.traite = 'traite';
+    this.entretienService.updateEntretient(id,entretienupdate ).subscribe(() => {
+      
+
+      // You can also perform any other necessary operations or handle the response here
+    });
 
   }
 

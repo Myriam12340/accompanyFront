@@ -8,6 +8,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EvaluationService } from '../service/evaluation.service';
 import { Evaluation } from '../Model/evaluation';
 import { EvalComp } from '../Model/eval-comp';
+import { MatDialog } from '@angular/material/dialog';
+import { ShowEvaluationIntegrationComponent } from './show-evaluation-integration/show-evaluation-integration.component';
+import { ShowEval6Component } from './eval-competance/show-eval6/show-eval6.component';
 
 @Component({
   selector: 'app-evaluation',
@@ -28,38 +31,91 @@ export class EvaluationComponent implements OnInit {
   evalcomp : EvalComp; 
   consultantId :any ;
   evaluatedConsultants: number[] = [];
-
+  consultantEvaluationStatus: { [key: number]: boolean } = {}; // Utilisez un objet pour stocker les statuts d'évaluation
+competance = false ;
+integration : number;
   constructor(
     private consultantService: ConsultantService,
     private router: Router,
-    private evaluationService: EvaluationService,private route: ActivatedRoute
+    private evaluationService: EvaluationService,private route: ActivatedRoute ,    private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
-
     this.route.params.subscribe(params => {
       this.consultantId = +params['consultantId'];
       // Now you have access to the consultantId in this component
       console.log(this.consultantId);
     });
+  
     this.consultantService.getConsultantlist().subscribe(
       (data: ConsultantModule[]) => {
+
         this.consultants = data;
+    
+        for (const consultant of this.consultants) {
+
+          this.evaluationService.checkConsultantEvaluation(consultant.id).subscribe(hasEvaluation => {
+            this.consultantEvaluationStatus[consultant.id] = hasEvaluation;
+           consultant.competance = hasEvaluation;
+          });
+    
+    
+    
+    
+          this.evaluationService.checkConsultantEvaluationintegration(consultant.id).subscribe(hasEvaluation => {
+          consultant.nb  = hasEvaluation;
+          
+            
+            });
+    
+    
+        }
+        
         this.filterConsultants();
-        this.currentList="alert";
+        
+        this.currentList = "alert";
+  
         this.dataSource.data = this.integrationConsultants;
-         // Assign integrationConsultants to the dataSource
+  
+    
       },
       (error) => {
         console.log('An error occurred while retrieving the consultants list: ', error);
       }
     );
   }
+  
+  checkEvaluationForConsultant(consultantId: number) {
+    this.evaluationService.checkConsultantEvaluation(consultantId).subscribe(hasEvaluation => {
+      this.consultantEvaluationStatus[consultantId] = hasEvaluation;
+      if (hasEvaluation) {
+        console.log('Le consultant a une évaluation.');
+        this.competance = true ;
+      } else {
+        console.log('Le consultant n\'a pas d\'évaluation.');
+      }
+    });
+  }
+  
+  async checkEvaluationForintegration(consultant: ConsultantModule) {
+    const hasEvaluation = await this.evaluationService.checkConsultantEvaluationintegration(consultant.id).toPromise();
+    consultant.nb = hasEvaluation;
+  }
+  
+
+
+
+
+
+
+
+
   consultantevaluer(consultantId: number, nom: string, prenom: string, dateIntegration: Date, grade: string, integration: string) {
     // Perform the evaluation
   
     // Add the evaluated consultant to the evaluatedConsultants array
     this.evaluatedConsultants.push(consultantId);
+
   }
   
 
@@ -75,9 +131,9 @@ export class EvaluationComponent implements OnInit {
         const evaluationDate3MonthMinus15Days = evaluationDate3Month.clone().subtract(15, 'days');
         const evaluationDate6Month = integrationDate.clone().add(6, 'month');
         const evaluationDate6MonthMinus15Days = evaluationDate6Month.clone().subtract(15, 'days');
-
+  
         const today = moment();
-
+  
         if (
           today.isSameOrAfter(evaluationDate1MonthMinus15Days, 'day') &&
           today.isSameOrBefore(evaluationDate1Month, 'day')
@@ -97,17 +153,20 @@ export class EvaluationComponent implements OnInit {
           consultant.isI6 = true;
           consultant.prochain_entretien = evaluationDate6Month.format('DD-MM-yyyy');
         }
-
-        return consultant.isI1 || consultant.isI3 || consultant.isI6;
+  
+        // Exclure les consultants ayant une évaluation prévue
+        return (
+          (consultant.isI1 || consultant.isI3 || consultant.isI6) &&
+          !this.evaluatedConsultants.includes(consultant.id)
+        );
       });
-
+  
       this.integrationConsultants = filteredConsultants;
-   
-
+  
       console.log(this.integrationConsultants);
     }
-  
   }
+  
 
 
   alert(){
@@ -202,6 +261,11 @@ export class EvaluationComponent implements OnInit {
         this.evaluations.forEach(e => {
           this.consultantService.getConsultant2(e.consultant).subscribe(
             (consultant: any) => {
+
+
+        
+
+              
             e.nomconsultant = consultant.nom +" "+ consultant.prenom ; 
             console.log (e.nomconsultant); // Ajouter la propriété "consultantNom"  avec vérification de la présence de la propriété 'nom'
             },
@@ -281,5 +345,44 @@ viewEvaluationCompetenceList() {
     this.consultantService.setConsultantData(consultantData);
     this.router.navigate(['/eval_competance']);
   }
+  showcompetance(evaluation:any) {
+    console.log("evaluation", evaluation);
+
+    const dialogRef = this.dialog.open(ShowEval6Component, {
+      data: { evaluation }, // Pass data to your dialog component
+    
+      width: '1000px', // Ajustez la largeur selon vos besoins
+      height: '1000px', // Ajustez la hauteur selon vos besoins
+    
+    });
   
+    dialogRef.afterClosed().subscribe(result => {
+      // You can perform actions after the dialog is closed if needed
+    });
+
+
+
+  }
+  showintegration(evaluation: Evaluation) {
+    console.log("evaluation", evaluation);
+
+    const dialogRef = this.dialog.open(ShowEvaluationIntegrationComponent, {
+      data: { evaluation }, // Pass data to your dialog component
+    
+      width: '1000px', // Ajustez la largeur selon vos besoins
+      height: '1000px', // Ajustez la hauteur selon vos besoins
+    
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      // You can perform actions after the dialog is closed if needed
+    });
+
+
+
+  }
+
+
+
+
 }

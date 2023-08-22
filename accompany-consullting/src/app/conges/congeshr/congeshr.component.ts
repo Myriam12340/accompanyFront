@@ -43,7 +43,7 @@ export class CongeshrComponent implements OnInit {
             (consultant: any) => {
               conge.validateurnom = consultant.nom + ' ' + consultant.prenom;
             
-              conge.duree = this.calculateDuree(conge.dateDebut , conge.dateFin);
+           
             },
             (error) => {
               console.log('Une erreur s\'est produite lors de la récupération du consultant :', error);

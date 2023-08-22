@@ -1,0 +1,38 @@
+/* Style du tableau */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+  }
+  
+  /* Style des en-têtes de colonnes */
+  thead th {
+    text-align: left;
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+  }
+  
+  /* Style des cellules de données */
+  tbody td {
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+  }
+  
+  /* Style des boutons d'action */
+  .btn {
+    border-radius: 10px;
+  }
+  
+  /* Style du bouton d'action "Tous" */
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  /* Style des icônes */
+  .fa {
+    font-size: 1rem;
+  }
+ 
+  

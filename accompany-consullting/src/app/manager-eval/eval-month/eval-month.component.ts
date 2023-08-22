@@ -6,6 +6,9 @@ import { ConsultantService } from 'src/app/Model/consultant/consultant.service';
 import { Mission } from 'src/app/mission';
 import { MissionService } from 'src/app/service/mission.service';
 import { EvalMonthConsultantComponent } from './eval-month-consultant/eval-month-consultant.component';
+import { MissionsManagerComponent } from 'src/app/Mission/missions-manager/missions-manager.component';
+import { ConsultantEvalMissionComponent } from 'src/app/Mission/projet/consultant-eval-mission/consultant-eval-mission.component';
+import { EvalMensuel } from 'src/app/Model/eval-mensuel';
 
 @Component({
   selector: 'app-eval-month',
@@ -13,6 +16,9 @@ import { EvalMonthConsultantComponent } from './eval-month-consultant/eval-month
   styleUrls: ['./eval-month.component.css']
 })
 export class EvalMonthComponent implements OnInit {
+
+  evaluations: EvalMensuel[] = [];
+
   missionid: any;
   equipe: number;
   consultantsEvalues: number[] = [];
@@ -22,7 +28,7 @@ export class EvalMonthComponent implements OnInit {
   m:any;
   nombreequipe : number;
   membresEquipe: Consultant[] = []; // Ajoutez cette ligne pour déclarer la propriété membresEquipe
-
+from : string ;
   constructor(private dialog: MatDialog,private router: Router, private route: ActivatedRoute, private missionservice: MissionService, private consultantservice: ConsultantService
 
   ) { }
@@ -32,6 +38,10 @@ export class EvalMonthComponent implements OnInit {
       const missionid = params['missionid'].trim();
       console.log("ttt" + missionid);
       this.missionid = missionid;
+      const from = params['from'].trim();
+      this.from = from ;
+      console.log ("from "+this.from) ;
+      
     });
   
     this.missionservice.getMission(this.missionid).subscribe(
@@ -79,7 +89,7 @@ export class EvalMonthComponent implements OnInit {
   }
 
 
-  evaluer(nom :string , prenom :string ,idconsultant: number, manager: number, mission: number) {
+  evaluer(nom :string , prenom :string ,idconsultant: number, mission: number, manager: number) {
     const selectedConsultant = idconsultant; // assuming only one consultant can be selected
     const managerid = manager;
     const missionid = mission;
@@ -99,18 +109,90 @@ export class EvalMonthComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       // result contient l'ID du consultant
       console.log('Consultant ID:', result);
-      // Effectuez les opérations nécessaires avec l'ID du consultant, comme supprimer le bouton d'évaluation
-      // Vous pouvez appeler une méthode pour supprimer le bouton d'évaluation en utilisant l'ID du consultant
-    
+
+      const evalMensuel = new EvalMensuel();
+      evalMensuel.consultant = result.consultant;
+      evalMensuel.manager = result.manager;
+      evalMensuel.mission = missionid;
+      evalMensuel.Budge = result.Budge;
+      evalMensuel.delai = result.delai ;
+      evalMensuel.perimetre = result.perimetre;
+      evalMensuel.qualite = result.qualite;
+      evalMensuel.nbeval = this.mission.nbeval+1;
+
+
+
+
+      this.evaluations.push(evalMensuel);
+
+
+      
       const consultantId = result;
 
     // Ajouter l'ID du consultant évalué à la liste consultantsEvalues
     this.consultantsEvalues.push(consultantId);
       
     });
+
+console.log("list",this.evaluations);
+
   }
   
- 
+  consulter_eval(nom :string , prenom :string ,idconsultant: number,  mission: number ,manager: number,) {
+
+
+    const selectedConsultant = idconsultant; // assuming only one consultant can be selected
+    const managerid = manager;
+    const missionid = mission;
+    const nomconsultant =nom ;
+    const prenomconsultant = prenom ;
   
+    const dialogConfig = new MatDialogConfig();
+  
+    dialogConfig.width = '1000px'; // Définir la largeur de la boîte de dialogue
+  
+    dialogConfig.data = {nom:nomconsultant,prenom:prenomconsultant, consultant: selectedConsultant, manager: managerid, mission: missionid };
+    console.log(selectedConsultant);
+    console.log(dialogConfig);
+  
+    const dialogRef = this.dialog.open(ConsultantEvalMissionComponent, dialogConfig);
+  
+    dialogRef.afterClosed();
+  }
+  
+terimner (){
+
+  const id = this.mission.id;
+    const missionupdate = this.mission ;
+    missionupdate.nbeval  = this.mission.nbeval + 1 ;
+ 
+    this.missionservice.updateMission(id,missionupdate ).subscribe(() => {
+      
+    });
+
+ 
+
+    this.evaluations.forEach(evaluation => {
+console.log ("tythj",evaluation);
+
+      this.missionservice.addeval_menusel_Mission(evaluation).subscribe(
+        result => {
+          
+
+
+          
+          console.log('Evaluation added successfully', result);
+        },
+        error => {
+          console.error('Failed to add evaluation', error);
+          // Gérez l'erreur ici si nécessaire
+        }
+      );
+    });
+    this.router.navigate(['/list_missions'])
+}
+
+
+
 
 }

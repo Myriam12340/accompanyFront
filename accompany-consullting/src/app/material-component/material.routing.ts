@@ -42,9 +42,26 @@ import { EvalMonthComponent } from '../manager-eval/eval-month/eval-month.compon
 import { EvalMonthConsultantComponent } from '../manager-eval/eval-month/eval-month-consultant/eval-month-consultant.component';
 import { MissionsManagerComponent } from '../Mission/missions-manager/missions-manager.component';
 import { ProjetComponent } from '../Mission/projet/projet.component';
+import { ConsultantEvalMissionComponent } from '../Mission/projet/consultant-eval-mission/consultant-eval-mission.component';
+import { ConsutantevaluationsComponent } from '../evaluation/consutantevaluations/consutantevaluations.component';
+import { ShowEvaluationIntegrationComponent } from '../evaluation/show-evaluation-integration/show-evaluation-integration.component';
+import { ShowEval6Component } from '../evaluation/eval-competance/show-eval6/show-eval6.component';
+import { DashadminComponent } from '../admin/dashadmin/dashadmin.component';
+import { AnniversaireComponent } from '../anniversaire/anniversaire.component';
 
 export const MaterialRoutes: Routes = [
+
+  { path: 'birthday', component: AnniversaireComponent},
+
+  { path: 'dash', component: DashadminComponent},
+
+  { path: 'showevaluation', component: ShowEvaluationIntegrationComponent},
+  { path: 'showevaluationcompetance', component: ShowEval6Component},
+
+  { path: 'consultantEvals', component: ConsutantevaluationsComponent },
+
   { path: 'list_missions', component: MissionsManagerComponent },
+  { path: 'eval-consultant', component:ConsultantEvalMissionComponent},
 
 
   { path: 'projet', component: ProjetComponent },
@@ -78,7 +95,7 @@ export const MaterialRoutes: Routes = [
     {path: 'mail',component:MailRecruteurComponent},
   
 
-  {path: 'evaluationlist',component:EvaluationListComponent},
+  {path: 'Anniversaire',component:EvaluationListComponent},
   {path: 'calender',component:CalendarComponent},
 
   {path: 'AddConsultant', component:AddConsultantComponent},

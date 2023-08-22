@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {entretient } from '../Model/entretient';
 import { Candidat } from '../Model/candidat';
@@ -15,6 +15,13 @@ export class EntretienService {
   constructor(
     private http: HttpClient) { }
 
+
+
+
+   
+
+
+    
   /** POST: add a new entretien intial */
   addEntretien(viewModel: EntretientViewModel): Observable<entretient> {
     return this.http.post<entretient>(this.baseUrl, viewModel);
@@ -45,7 +52,12 @@ getEntretienCandidat(val : number): Observable<entretient[]>{
  
 
 }
+  /** Get candidat */
 
+  getCandidatparemail(email : number) {
+    return this.http.get(this.baseUrl + '/email/' + email);
+  }
+  
 
 
   /** Get candidat */
@@ -56,6 +68,14 @@ getEntretienCandidat(val : number): Observable<entretient[]>{
   
 
 
+
+ updateEntretient(id: number, entretient: entretient): Observable<any> {
+    const url = `${this.baseUrl}/${id}`;
+    return this.http.put(url, entretient);
+  }
+  uploadFile(formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/upload`, formData);
+  }
 
 
 

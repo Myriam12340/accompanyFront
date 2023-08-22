@@ -84,6 +84,10 @@ export class MissionService {
     return this.http.get<EvalMissionIntegration[]>(url);
   }
   
+  getevalintegrationbyMission(missionid : number): Observable<EvalMissionIntegration[]> {
+    const url = `${this.evalurl}/mission/${missionid}`;
+    return this.http.get<EvalMissionIntegration[]>(url);
+  }
 
   ///partie mensuel 
   private mensuelurl = ' http://localhost:60734/api/eval__mensuel';
@@ -91,5 +95,17 @@ export class MissionService {
   addeval_menusel_Mission(viewModel: EvalMensuel): Observable<EvalMensuel> {
     return this.http.post<EvalMensuel>(this.mensuelurl, viewModel);
   }
+
+
+//get evak de consultant dans une mission 
+getEvaluationsconsultantparmission(missionId: number, consultantId: number) {
+  const url = `http://localhost:60734/api/eval__mensuel/mission/${missionId}/consultant/${consultantId}`;
+  return this.http.get<EvalMensuel[]>(url);
+}
+
+getConsultantIdsWithEvaluations(): Observable<number[]> {
+  const url = `${this.mensuelurl}/consultant-ids-with-evals`;
+  return this.http.get<number[]>(url);
+}
 
 }

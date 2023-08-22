@@ -4,6 +4,8 @@ import { Candidat } from '../../Model/candidat';
 import { EntretienService } from '../../service/entretient.service';
 import { entretient } from '../../Model/entretient';
 import { AuthService } from '../../service/Authentication Service/auth.service';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-entretientdetail',
@@ -17,11 +19,24 @@ export class EntretientdetailComponent implements OnInit {
   candidatprofil : any;
   avis : any ;
   recruteur : any ;
-  
+  pdfUrl: SafeResourceUrl;
+cv:any;
+showPdf: boolean = false;
   entretients: entretient[] = [];
-  constructor(private route: ActivatedRoute ,private entretienService: EntretienService,private authService: AuthService) { }
-
+  constructor(private sanitizer: DomSanitizer,private http: HttpClient,private route: ActivatedRoute
+     ,private entretienService: EntretienService,private authService: AuthService) { 
+  
+     }
+ 
   ngOnInit(): void {
+
+    const pdfId = 'support.pdf'; // Replace with the actual ID
+
+
+    const fileName = 'cv%20fatma.pdf'; // Remplacez par le nom de fichier souhaité
+   
+
+    
     this.route.queryParams.subscribe(params => {
       console.log(params);
       const candidat = params['Candidat'];
@@ -32,6 +47,8 @@ export class EntretientdetailComponent implements OnInit {
       this.descriptionPoste = descriptionPoste ; 
 this.post = post ;
       this.candidatid = candidat;
+
+
     });
 this.getCandidatprofil();
 this.entretienService.getEntretienCandidat(this.candidatid).subscribe((data) => {
@@ -53,6 +70,9 @@ this.entretienService.getEntretienCandidat(this.candidatid).subscribe((data) => 
   console.log("ttt" ,this.entretients);
 });
 
+
+
+
   }
 
 
@@ -71,7 +91,21 @@ this.entretienService.getEntretienCandidat(this.candidatid).subscribe((data) => 
 this.entretienService.getCandidat(this.candidatid).subscribe(
   (user) => {
     this.candidatprofil = user;
-    console.log('User foundddd:', this.candidatprofil.nom);
+    console.log('User foundddd:', this.candidatprofil);
+
+  
+this.cv = this.candidatprofil.cvPdfUrl;
+    this.http.get(`http://localhost:60734/api/entretients/download-pdf?fileName=${this.cv}`, {
+      responseType: 'arraybuffer',
+    }).subscribe(
+      (response: any) => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
     // Appel à la fonction qui ajoute l'entretien après la récupération de l'utilisateur
   },
   (error) => {
@@ -82,6 +116,23 @@ this.entretienService.getCandidat(this.candidatid).subscribe(
   }
 
 
+  loadPdf(): void {
+    const fileName = 'monfichier.pdf'; // Remplacez par le nom de fichier souhaité
+    this.http.get(`/api/entretients/download-pdf?fileName=${this.cv}`, {
+      responseType: 'arraybuffer',
+    }).subscribe(
+      (response: any) => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
 
+  togglePdfViewer(): void {
+    this.showPdf = !this.showPdf;
+  }
 
 }

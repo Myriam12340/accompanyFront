@@ -26,6 +26,11 @@ export class ConsultantService {
   getConsultantlist():Observable<ConsultantModule[]>{
     return this.http.get<any>(this.APIurl+'/Consultants');
   }
+
+
+  addadmin(val:any){
+    return this.http.post(this.APIurl+'/Consultants/admin',val);
+  }
   addConsultant(val:any){
     return this.http.post(this.APIurl+'/Consultants',val);
   }
@@ -63,4 +68,34 @@ export class ConsultantService {
 console.log (etatModifier);
     return this.http.put(url,id);
   }
+
+  updatesoldemaladie(id: number, soldemaladie: number): Observable<any> {
+    const url = `${this.APIurl}/Consultants/soldemaladie/${id}/${soldemaladie}`;
+    const body = { soldemaladie };
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+console.log (soldemaladie);
+    return this.http.put(url,id);
+  }
+
+
+  updatesoldeconge(id: number, soldeconge: number): Observable<any> {
+    const url = `${this.APIurl}/Consultants/solde/${id}/${soldeconge}`;
+    const body = { soldeconge };
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+console.log (soldeconge);
+    return this.http.put(url,id);
+  }
+
+
+
 }

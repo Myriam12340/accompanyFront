@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Conge } from 'src/app/Model/conge';
 import { ConsultantService } from 'src/app/Model/consultant/consultant.service';
@@ -6,13 +9,17 @@ import { EmailMessage } from 'src/app/Model/email-message';
 import { AuthService } from 'src/app/service/Authentication Service/auth.service';
 import { CongeService } from 'src/app/service/conge.service';
 import { MailService } from 'src/app/service/mail.service';
+import { ValidationRhComponent } from './validation-rh/validation-rh.component';
 
 @Component({
   selector: 'app-consulterdemande',
   templateUrl: './consulterdemande.component.html',
   styleUrls: ['./consulterdemande.component.css']
 })
+
 export class ConsulterdemandeComponent implements OnInit {
+  @Output() soldeCongeUpdated: EventEmitter<number> = new EventEmitter<number>();
+
   congedata: Conge;
   solde: any;
   soldemaldie: any;
@@ -36,9 +43,27 @@ email: EmailMessage = {
   toName: '',
   toEmail: '',
   subject: '',
-  body: ''
+  body: '',
+ CcEmail:''
+ ,CcName:''
 };
-  constructor(private emailService: MailService,private router: Router, private congeservice: CongeService, private authService: AuthService, private consultantservice: ConsultantService) { }
+
+
+pdfUrl: SafeResourceUrl;
+certif:any;
+showPdf: boolean = false;
+
+  constructor(    private dialog: MatDialog
+,    private sanitizer: DomSanitizer,private http: HttpClient,private emailService: MailService,private router: Router, private congeservice: CongeService, private authService: AuthService, private consultantservice: ConsultantService) { }
+
+
+
+
+
+
+
+
+
 
   ngOnInit(): void {
 
@@ -46,12 +71,29 @@ email: EmailMessage = {
     this.congeservice.getcongeData().subscribe((data) => {
       // Handle the received data here
       console.log("Received congeData in component:", data);
+ 
 
       // Assign the received data to a property in your component
       this.data = data;
+      console.log("Received congeData in component:", this.data.conge);
       this.d = this.data.conge.demandeur;
       console.log("DD", this.d);
       console.log("DD" + this.d);
+
+      this.certif = this.data.conge.certif;
+      this.http.get(`http://localhost:60734/api/Conges/download-pdf?fileName=${this.certif}`, {
+        responseType: 'arraybuffer',
+      }).subscribe(
+        (response: any) => {
+          const blob = new Blob([response], { type: 'application/pdf' });
+          this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+
+      
 
       // Perform any other necessary operations with the data
     });
@@ -91,9 +133,9 @@ email: EmailMessage = {
          
        
 
-      this.duree = this.calculateDuree(this.data.conge.dateDebut, this.data.conge.dateFin);
-      this.datedebut = this.dateconvert(this.data.conge.dateDebut);
-      this.datefin = this.dateconvert(this.data.conge.dateFin);
+      this.duree = this.data.conge.duree;
+      this.datedebut = this.data.conge.dateDebut;
+      this.datefin = this.data.conge.dateFin;
 
       this.email.subject = 'Demande de congé: 💬';
       const body = `<p>Cher <strong>${this.email.toName}</strong>,</p>
@@ -101,7 +143,7 @@ email: EmailMessage = {
         <ul>
           <li><strong>Date de début :</strong> ${this.data.conge.dateDebut} <i class="fa fa-calendar"></i></li>
           <li><strong>Date de fin :</strong> ${this.data.conge.dateFin} <i class="fa fa-calendar"></i></li>
-          <li><strong>Durée :</strong> ${this.duree} jours  <i class="fa fa-calendar"></i></li>
+          <li><strong>Durée :</strong> ${this.data.conge.duree} jours  <i class="fa fa-calendar"></i></li>
           <li><strong>Type de congé :</strong> ${this.data.conge.type} <i class="fa fa-suitcase"></i></li>
         </ul>
         <p>Je vous prie de bien vouloir examiner ma demande et de me notifier votre décision dans les plus brefs délais.</p>
@@ -113,6 +155,32 @@ email: EmailMessage = {
      
    
   }
+
+
+
+  
+
+  togglePdfViewer(): void {
+    this.showPdf = !this.showPdf;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   calculateDuree(debut: Date, fin: Date) {
     const dateDebut = new Date(debut);
     const dateFin = new Date(fin);
@@ -141,6 +209,10 @@ email: EmailMessage = {
       
       // You can also perform any other necessary operations or handle the response here
     });
+
+
+
+
     
     this.router.navigate(['/listconge']);
   }
@@ -161,19 +233,50 @@ retour(){
   }
 
 }
-  valider(congeup: Conge){
+  valider(congeup: Conge , soldeMaladie : number , soldeconge : number ){
     const id = congeup.id;
+    const consultantid = congeup.demandeur;  
+    var solde ;
+    solde = soldeMaladie - congeup.duree;
     var etatModifier = 'valider';
+
+
+//update solde conge 
+var soldec;
+soldec = soldeconge - congeup.duree;
+
+
+    if (congeup.type == "Congés Exceptionnels")
+
+{
+  this.consultantservice.updatesoldeconge(consultantid,soldec ).subscribe(() => {
+     
+    // You can also perform any other necessary operations or handle the response here
+    alert(solde);
+
+  });
+
+}
+ else if (congeup.type == "Congés Maladie")
     this.congeservice.updateCongeEtat(id, etatModifier).subscribe(() => {
       
 
-      
-        alert('Congé Valider');
+      this.consultantservice.updatesoldemaladie(consultantid,solde ).subscribe(() => {
+     
+      // You can also perform any other necessary operations or handle the response here
+      alert(solde);
+
+    });
+
+
+
         this.router.navigate(['/listdemandes'])
 
       
       // You can also perform any other necessary operations or handle the response here
     });
+    
+
   }
 
   annulerDemande(congeup: Conge) {
@@ -235,5 +338,45 @@ retour(){
       }
     );
   }
- 
+  imprimer() {
+    // Cacher le reste de la page pour l'impression
+    document.body.classList.add('print-mode');
+  
+    // Utiliser la fonction d'impression du navigateur
+    window.print();
+  
+    // Rétablir l'affichage normal après l'impression
+    document.body.classList.remove('print-mode');
+  }
+  
+
+
+
+  validerrh(congeup: Conge , soldeMaladie : number , soldeconge : number){
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = { };
+// Définir la largeur de la boîte de dialogue
+   
+   dialogConfig.autoFocus = true;
+   dialogConfig.width = '60%';
+   dialogConfig.panelClass = 'custom-dialog'; 
+   dialogConfig.data = { conge: congeup , soldeMaladie,soldeconge};
+
+    const dialogRef = this.dialog.open(ValidationRhComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(() => {
+      // Écoutez l'événement d'achèvement de la validation
+      dialogRef.componentInstance.validationCompleted.subscribe((nouveauSoldeConge: number) => {
+        // Mettez à jour le solde de congé avec la nouvelle valeur
+        this.solde = nouveauSoldeConge;
+
+        // Émettez un événement pour indiquer la mise à jour du solde
+        this.soldeCongeUpdated.emit(this.solde);
+        this.router.navigate(['/listconge'])
+      });
+    });
+   
+   
+  }
+  
 }
