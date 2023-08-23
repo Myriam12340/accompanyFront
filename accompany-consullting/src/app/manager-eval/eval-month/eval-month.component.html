@@ -51,10 +51,11 @@
   [disabled]="consultantsEvalues.includes(membre.id)">
   <i class="fas fa-check"></i> Évaluer
 </button>
+<div class="col-1" *ngIf="role=== 'admin'">
 <button type="submit" class="btn btn-primary mr-2" (click)="consulter_eval(membre.nom,membre.prenom,membre.id, mission.id, mission.manager)"*ngIf="from === 'fromrh'"
 [disabled]="consultantsEvalues.includes(membre.id)">
 <i class="fas fa-check"></i> Voir l'eval
-</button>
+</button></div>
               
 
           </div>

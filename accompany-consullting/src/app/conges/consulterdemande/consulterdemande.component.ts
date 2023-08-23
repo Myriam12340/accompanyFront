@@ -246,28 +246,11 @@ var soldec;
 soldec = soldeconge - congeup.duree;
 
 
-    if (congeup.type == "Congés Exceptionnels")
-
-{
-  this.consultantservice.updatesoldeconge(consultantid,soldec ).subscribe(() => {
-     
-    // You can also perform any other necessary operations or handle the response here
-    alert(solde);
-
-  });
-
-}
- else if (congeup.type == "Congés Maladie")
+   
     this.congeservice.updateCongeEtat(id, etatModifier).subscribe(() => {
       
 
-      this.consultantservice.updatesoldemaladie(consultantid,solde ).subscribe(() => {
      
-      // You can also perform any other necessary operations or handle the response here
-      alert(solde);
-
-    });
-
 
 
         this.router.navigate(['/listdemandes'])

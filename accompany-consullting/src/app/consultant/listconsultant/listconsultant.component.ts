@@ -16,6 +16,7 @@ import { PageEvent } from '@angular/material/paginator';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { ConsultantModule } from '../../Model/consultant/consultant.module';
+import { AuthService } from 'src/app/service/Authentication Service/auth.service';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 
@@ -28,6 +29,7 @@ import { ConsultantModule } from '../../Model/consultant/consultant.module';
 })
 export class ListconsultantComponent implements OnInit {
   
+  role : any ;
 
   type : string ; 
   selectedConsultant: any;
@@ -73,9 +75,25 @@ export class ListconsultantComponent implements OnInit {
   totalConsultants = 0;
   nbactif :Number ;
   nbinactif: number ;
-  constructor(private consultantservice: ConsultantService, private router: Router,private dialog: MatDialog) { }
+  userProfile: any;
+
+  constructor(    private authService: AuthService,
+    private consultantservice: ConsultantService, private router: Router,private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    const jwt = sessionStorage.getItem('jwt');
+    if (jwt) {
+      this.authService.getUserProfile(jwt).subscribe(
+        (userProfile) => {
+          this.userProfile = userProfile;
+          console.log(this.userProfile);
+          this.role  = userProfile.role;
+
+       
+        },
+        (error) => console.error(error)
+      );
+    }
     this.allconsultant();
    
   

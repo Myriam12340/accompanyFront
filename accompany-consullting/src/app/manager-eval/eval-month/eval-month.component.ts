@@ -9,6 +9,7 @@ import { EvalMonthConsultantComponent } from './eval-month-consultant/eval-month
 import { MissionsManagerComponent } from 'src/app/Mission/missions-manager/missions-manager.component';
 import { ConsultantEvalMissionComponent } from 'src/app/Mission/projet/consultant-eval-mission/consultant-eval-mission.component';
 import { EvalMensuel } from 'src/app/Model/eval-mensuel';
+import { AuthService } from 'src/app/service/Authentication Service/auth.service';
 
 @Component({
   selector: 'app-eval-month',
@@ -22,6 +23,8 @@ export class EvalMonthComponent implements OnInit {
   missionid: any;
   equipe: number;
   consultantsEvalues: number[] = [];
+  role : any ;
+  userProfile: any;
 
   mission: any;
   nomchef:any;
@@ -29,11 +32,32 @@ export class EvalMonthComponent implements OnInit {
   nombreequipe : number;
   membresEquipe: Consultant[] = []; // Ajoutez cette ligne pour déclarer la propriété membresEquipe
 from : string ;
-  constructor(private dialog: MatDialog,private router: Router, private route: ActivatedRoute, private missionservice: MissionService, private consultantservice: ConsultantService
+  constructor(    private authService: AuthService,
+    private dialog: MatDialog,private router: Router, private route: ActivatedRoute, private missionservice: MissionService, private consultantservice: ConsultantService
 
   ) { }
 
   ngOnInit(): void {
+
+    const jwt = sessionStorage.getItem('jwt');
+    if (jwt) {
+      this.authService.getUserProfile(jwt).subscribe(
+        (userProfile) => {
+          this.userProfile = userProfile;
+          console.log(this.userProfile);
+          this.role  = userProfile.role;
+
+       
+        },
+        (error) => console.error(error)
+      );
+    }
+
+
+
+
+
+
     this.route.queryParams.subscribe((params) => {
       const missionid = params['missionid'].trim();
       console.log("ttt" + missionid);
@@ -86,6 +110,8 @@ from : string ;
         console.log("Une erreur s'est produite lors du chargement de la mission :", error);
       }
     );
+
+    
   }
 
 

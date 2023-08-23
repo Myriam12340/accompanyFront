@@ -26,7 +26,7 @@ export class MenuItems {
         userProfile => {
           const role = userProfile.role;
 
-          if (role === "consultant") {
+          if (role === "Consultant") {
             this.MENUITEMS.push(
               {
                 state: 'demande',
@@ -46,13 +46,7 @@ export class MenuItems {
                 name: 'Projet',
                 icon: 'featured_play_list'
               }
-              , 
-              {
-                state: 'list_missions',
-                name: 'list_missions',
-                type: 'link',
-                icon: 'playlist_add_check'
-              }
+        
               , 
             );
           } else if (role === "admin") {

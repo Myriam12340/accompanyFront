@@ -44,20 +44,26 @@
     <br>
     <br>
     <div class="row col-12">
+      <div *ngIf="role=== 'admin'">
+
         <button type="button" class="btn btn-outline-info mr-2" (click)="add()"><i class="fa fa-plus"></i> Ajouter</button>
+       
         <button type="button" class="btn btn-outline-info mr-2" (click)="onEdit()"><i class="fa fa-pencil"></i> Modifier</button>
+       </div>
         <button type="button" class="btn btn-outline-info" (click)="onconsulte()"><i class="fa fa-eye"></i> Consulter</button>
     </div>
     
      
     <br><br>
+    <div  *ngIf="role=== 'admin'">
+
     <div class="col-3 ">
         <button class="text-white" style="background-color: rgb(226, 68, 68);border-radius: 10px;" (click)="pdf(type)">
             <i class="fa fa-file-pdf-o"></i> PDF
           </button>
 
 </div>
-  
+  </div>
     <div>
         <br>
         <br>

@@ -14,7 +14,7 @@ import { ConsultantService } from '../Model/consultant/consultant.service';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-
+  img:any;
   sp=false;
   consultant: Consultant = new Consultant();
   myForm: FormGroup;
@@ -68,6 +68,7 @@ business_unit:["",Validators.required],
       code:["",Validators.required],
       age:['', Validators.required],
        situation_amoureuse:["",Validators.required]
+       ,photo:[ this.img]
     });
 
 
@@ -82,7 +83,7 @@ business_unit:["",Validators.required],
   
       this.consultantService.addadmin(this.consultant).subscribe(
         () => {
-          this.snackBar.open("Consultant ajouté avec succès", "test", {
+          this.snackBar.open("Admin  ajouté avec succès", "test", {
             duration: 2000,
             panelClass: ['mat-toolbar', 'mat-primary']
           });
@@ -118,5 +119,24 @@ business_unit:["",Validators.required],
     this.step--;
     console.log(this.step);
   }
-
+  onFileSelected(event: any) {
+    const selectedFile = event.target.files[0];
+  
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+  
+      this.consultantService.uploadFile(formData).subscribe(
+        (response) => {
+          const fileUrl = response.fileUrl;
+          this.img= fileUrl;
+          this.myForm.patchValue({ photo: fileUrl }); // Mise à jour de la valeur dans le formulaire
+          console.log('File uploaded successfully. File URL:', fileUrl);
+        },
+        (error) => {
+          console.error('Error uploading file:', error);
+        }
+      );
+    }
+  }
 }
