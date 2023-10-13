@@ -1,0 +1,27 @@
+input[type=number], select {
+    width: 75%;
+    padding: 6px 6px;
+    margin: 10px 2 px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+
+  .no-data-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #445ac8;
+    border-radius: 8px;
+  }
+  
+  .icon {
+    font-size: 48px;
+    color: #ff9800; /* Couleur orange */
+  }
+  
+  .message {
+    color: #f4f0f0; /* Couleur de texte noire */
+    margin-top: 10px;
+  }
+  

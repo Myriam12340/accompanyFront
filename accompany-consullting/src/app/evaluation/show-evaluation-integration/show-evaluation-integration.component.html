@@ -48,7 +48,7 @@
 
   <div *ngFor="let mission of missions" >
     <table style="width: 100%; border: 2px solid #24527a;">
-    <ng-container *ngIf="mission.feedbackManager !== null && mission.noteManager !== null">
+    <ng-container >
 
     <mat-toolbar style="background-color: #1e5d6b; color: antiquewhite;">
       <mat-toolbar-row>
@@ -64,7 +64,7 @@
       </mat-toolbar-row>
     </mat-toolbar>
     </ng-container>
-    <table style="width: 100%;" *ngIf="mission.feedbackManager !== null && mission.noteManager !== null">
+    <table style="width: 100%;" >
       <thead>
         <tr>
           <th style="width: 33.33%; font-size:large; font-family: Georgia, serif; color: #24527a;">Critères</th>
@@ -97,39 +97,9 @@
     </table>
     
 
-    <mat-toolbar style="background-color: #1e5d6b; color: antiquewhite;">
-      <mat-toolbar-row>
-        <div class="mission-info">
-          <span>Partie Manager </span>
-          <mat-icon class="material-icons"></mat-icon>
-        </div>
-       
-      </mat-toolbar-row>
-    </mat-toolbar>
+   
     <br>
-    <table style="width: 100%; ">
-      <tr>
-        <th >
-          <label for="exampleFormControlInput1" class="form-label" style="font-size: 16px;"> Note</label>
-
-        </th>
-        <th >
-          <mat-icon class="material-icons" style="color: white; font-size: 24px; vertical-align: middle;">star_rate</mat-icon>
-          <span style="vertical-align: middle; font-size: 20px; ">{{ mission.noteManager }}</span>
-        </th>
-      </tr>
-      <tr>
-        <th >
-          <label class="form-label" style="font-size: 16px;">Feedback</label>
-        </th>
-        <th >
-          <div >
-            <mat-icon class="material-icons" style="color: white; font-size: 24px; vertical-align: middle;">post_add</mat-icon>
-            <span style="vertical-align: middle; font-size: 18px; ">{{ mission.feedbackManager }}</span>
-          </div>
-        </th>
-      </tr>
-    </table>
+  
     </table>
 
 </div>  
@@ -148,6 +118,8 @@
       </mat-toolbar-row>
     </mat-toolbar>
     <br>
+    <div style="display: flex; flex-direction: row;">
+      <div style="flex: 1; margin-right: 20px;">
     <table style="width: 100%; ">
       <thead style="background-color:#1e5d6b;color: azure;">
         <tr>
@@ -176,7 +148,13 @@
       </tbody>
     </table>
   
-  
+  </div>
+  <div style="flex: 1;">
+    <label>Commentaire</label>
+    <textarea class="form-control border" placeholder="Laissez un commentaire ici" id="floatingTextarea2" [value] ="data.evaluation.commentaire_Aspects_RH" required style="height: 100px; width: 100%;"></textarea>
+ 
+  </div>
+</div>
   
   
      </mat-card>
@@ -341,6 +319,8 @@
       </mat-toolbar-row>
     </mat-toolbar>
     <br>
+    <div style="display: flex; flex-direction: row;">
+      <div style="flex: 1; margin-right: 20px;">
     <table style="width: 100%; ">
       <thead style="background-color:#1e5d6b; color: azure;">
        
@@ -390,7 +370,12 @@
         </tr>
       </tbody>
     </table>
-  
+  </div>
+  <div style="flex: 1;">
+    <label>Commentaire</label>
+    <textarea class="form-control border"  id="floatingTextarea2" [value]="data.evaluation.commentaire_travailler" required style="height: 100px; width: 100%;"></textarea>
+  </div>
+</div>
   
   
   

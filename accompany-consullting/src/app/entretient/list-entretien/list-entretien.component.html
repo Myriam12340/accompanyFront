@@ -9,8 +9,16 @@
            
 
     </div>
-
-
+<br>
+    <div class="search-container">
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Recherche par nom et prénom" />
+      
+      
+      <button type="button" class="btn btn-primary" style="border-radius: 10px;"  (click)="searchEntretiens()">
+        <i class="fa fa-search-plus" aria-hidden="true"></i>
+        Rechercher 
+      </button>
+    </div>
 
 <br><br>
 

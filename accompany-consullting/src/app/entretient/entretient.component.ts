@@ -130,19 +130,25 @@ async addEntretien(): Promise<void> {
 
 
 ///partie dialog mail 
-add() {
-  const dialogRef = this.dialog.open(MailRecruteurComponent);
 
-  dialogRef.afterClosed().subscribe(result => {
-    console.log('E-mail address ress :', result);
-   this.entretient.recruteurSuivant = result.id ;
-    // Do whatever you want with the retrieved email address here
-  });
   
 
 
+add() {
+  const dialogRef = this.dialog.open(MailRecruteurComponent, {
+    data: {
+      nomPrenom: this.entretienForm.get('nom')?.value + ' ' + this.entretienForm.get('prenom')?.value,
+      poste: this.entretienForm.get('post')?.value
+    }
+  });
 
+  dialogRef.afterClosed().subscribe(result => {
+    console.log('E-mail address ress :', result);
+    this.entretient.recruteurSuivant = result.id;
+    // Do whatever you want with the retrieved email address here
+  });
 }
+
 
 
 annuler(){

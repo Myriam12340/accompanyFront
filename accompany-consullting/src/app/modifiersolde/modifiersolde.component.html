@@ -1,0 +1,90 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<mat-card>
+  <div class="p-20 bg-info position-relative">
+    <h4 class="card-title text-white m-0">Liste du personnel</h4>
+  </div>
+  
+  <div class="search-container d-flex align-items-center justify-content-end">
+    <mat-form-field appearance="fill" class="mb-0">
+      <mat-label>Rechercher un personnel</mat-label>
+      <input matInput placeholder="Rechercher par nom et prénom" (input)="applyFilter($event.target.value)">
+      <mat-icon>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <br>
+
+  <!-- Partie de modification -->
+  <div class="row justify-content-end mb-3">
+    <div class="row">
+      <div class="col-5">
+        <mat-form-field class="input">
+          <input matInput type="number" placeholder="Nombre de jours" [(ngModel)]="numberOfDays">
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <button mat-raised-button style="background-color: red; color: aliceblue;" class="mr-2" (click)="updateSoldeCongeForSelectedConsultants()">
+          <mat-icon>remove</mat-icon> 
+        </button>
+        <button mat-raised-button style="background-color: green; color: aliceblue;" (click)="updateSoldeCongeajouter()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  
+  <!-- Tableau -->
+  <div class="col-12">
+    <table class="table table-striped table-hover" mat-table [dataSource]="filteredConsultants"
+    
+    >
+      
+        <ng-container matColumnDef="select" >
+          <th mat-header-cell *matHeaderCellDef class="thead-info">sélectionner 
+</th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="onConsultantSelectionChange($event, row)"
+                          [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+            
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="nom prenom">
+          <th mat-header-cell *matHeaderCellDef class="thead-info">Nom & Prenom</th>
+          <td mat-cell *matCellDef="let consultant">{{ consultant.nom }} {{ consultant.prenom }}</td>
+        </ng-container>
+            <!-- ... -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef class="thead-info">Status</th>
+              <td mat-cell *matCellDef="let consultant" [ngClass]="{'mat-badge mat-badge-primary': consultant.status === 'Inactif', 'mat-badge mat-badge-danger': consultant.status === 'Actif'}">{{ consultant.status }}</td>
+           
+             
+           
+            </ng-container>
+            <!-- ... -->
+       
+          
+            <ng-container matColumnDef="SoldeConge">
+                <th mat-header-cell *matHeaderCellDef class="thead-info">Solde Congé</th>
+                <td mat-cell *matCellDef="let consultant" [ngClass]="{'text-danger font-weight-bold': consultant.soldeConge < 0}">
+                  {{ consultant.soldeConge }}
+                </td>
+              </ng-container>
+              
+        <ng-container matColumnDef="grade">
+          <th mat-header-cell *matHeaderCellDef class="thead-info">Grade</th>
+          <td mat-cell *matCellDef="let consultant">{{ consultant.grade }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="['select', 'nom prenom', 'status', 'SoldeConge', 'grade']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['select', 'nom prenom', 'status', 'SoldeConge', 'grade']" ></tr>
+    </table>
+      
+  </div>
+
+  <mat-paginator [length]="totalConsultants" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [pageIndex]="currentPage" (page)="onPageChange($event)">
+  </mat-paginator>
+</mat-card>

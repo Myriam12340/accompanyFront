@@ -11,6 +11,9 @@ import { EvalComp } from '../Model/eval-comp';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowEvaluationIntegrationComponent } from './show-evaluation-integration/show-evaluation-integration.component';
 import { ShowEval6Component } from './eval-competance/show-eval6/show-eval6.component';
+import { MailService } from '../service/mail.service';
+import { EmailMessage } from '../Model/email-message';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-evaluation',
@@ -18,6 +21,29 @@ import { ShowEval6Component } from './eval-competance/show-eval6/show-eval6.comp
   styleUrls: ['./evaluation.component.css']
 })
 export class EvaluationComponent implements OnInit {
+  email: EmailMessage = {
+    fromName: '',
+    fromEmail: '',
+    toName: '',
+    toEmail: '',
+    subject: '',
+    body: '',
+    CcEmail:''
+    ,CcName:''
+    , UserEmail:''
+  };
+
+
+
+
+
+  showMailForm = false;
+  dateInput: string = '';
+  selectedOption: string = '';
+  teamsLink: string = '';
+  selectedLocation: string = '';
+  showMailFormState: { [key: string]: boolean } = {};
+
   consultants: Consultant[];
   integrationConsultants: Consultant[] = [];
   dataSource = new MatTableDataSource();
@@ -34,7 +60,106 @@ export class EvaluationComponent implements OnInit {
   consultantEvaluationStatus: { [key: number]: boolean } = {}; // Utilisez un objet pour stocker les statuts d'évaluation
 competance = false ;
 integration : number;
-  constructor(
+
+
+sendMail(email: string, consultant: Consultant) {
+  this.showMailFormState[consultant.id] = false;
+
+  console.log('Date:', this.dateInput);
+  console.log('Selected Option:', this.selectedOption);
+  console.log('Teams Link:', this.teamsLink);
+  console.log('Selected Location:', this.selectedLocation);
+
+  console.log('email :', email);
+
+  let subject = '';
+  let body = '';
+
+  if (consultant.isI3 && !consultant.isI1 && !consultant.isI6) {
+    subject = 'Bilan 3 mois';
+    body = `
+      <div style="font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <p style="font-size: 16px; color: #333;">Bonjour ,  ${consultant.nom} ${consultant.prenom}</p>
+        <p style="font-size: 16px; color: #333;">
+          Nous avons le plaisir de vous informer que le bilan d'intégration de 3 mois a été planifiée. Voici les détails :
+        </p>
+        <ul style="list-style: none; padding: 0;">
+          <li>Date de l'évaluation :  ${this.formatDate(this.dateInput)} </li>
+          <li>le point sera en : ${this.selectedOption === 'teams' ? 'Teams' : 'Bureau'}</li>
+          ${this.selectedOption === 'teams' ? `<li>Lien Teams 👩‍💻 :  <a href="${this.teamsLink}" target="_blank">${this.teamsLink}</a></li>` : `<li>Lieu 📍 : ${this.selectedLocation}</li>`}
+        </ul>
+        <p style="font-size: 16px; color: #333;">Cordialement, <br>L'équipe RH</p>
+        <br>
+        <strong style="font-family: Arial, sans-serif; margin: 20px; color: #339AB0;">Accompany Consulting</strong></p>
+      </div>
+    `;
+  } else if (consultant.isI1 && !consultant.isI3  && !consultant.isI6) {
+    subject = 'Bilan 1 mois';
+    body = `
+      <div style="font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <p style="font-size: 16px; color: #333;">Bonjour, ${consultant.nom} ${consultant.prenom}</p>
+        <p style="font-size: 16px; color: #333;">
+          Nous avons le plaisir de vous informer que le Bilan d'intégration de 1 mois a été planifiée. Voici les détails :
+        </p>
+        <ul style="list-style: none; padding: 0;">
+          <li>Date de l'évaluation :   ${this.formatDate(this.dateInput)}</li>
+          <li>le point sera en : ${this.selectedOption === 'teams' ? 'Teams' : 'Bureau'}</li>
+          ${this.selectedOption === 'teams' ? `<li>Lien Teams 👩‍💻:  <a href="${this.teamsLink}" target="_blank">${this.teamsLink}</a></li>` : `<li>Lieu 📍 : ${this.selectedLocation}</li>`}
+        </ul>
+        <p style="font-size: 16px; color: #333;">Cordialement, <br>L'équipe RH
+        <br>
+        <strong style="font-family: Arial, sans-serif; margin: 20px; color: #339AB0;">Accompany Consulting</strong></p>
+      </div>
+    `;
+  } else if (consultant.isI6 && !consultant.isI1 && !consultant.isI3) {
+    subject = 'Évaluation 6 mois';
+    body = `
+      <div style="font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <p style="font-size: 16px; color: #333;">Bonjour ,  ${consultant.nom} ${consultant.prenom}</p>
+        <p style="font-size: 16px; color: #333;">
+          Nous avons le plaisir de vous informer que l'évaluation de 6 mois a été planifiée. Voici les détails :
+        </p>
+        <ul style="list-style: none; padding: 0;">
+          <li>Date de l'évaluation :  ${this.formatDate(this.dateInput)}</li>
+          <li>le point sera en : ${this.selectedOption === 'teams'  ? 'Teams' : 'Bureau'}</li>
+          ${this.selectedOption === 'teams' ? `<li>Lien Teams 👩‍💻:  <a href="${this.teamsLink}" target="_blank">${this.teamsLink}</a></li>` : `<li>Lieu 📍: ${this.selectedLocation}</li>`}
+        </ul>
+        <p style="font-size: 16px; color: #333;">Cordialement, <br>L'équipe RH</p>
+        <br>
+        <strong style="font-family: Arial, sans-serif; margin: 20px; color: #339AB0;">Accompany Consulting</strong></p>
+      </div>
+    `;
+  }
+
+  this.email.subject = subject;
+  this.email.body = body;
+  this.email.toEmail = email;
+  this.email.toName = `${consultant.nom} ${consultant.prenom}`;
+
+  this.emailService.sendEmail(this.email).subscribe(
+    () => {
+      console.log('Email sent successfully');
+      // Faites ce que vous devez faire lorsque l'e-mail est envoyé avec succès
+    },
+    (error) => {
+      console.log('Error sending email:', error);
+      // Faites ce que vous devez faire en cas d'erreur lors de l'envoi de l'e-mail
+    }
+  );
+  this._snackBar.open('L\'e-mail a été envoyé avec succès', 'Fermer', {
+    duration: 3000,
+    horizontalPosition: 'end',
+    verticalPosition: 'top',
+  });
+}
+
+
+toggleMailForm(consultantId: string) {
+  this.showMailFormState[consultantId] = !this.showMailFormState[consultantId];
+}
+
+  constructor(private _snackBar: MatSnackBar,
+    private emailService: MailService,
     private consultantService: ConsultantService,
     private router: Router,
     private evaluationService: EvaluationService,private route: ActivatedRoute ,    private dialog: MatDialog,
@@ -102,7 +227,17 @@ integration : number;
     consultant.nb = hasEvaluation;
   }
   
-
+  formatDate(dateString: string): string {
+    const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: 'numeric',
+        minute: 'numeric',
+    };
+    const formattedDate = new Date(dateString).toLocaleString('fr-FR', options);
+    return formattedDate;
+}
 
 
 

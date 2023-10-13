@@ -57,7 +57,7 @@ for(const m of this.missions)
 
   this.missionservice.getMission(m.mission).subscribe(
     (mission) => {
-      this.titremission = mission;
+      m.titre = mission.titre;
 
       console.log("vveee",this.titremission);
 
@@ -68,7 +68,7 @@ for(const m of this.missions)
   this.consultantService.getConsultant2(m.manager).subscribe( (response) => {
     this.manager = response;
    
-
+m.manager = this.manager.nom + " " +this.manager.prenom;
 
   },
   (error) => {

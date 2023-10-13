@@ -54,16 +54,13 @@
       </mat-form-field>
       <!-- ===================== -->
       <mat-form-field>
-        <input type="number" matInput placeholder="Age" name="age" formControlName="age" required>
+        <input type="number" matInput placeholder="Age" name="age" formControlName="age" disabled style="cursor: not-allowed;" >
       </mat-form-field>
-      <!-- ===================== -->
-
-
 
       <mat-form-field>
-        <input  type="date" matInput placeholder="Date de naissance" name="date_naissance" formControlName="date_naissance" required>
-       
+        <input type="date" matInput placeholder="Date de naissance" name="date_naissance" formControlName="date_naissance" required>
       </mat-form-field>
+      
       <!-- =================================== -->
       <mat-form-field>
         <mat-label>Genre</mat-label>
@@ -76,7 +73,7 @@
 
 
       <mat-form-field>
-        <mat-label>situation_amoureuse</mat-label>
+        <mat-label>État sentimental</mat-label>
                 <mat-select formControlName="situation_amoureuse">
                   <mat-option value="Célibataire">Célibataire</mat-option>
                   <mat-option value="En couple">En couple</mat-option>
@@ -103,15 +100,14 @@
       </mat-form-field>
         <!-- ============================= -->
       <mat-form-field>
-        <input matInput placeholder="Mobile 1" name="tel1" formControlName="tel1" required>
-        <mat-error *ngIf="myForm?.get('tel1')?.hasError('required')">Le numéro téléphone est obligatoire</mat-error>
+        <input matInput placeholder="Mobile 1" name="tel1" formControlName="tel1" >
         <mat-error *ngIf="myForm?.get('tel1')?.hasError('exactLength')">Le numéro téléphone doit comporter  8 caractères</mat-error>
 
         <mat-error *ngIf="myForm?.get('tel1')?.hasError('numeric')">Le numéro téléphone doit comporter des chiffres</mat-error>
       </mat-form-field>
         <!-- ============================= -->
       <mat-form-field>
-        <input matInput placeholder="Mobile 2" name="tel2" formControlName="tel2"  >
+        <input matInput placeholder="Mobile AC " name="tel2" formControlName="tel2"  >
         <mat-error *ngIf="myForm?.get('tel2')?.hasError('exactLength')">Le numéro téléphone doit comporter  8 caractères</mat-error>
         <mat-error *ngIf="myForm?.get('tel2')?.hasError('required')">Le numéro téléphone est obligatoire</mat-error>
         <mat-error *ngIf="myForm?.get('tel2')?.hasError('numeric')">Le numéro téléphone doit comporter des chiffres</mat-error>
@@ -145,8 +141,12 @@
       <mat-panel-title>Données RH</mat-panel-title>
       <mat-panel-description>Remplir les données RH<mat-icon>map</mat-icon></mat-panel-description>
     </mat-expansion-panel-header>
-    
-
+    <mat-form-field>
+      <input type="number" matInput placeholder="solde maladie" name="SoldeMaladie" formControlName="SoldeMaladie" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="number" matInput placeholder="solde congé" name="SoldeConge" formControlName="SoldeConge" required>
+    </mat-form-field>
     <mat-form-field>
       <input matInput type="text" placeholder="Code" name="code" formControlName="code" required>
     </mat-form-field>
@@ -167,6 +167,12 @@
                 <mat-select formControlName="grade">
                   <mat-option value="Manager">manager</mat-option>
                   <mat-option value="Consultant">consultant</mat-option>
+                  <mat-option value="consultant_stagier">consultant stagiaire</mat-option>
+                  <mat-option value="developpeur">développeur</mat-option>
+                  <mat-option value="Business_Analyst">Business Analyst </mat-option>
+                  <mat-option value="Product leader">Product leader </mat-option>
+                  <mat-option value="technical_Analyst">technical Analyst  </mat-option>
+                  <mat-option value="Consultant_Senior">Consultant Senior</mat-option>
                 </mat-select>
               </mat-form-field>
             <!-- ============================= -->
@@ -176,7 +182,7 @@
       
         
     
-      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+      <button mat-button color="warn" (click)="prevStep()">Précédent </button>
 
       <button mat-button color="primary" (click)="nextStep()">Suivant</button></mat-action-row>
 </mat-expansion-panel>
@@ -202,10 +208,11 @@
         <mat-option value="CDI">CDI</mat-option>
         <mat-option value="CIVP">CIVP</mat-option>
         <mat-option value="CDD">CDD</mat-option>
+        <mat-option value="Cntrat_de_stage">Contrat de stage</mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field>
-    <input type="number" matInput placeholder="salaire" name="salaire" formControlName="salaire" required>
+    <input type="number" matInput placeholder="salaire" name="salaire" formControlName="salaire" >
   </mat-form-field>
 <!-- =================================== -->
 
@@ -226,7 +233,7 @@
         <mat-option value="Prestataire">Prestataire</mat-option>
         <mat-option value="Accompany">Accompany</mat-option>
         <mat-option value="Alpha Banking">Alpha Banking </mat-option>
-        <mat-option value="Digitaly">Digitaly  </mat-option>
+        <mat-option value="CIC">CIC  </mat-option>
 
 
     </mat-select>
@@ -241,17 +248,20 @@
                     <mat-option value="Accompany">Accompany</mat-option>
                     <mat-option value="Alpha Banking">Alpha Banking </mat-option>
                     <mat-option value="Digitaly">Digitaly  </mat-option>
-            
+                    <mat-option value="Autre">Autre</mat-option>
+
             
                 </mat-select>
+
               </mat-form-field>
 
+              <input matInput *ngIf="myForm.get('business_unit')?.value === 'Autre'" formControlName="otherBusinessUnit" placeholder="Veuillez préciser">
 
 
 
             <mat-action-row>
       
-      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+      <button mat-button color="warn" (click)="prevStep()">Précédent </button>
 
       <button mat-button color="primary"  (click)="ajouterConsultant()">Ajouter</button>
 

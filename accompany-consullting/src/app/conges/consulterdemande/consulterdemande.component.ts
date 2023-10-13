@@ -10,6 +10,8 @@ import { AuthService } from 'src/app/service/Authentication Service/auth.service
 import { CongeService } from 'src/app/service/conge.service';
 import { MailService } from 'src/app/service/mail.service';
 import { ValidationRhComponent } from './validation-rh/validation-rh.component';
+import { PasswordDialogComponent } from 'src/app/parametres/password-dialog/password-dialog.component';
+import { FichierService } from 'src/app/service/fichier.service';
 
 @Component({
   selector: 'app-consulterdemande',
@@ -46,6 +48,7 @@ email: EmailMessage = {
   body: '',
  CcEmail:''
  ,CcName:''
+ , UserEmail:''
 };
 
 
@@ -53,9 +56,8 @@ pdfUrl: SafeResourceUrl;
 certif:any;
 showPdf: boolean = false;
 
-  constructor(    private dialog: MatDialog
+  constructor(  private fichieservice:FichierService, private dialogpassword: MatDialog,   private dialog: MatDialog
 ,    private sanitizer: DomSanitizer,private http: HttpClient,private emailService: MailService,private router: Router, private congeservice: CongeService, private authService: AuthService, private consultantservice: ConsultantService) { }
-
 
 
 
@@ -81,12 +83,12 @@ showPdf: boolean = false;
       console.log("DD" + this.d);
 
       this.certif = this.data.conge.certif;
-      this.http.get(`http://localhost:60734/api/Conges/download-pdf?fileName=${this.certif}`, {
-        responseType: 'arraybuffer',
-      }).subscribe(
+  
+
+
+      this.fichieservice.downloadPdf( this.certif).subscribe(
         (response: any) => {
-          const blob = new Blob([response], { type: 'application/pdf' });
-          this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+          this.pdfUrl = this.fichieservice.createBlob(response);
         },
         (error) => {
           console.error(error);
@@ -196,6 +198,17 @@ showPdf: boolean = false;
   }
 
   envoyer(){
+
+    const dialogRef = this.dialogpassword.open(PasswordDialogComponent, {
+      width: '300px',
+    });
+    dialogRef.afterClosed().subscribe(async (password) => {
+      if (password) {
+        // Vous pouvez utiliser le mot de passe saisi ici
+        console.log('Mot de passe saisi :', password);
+
+        // Maintenant, vous pouvez l'assigner à this.email.UserEmail
+        this.email.UserEmail = password;
     console.log(this.email);
     this.sendEmail();
     const id = this.data.conge.id;
@@ -210,11 +223,12 @@ showPdf: boolean = false;
       // You can also perform any other necessary operations or handle the response here
     });
 
-
+  
 
 
     
     this.router.navigate(['/listconge']);
+  }});
   }
 
 retour(){
@@ -321,7 +335,12 @@ soldec = soldeconge - congeup.duree;
       }
     );
   }
-  imprimer() {
+  imprimer(conge : Conge) {
+
+    this.congeservice.updateCongeimprime(conge.id, true).subscribe(() => {
+   console.log("imprimer")
+      // You can also perform any other necessary operations or handle the response here
+    });
     // Cacher le reste de la page pour l'impression
     document.body.classList.add('print-mode');
   

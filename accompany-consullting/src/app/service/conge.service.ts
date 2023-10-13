@@ -73,6 +73,21 @@ console.log (etatModifier);
   uploadFile(formData: FormData): Observable<any> {
     return this.http.post(`${this.baseUrl}/upload`, formData);
   }
+
+
+
+  updateCongeimprime(id: number, imprime : boolean): Observable<any> {
+    const url = `${this.baseUrl}/imprime/${id}/${imprime}`;
+    const body = {imprime };
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.put(url,id);
+  }
 }
   
   

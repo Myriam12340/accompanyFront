@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Conge } from 'src/app/Model/conge';
 import { ConsultantService } from 'src/app/Model/consultant/consultant.service';
 import { EmailMessage } from 'src/app/Model/email-message';
+import { PasswordDialogComponent } from 'src/app/parametres/password-dialog/password-dialog.component';
 import { AuthService } from 'src/app/service/Authentication Service/auth.service';
 import { CongeService } from 'src/app/service/conge.service';
 import { MailService } from 'src/app/service/mail.service';
@@ -37,11 +39,12 @@ email: EmailMessage = {
   body: '',
   CcEmail:''
  ,CcName:''
+ , UserEmail:''
 };
 day : string ;
 
 
-  constructor(private emailService: MailService,private congeservice : CongeService ,  private router: Router, 
+  constructor(private dialog: MatDialog,private emailService: MailService,private congeservice : CongeService ,  private router: Router, 
     private consultantService: ConsultantService,private authService: AuthService,) { }
     ngOnInit(): void {
       if (sessionStorage.getItem('jwt')) {
@@ -122,6 +125,18 @@ day : string ;
   }
   
   envoyerDemande(conge : Conge){
+
+    const dialogRef = this.dialog.open(PasswordDialogComponent, {
+      width: '300px',
+    });
+    dialogRef.afterClosed().subscribe(async (password) => {
+      if (password) {
+        // Vous pouvez utiliser le mot de passe saisi ici
+        console.log('Mot de passe saisi :', password);
+
+        // Maintenant, vous pouvez l'assigner à this.email.UserEmail
+        this.email.UserEmail = password;
+     
     const duree = this.calculateDuree(conge.dateDebut , conge.dateFin);
   const datedebuit = this.dateconvert(conge.dateDebut);
   const datefin =this.dateconvert(conge.dateFin);
@@ -143,14 +158,20 @@ day : string ;
          <ul>
            <li><strong>Date de début :</strong> ${datedebuit} <i class="fa fa-calendar"></i></li>
            <li><strong>Date de fin :</strong> ${datefin} <i class="fa fa-calendar"></i></li>
-           <li><strong>Durée :</strong> ${duree} jours  <i class="fa fa-calendar"></i></li>
+           <li><strong>Durée :</strong> ${conge.duree} jours  <i class="fa fa-calendar"></i></li>
            <li><strong>Type de congé :</strong> ${conge.type} <i class="fa fa-suitcase"></i></li>
          </ul>
          <p>Je vous prie de bien vouloir examiner ma demande et de me notifier votre décision dans les plus brefs délais.</p>
          <p>Cordialement,</p>
          <p></p>`;
+
+
+       
    
        this.email.body = body;
+
+
+       
          this.sendEmail(); // Move sendEmail() method call here
        
         },
@@ -162,11 +183,11 @@ day : string ;
     const etatModifier = 'En attente';
 
     this.congeservice.updateCongeEtat(id, etatModifier).subscribe(() => {
-      alert('Congé envoyer');
+
       window.location.reload();
       // You can also perform any other necessary operations or handle the response here
     });
-
+  }});
   }
   calculateDuree(debut : Date , fin : Date) {
     const dateDebut = new Date(debut);

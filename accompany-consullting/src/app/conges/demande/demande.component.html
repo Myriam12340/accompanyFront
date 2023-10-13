@@ -24,28 +24,69 @@
 
                 <div class="row">
                     <div class="col">
-                        <label for="demandeur">Demandeur: <i class="fa fa-user" ></i> </label>
-                        <input type="text" id="demandeur" value={{nomconsultant}} disabled style="cursor: not-allowed;">
-                        <label for="demandeur"> Poste: <i class="fa fa-briefcase"></i> </label>
-                        <input type="text" id="demandeur" value={{posteconsultant}} disabled style="cursor: not-allowed;">
-                        
-                        <label for="validateur">Validateur: <i class="fa fa-check"></i> </label>
-                        
-                        <input type="text" id="validateur" formControlName="validateur">
-
-                        <mat-error *ngIf="demandeForm?.get('validateur')?.hasError('required')">Le validateur est obligatoire</mat-error>
-
-                      
-
+                      <label for="demandeur">Demandeur: <i class="fa fa-user"></i> </label>
+                      <input type="text" id="demandeur" value={{nomconsultant}} disabled style="cursor: not-allowed;width: 50%;">
                     </div>
-                
+                  
+                    <div class="col">
+                      <label for="poste">Poste: <i class="fa fa-briefcase"></i> </label>
+                      <input type="text" id="poste" value={{posteconsultant}} disabled style="cursor: not-allowed;width: 50%;">
+                    </div>
                 </div>
+
+
+                <mat-toolbar style="background-color: #5F9EA0; color:white;">
+                    <mat-toolbar-row style="text-align: center;">
+                        <span><i class="fa fa-info-circle"></i> Validateur</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
                 <br>
-                <div class="col">
-                    <label for="cc">En CC : <i class="fa fa-check"></i> </label>
+                <div class="row">
                     
-                    <input type="text" id="cc" formControlName="cc">
-                </div>
+                  
+                    <div class="col" style="width: 50%;">
+                      <label for="validateur">Validateur: <i class="fa fa-check"></i> </label>
+                  
+                      <mat-form-field  style="width: 50%;">
+                        <mat-label>Validateur</mat-label>
+                        <mat-select formControlName="validateur" >
+                            <input  style="width: 50%;"type="text" matInput placeholder="Rechercher un validateur" (input)="filterUsers($event.target.value)">
+
+                          <mat-option *ngFor="let utilisateur of filteredUtilisateurs" [value]="utilisateur.mail">
+                            {{ utilisateur.nom }} {{ utilisateur.prenom }}
+                          </mat-option>
+                          <mat-option *ngIf="filteredUtilisateurs.length === 0" [value]="searchTerm">
+                            Aucun résultat trouvé.  {{ searchTerm }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                  
+                      <mat-error *ngIf="demandeForm?.get('validateur')?.hasError('required')">Le validateur est obligatoire</mat-error>
+                    </div>
+                  
+                      
+                    <div class="col" style="width: 50%;">
+                        <label for="validateur">CC: <i class="fa fa-check"></i> </label>
+                    
+                        <mat-form-field  style="width: 50%;">
+                          <mat-label>CC</mat-label>
+                          <mat-select formControlName="cc" >
+                              <input  style="width: 50%;"type="text" matInput placeholder="Rechercher un utilisateur" (input)="filterUsers($event.target.value)">
+  
+                            <mat-option *ngFor="let utilisateur of filteredUtilisateurs" [value]="utilisateur.mail">
+                              {{ utilisateur.nom }} {{ utilisateur.prenom }}
+                            </mat-option>
+                            <mat-option *ngIf="filteredUtilisateurs.length === 0" [value]="searchTerm">
+                              Aucun résultat trouvé.  {{ searchTerm }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                    
+                      </div>
+               
+                  
+                <br>
+               </div>
             </mat-card>
             <br>
 
@@ -103,8 +144,9 @@
                 </div>
                 <label>Demi-journée: </label>
 
-                <input type="radio" id="demiJournee" name="typeDuree"  (change)="onDemiJourneeChange()">
-            </mat-card>
+                <label>Demi-journée: </label>
+                <mat-checkbox formControlName="demiJournee" id="demiJournee" (change)="onDemiJourneeChange()">Demi-journée</mat-checkbox>
+                            </mat-card>
             <br>
 
             <mat-card>
@@ -116,6 +158,17 @@
                 <br>
             
                 <div class="row">
+
+
+                    <div class="col">
+                        <input type="radio" id="congesPersonnel" name="type" value="congé personnel" formControlName="type"
+                          (change)="onCongesPersonnelSelected()">
+                        <label for="congesPersonnel">Congés Personnel</label><br>
+                    
+                        <!-- Champ de téléchargement PDF conditionnel -->
+                     
+                        
+                      </div>
                     <div class="col">
                       <input type="radio" id="congesExceptionnels" name="type" value="Congés Exceptionnels" formControlName="type"
                         (change)="onCongesExceptionnelsSelected()">

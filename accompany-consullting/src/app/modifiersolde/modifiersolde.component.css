@@ -1,0 +1,26 @@
+/* Ajoutez ces styles dans votre fichier CSS existant ou créez un nouveau fichier */
+
+.example-full-width {
+    width: 100%;
+}
+
+.card-title {
+    margin: 0;
+}
+
+.table {
+    margin-top: 20px; /* Ajustez la marge selon vos préférences */
+}
+
+.thead-info {
+    background-color: #5bc0de; /* Couleur de fond de l'en-tête */
+    color: #fff; /* Couleur du texte de l'en-tête */
+}
+.input {
+    padding: 6px 6px;
+    margin: 10px 2 px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: 100%;
+  }

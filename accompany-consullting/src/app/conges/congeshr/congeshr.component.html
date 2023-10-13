@@ -6,6 +6,25 @@
 <div class="p-20 bg-info position-relative">
   <h4 class="card-title text-white m-0">Liste des congés</h4>
 </div>
+
+
+
+
+
+
+<br>
+<!-- Add the following code to your template -->
+<div [formGroup]="searchForm" class="search-container">
+  <input type="text" formControlName="searchValidatorTerm" placeholder="Recherche par nom et prénom" />
+
+    <select formControlName="selectedMonth" >
+      <option *ngFor="let month of months" [ngValue]="month.value">{{ month.name }}</option>
+    </select>
+ 
+  <button (click)="searchConges()" class="button-recherche">Rechercher</button>
+</div>
+
+
 <br>
 <div class="row col-12">
   <div class="btn-group" role="group">
@@ -17,6 +36,11 @@
       <mat-icon>calendar_today</mat-icon>
 
       Semaine
+    </button>
+    <button type="button" class="btn btn-primary mr-2" style=" border-radius: 10px;" (click)="filterByMonth()">
+      <mat-icon>calendar_today</mat-icon>
+
+      Mois
     </button>
   </div>
 </div>
@@ -57,6 +81,11 @@
        <button mat-button class="btn btn-outline-primary mr-2"  (click)=" congedata(
      conge,'byrh')"><mat-icon>visibility</mat-icon>
         Consulter</button>
+
+        <div *ngIf="conge.imprime" class="icon-container">
+          <i class="fa fa-check-circle-o check-icon" aria-hidden="true"></i>
+        </div>
+        
       </mat-cell>
   
   

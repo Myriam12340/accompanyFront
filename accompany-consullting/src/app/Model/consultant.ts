@@ -2,6 +2,9 @@
 export class Consultant {
     id: number;
     salaire : number; 
+    SoldeConge : number; 
+    SoldeMaladie : number; 
+
     nom: string;
     prenom: string;
     adress: string;
@@ -27,6 +30,7 @@ isI3 : boolean ;
 isI6 : boolean ;
 nb : number;
 competance:boolean;
+date_sortie : Date;
 
 prochain_entretien: string; // Nouvelle propriété
 

@@ -233,3 +233,20 @@ select
   background-color: #f95959;
   color: azure;
 }
+
+.custom-table2 {
+  width: 100%; /* Ajustez la largeur totale du tableau en fonction de votre mise en page */
+  border-collapse: collapse;
+  border: 1px solid #0a0416;
+  /* Ajustez les largeurs des colonnes individuelles */
+}
+
+.label-cell2 {
+  width: 20%; 
+  vertical-align: middle;
+  padding-right: 1rem; /* Ajustez la largeur de la colonne des étiquettes */
+}
+
+.styled-textarea2 {
+  width: 80%; /* Ajustez la largeur de la colonne des zones de texte */
+}

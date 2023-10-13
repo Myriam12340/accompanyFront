@@ -8,6 +8,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { EmailMessage } from '../../Model/email-message';
 import { MailService } from '../../service/mail.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { PasswordDialogComponent } from 'src/app/parametres/password-dialog/password-dialog.component';
 
 @Component({
   selector: 'app-demande',
@@ -51,15 +53,25 @@ export class DemandeComponent implements OnInit {
     body: '',
     CcEmail:''
     ,CcName:''
+    , UserEmail:''
   };
   toname:string;
-  constructor(private router: Router,private emailService: MailService, private congeService: CongeService, private authService: AuthService, private consultantservice: ConsultantService, private formBuilder: FormBuilder,) {
+  validateurs: any[]= [];
+  filteredUtilisateurs: Consultant[] = [];
+  constructor(private dialog: MatDialog, private router: Router,private emailService: MailService, private congeService: CongeService, private authService: AuthService, private consultantservice: ConsultantService, private formBuilder: FormBuilder,) {
     this.form = new FormGroup({
     })
   }
   isCongesMaladieSelected: boolean = false;
 
 certif:any;
+filterUsers(searchTerm: string): void {
+  this.filteredUtilisateurs = this.utilisateurs.filter(user =>
+    (user.nom.toLowerCase().includes(searchTerm.toLowerCase()) || user.prenom.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+}
+
+
   ngOnInit(): void {
 
     if (sessionStorage.getItem('jwt')) {
@@ -89,6 +101,18 @@ certif:any;
         (error) => console.error(error)
       );
     }
+
+
+    this.consultantservice.getConsultantlist().subscribe(
+      (response) => {
+       
+        this.utilisateurs = response.filter(user => user.status === 'actif');
+      },
+      
+      (error) => {
+        console.error(error); // Gérez l'erreur de la requête
+      }
+    );
     this.demandeForm = this.formBuilder.group({
 
       validateur: ['', Validators.required],
@@ -105,47 +129,39 @@ certif:any;
 
 
   }
-
   onDemiJourneeChange() {
-    this.isDemiJourneeSelected = true;
-    
-    // Réinitialisez les champs liés à la date et à la durée si nécessaire
+    this.isDemiJourneeSelected = !this.isDemiJourneeSelected; // Toggle the value
+
+    // Reset related fields if necessary
     if (this.isDemiJourneeSelected) {
-
-      this.demandeForm.patchValue({
-        
-        duree: 0.5, // Mettre à jour la valeur de la durée à 0.5
-    });
-
+        this.demandeForm.patchValue({
+            duree: 0.5,
+            dateFin: this.demandeForm.get('dateDebut')?.value, // Reset dateFin to dateDebut
+        });
+    } else {
+        this.demandeForm.get('dateFin')?.enable(); // Enable dateFin if Demi-journée is not selected
     }
 }
+
 
 
   submitDemandeConge(besoin :string): void {
 
 
   
-    this.ccEmails.push("mariem.ksouri@sesame.com");
-
-this.ccEmails.push("mariem.ksouri@esen.tn");
-
+   
     
     
     if(besoin =="envoyer"){
     this.conge.dateDebut = this.demandeForm.get('dateDebut')?.value;
-   
-    if ( this.isDemiJourneeSelected = true)
-    {
+  
+    if (this.isDemiJourneeSelected) {
       this.conge.dateFin = this.demandeForm.get('dateDebut')?.value;
-      this.conge.duree = 0.5 ;
-
-    }
-
-    else{
+      this.conge.duree = 0.5;
+  } else {
       this.conge.dateFin = this.demandeForm.get('dateFin')?.value;
-      this.conge.duree= this.demandeForm.get('duree')?.value;
-
-    }
+      this.conge.duree = this.demandeForm.get('duree')?.value;
+  }
 
     this.conge.type = this.demandeForm.get('type')?.value;
     this.conge.validateur = this.demandeForm.get('validateur')?.value;
@@ -171,7 +187,8 @@ this.conge.certif = this.certif;
 
 
       });
-      
+   
+    
       this.email.CcEmail= this.demandeForm.get('cc')?.value;
 
       this.consultantservice.getConsultantbyemail(this.demandeForm.get('validateur')?.value).subscribe(
@@ -184,7 +201,7 @@ this.conge.certif = this.certif;
           this.email.fromName = this.userProfile.userName;
           this.email.toName = this.toname;
           this.email.subject = 'Demande de congé: 💬';
-          const body = `<p>Cher <strong>${this.email.toName}</strong>,</p>
+          const body = `<p>Bonjour <strong>${this.email.toName}</strong>,</p>
             <p>Je vous informe par la présente que je souhaite faire une demande de congé pour la période suivante :</p>
             <ul>
               <li><strong>Date de début :</strong> ${this.conge.dateDebut} <i class="fa fa-calendar"></i></li>
@@ -194,31 +211,30 @@ this.conge.certif = this.certif;
             </ul>
             <p>Je vous prie de bien vouloir examiner ma demande et de me notifier votre décision dans les plus brefs délais.</p>
             <p>Cordialement,</p>
-            <p></p>`;
+
+            <p ><strong>${this.nomconsultant}</strong></p>`;
       
           this.email.body = body;
           
+          
           this.sendEmail();
+
         },
         (error) => {
           console.error(error); // Gérez l'erreur de la requête
         }
       );
-      
+    
     }
     else if (besoin == "enregister")
     {
 
-      if ( this.isDemiJourneeSelected = true)
-    {
-      this.conge.dateFin = this.demandeForm.get('dateDebut')?.value;
-      this.conge.duree = 0.5 ;
-
-    }
-    else{
-      this.conge.dateFin = this.demandeForm.get('dateFin')?.value;
-      this.conge.duree= this.demandeForm.get('duree')?.value;
-
+      if (this.isDemiJourneeSelected) {
+        this.conge.dateFin = this.demandeForm.get('dateDebut')?.value;
+        this.conge.duree = 0.5;
+    } else {
+        this.conge.dateFin = this.demandeForm.get('dateFin')?.value;
+        this.conge.duree = this.demandeForm.get('duree')?.value;
     }
       this.conge.dateDebut = this.demandeForm.get('dateDebut')?.value;
   
@@ -226,11 +242,13 @@ this.conge.certif = this.certif;
       this.conge.demandeur = this.demandeur;
       this.conge.etat = "pas envoyer";
 
-  
+      this.conge.certif = this.certif;
+
       this.consultantservice.getConsultantbyemail(this.demandeForm.get('validateur')?.value).subscribe(
-        (user) => {
+        (user:any) => {
           this.validateur = user;
           const userId = this.validateur.id;
+  
           console.log("m:" + this.validateur.id);
           this.conge.validateur = userId;
           console.log(this.conge);
@@ -332,4 +350,10 @@ this.conge.certif = this.certif;
   onCongesExceptionnelsSelected() {
     this.isCongesMaladieSelected = false;
   }
+  onCongesPersonnelSelected(){
+    console.log("conge personnel");
+  }
+
+
+  
 }

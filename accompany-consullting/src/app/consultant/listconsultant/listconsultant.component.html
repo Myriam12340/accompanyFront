@@ -3,7 +3,7 @@
 
 <mat-card>
     <div class="p-20 bg-info position-relative">
-        <h4 class="card-title text-white m-0">Liste du personnels</h4>
+        <h4 class="card-title text-white m-0">Liste du personnel</h4>
      
       </div>
       <div class="search-container d-flex align-items-center justify-content-end">
@@ -18,6 +18,7 @@
     <br>
 
     <div class="row col-12">
+
         <div class="btn-group" role="group">
           <button type="button" class="btn btn-primary mr-2" style=" border-radius: 10px;" (click)="filterConsultantsByStatus('actif')">
             <i class="fa fa-check-circle"></i> Actif
@@ -55,20 +56,27 @@
     
      
     <br><br>
-    <div  *ngIf="role=== 'admin'">
-
-    <div class="col-3 ">
-        <button class="text-white" style="background-color: rgb(226, 68, 68);border-radius: 10px;" (click)="pdf(type)">
-            <i class="fa fa-file-pdf-o"></i> PDF
-          </button>
-
-</div>
+   <div *ngIf="role === 'admin'" class="container">
+  <div class="row justify-content-end">
+    <div class="col-md-1">
+      <button class="text-white btn btn-danger btn-sm" style="border-radius: 10px;" (click)="pdf(type)">
+        <i class="fa fa-file-pdf-o"></i> PDF
+      </button>
+    </div>
+    <div>
+      <button class="text-white btn btn-success btn-sm" style="border-radius: 10px;" (click)="exportToExcel()">
+        <i class="fa fa-file-excel-o"></i> Excel
+      </button>
+    </div>
   </div>
+</div>
+
     <div>
         <br>
         <br>
         <div class="col-12">
             <table class="table table-striped table-hover" mat-table [dataSource]="filteredConsultants">
+              
                 <ng-container matColumnDef="select">
                   <th mat-header-cell *matHeaderCellDef>select</th>
                   <td mat-cell *matCellDef="let row">
@@ -102,7 +110,7 @@
                   <td mat-cell *matCellDef="let consultant">{{ consultant.grade }}</td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="['select', 'nom prenom', 'status', 'date_integration', 'grade']"></tr>
-                <tr mat-row *matRowDef="let row; columns: ['select', 'nom prenom', 'status', 'date_integration', 'grade'];"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['select', 'nom prenom', 'status', 'date_integration', 'grade']"></tr>
               </table>
               
           </div>
@@ -114,6 +122,5 @@
           [pageIndex]="currentPage"
           (page)="onPageChange($event)">
 </mat-paginator>
-
     </mat-card>
 

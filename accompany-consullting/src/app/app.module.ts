@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+
 import { AppRoutes } from './app.routing';
 import { AppComponent } from './app.component';
 
@@ -60,6 +60,15 @@ import { ShowEval6Component } from './evaluation/eval-competance/show-eval6/show
 import { AdminComponent } from './admin/admin.component';
 import { DashadminComponent } from './admin/dashadmin/dashadmin.component';
 import { ValidationRhComponent } from './conges/consulterdemande/validation-rh/validation-rh.component';
+import { PasswordDialogComponent } from './parametres/password-dialog/password-dialog.component';
+import { AnniversairetableComponent } from './anniversaire/anniversairetable/anniversairetable.component';
+import { ModifiersoldeComponent } from './modifiersolde/modifiersolde.component';
+import { DemanderecupComponent } from '././Recuperation/demanderecup/demanderecup.component';
+import { PageerreurComponent } from './parametres/pageerreur/pageerreur.component';
+import { RequiperationValidateurComponent } from './Recuperation/demanderecup/requiperation-validateur/requiperation-validateur.component';
+import { GroupeconsulterComponent } from './Recuperation/demanderecup/requiperation-validateur/groupeconsulter/groupeconsulter.component';
+import { RecupRHComponent } from './Recuperation/recup-rh/recup-rh.component';
+import { TraitegroupeComponent } from './Recuperation/recup-rh/traitegroupe/traitegroupe.component';
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
 }
@@ -112,9 +121,20 @@ export function tokenGetter() {
           AdminComponent,
           DashadminComponent,
           ValidationRhComponent,
+          PasswordDialogComponent,
+          AnniversairetableComponent,
+          ModifiersoldeComponent,
+          DemanderecupComponent,
+          PageerreurComponent,
+          RequiperationValidateurComponent,
+          GroupeconsulterComponent,
+          RecupRHComponent,
+          TraitegroupeComponent,
+        
           
   ],
   imports: [
+    
     BrowserModule,
     BrowserAnimationsModule,
     DemoMaterialModule,
@@ -135,7 +155,7 @@ export function tokenGetter() {
   providers: [
     {
     
-      useClass: PathLocationStrategy,
+     
       provide: 'moment', useValue: moment 
     }
   ],

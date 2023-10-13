@@ -1,0 +1,67 @@
+.check-icon {
+    color: #00a859; /* Couleur de l'icône */
+    font-size: 28px; /* Taille de l'icône */
+    margin-left: 5px; /* Marge à gauche de l'icône pour l'espacement */
+    vertical-align: middle; /* Alignement vertical au centre */
+  }
+  /* Ajoutez ces styles dans votre fichier CSS */
+
+/* Ajoutez ces styles dans votre fichier CSS */
+
+div[formGroup="searchForm"] {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Ajustez la valeur pour l'espace souhaité */
+}
+
+input[formControlName="searchValidatorTerm"] {
+  flex: auto; /* Pour occuper tout l'espace disponible */
+  padding: 1px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 25%;
+}
+
+select[formControlName="selectedMonth"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 25%;
+}
+
+button {
+  padding: 8px;
+  border: 1px solid #007BFF;
+  border-radius: 4px;
+  background-color: #007BFF;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Ajoutez des styles pour les icônes si vous en avez spécifiés */
+.icon {
+  margin-right: 5px;
+}
+
+.search-container {
+  display: flex;
+  gap: 10px;
+}
+
+.select-container {
+  position: relative;
+  
+}
+
+label {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  pointer-events: none;
+  color: #808080; /* Couleur du texte de l'indice */
+}
+
+select {
+  padding-top: 20px; 
+  /* Espace pour le libellé */
+}

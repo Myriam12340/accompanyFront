@@ -1,23 +1,48 @@
 <div class="admin-container" [ngClass]="{ 'zoomed': zoomedSection }">
+
     <div class="admin-column">
+        <div class="admin-section" [ngClass]="{ 'zoomed': zoomedSection === 'anniversaire' }" (click)="zoomedSection = (zoomedSection === 'anniversaire' ? null : 'anniversaire')">
+          <h2><i class="fa fa-calendar"></i> Calendrier</h2>
+          <app-anniversaire class="small-calendar"></app-anniversaire>
+        </div>
+      </div>
+      <div class="admin-section" [ngClass]="{ 'zoomed': zoomedSection === 'anniversaire' }" (click)="zoomedSection = (zoomedSection === 'anniversaire' ? null : 'anniversaire')">
+        <h2><i class="fas fa-birthday-cake"></i> Anniversaire</h2>
+        <app-anniversairetable></app-anniversairetable>
+
+
+        <div  [ngClass]="{ 'zoomed': zoomedSection === 'entretien' }" (click)="zoomedSection = (zoomedSection === 'entretien' ? null : 'entretien')">
+            <h2><i class="fas fa-list"></i> Liste d'entretiens</h2>
+            <app-list-entretien></app-list-entretien>
+        </div>
+    </div>
+    
+    </div>
+<div class="admin-container" [ngClass]="{ 'zoomed': zoomedSection }">
+
+
+
+
+    <div class="admin-column">
+      
+       
+
         <div class="admin-section" [ngClass]="{ 'zoomed': zoomedSection === 'evaluation' }" (click)="zoomedSection = (zoomedSection === 'evaluation' ? null : 'evaluation')">
             <h2><i class="fas fa-chart-bar"></i> Évaluation</h2>
             <app-evaluation></app-evaluation>
         </div>
-        <div class="admin-section" [ngClass]="{ 'zoomed': zoomedSection === 'entretien' }" (click)="zoomedSection = (zoomedSection === 'entretien' ? null : 'entretien')">
-            <h2><i class="fas fa-list"></i> Liste d'entretiens</h2>
-            <app-list-entretien></app-list-entretien>
-        </div>
+        
     </div>
 
     <div class="admin-column">
         <div class="admin-section" [ngClass]="{ 'zoomed': zoomedSection === 'projet' }" (click)="zoomedSection = (zoomedSection === 'projet' ? null : 'projet')">
             <h2><i class="fas fa-project-diagram"></i> Projets</h2>
             <app-projet></app-projet>
+
+            
         </div>
-        <div class="admin-section" [ngClass]="{ 'zoomed': zoomedSection === 'anniversaire' }" (click)="zoomedSection = (zoomedSection === 'anniversaire' ? null : 'anniversaire')">
-            <h2><i class="fas fa-birthday-cake"></i> Anniversaire</h2>
-            <app-anniversaire></app-anniversaire>
-        </div>
+     
+     
     </div>
 </div>
+

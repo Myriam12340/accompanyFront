@@ -2,4 +2,53 @@
     width: 80%;
     height: 80%;
   }
+  .form-field {
+    display: block;
+    margin-bottom: 15px;
+  }
+  
+  .card-title {
+    text-align: center;
+    color: blue;
+    font-size: x-large;
+  }
+  
+  /* Ajoutez d'autres classes au besoin */
+  .form-container {
+    padding: 20px;
+    margin: 20px auto;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+  }  button {
+    padding: 6px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+   
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .cancel-button {
+    background-color: #dc3545; /* Rouge */
+    color: #fff;
+  }
+  
+  .save-button {
+    background-color: #28a745; /* Vert */
+    color: #fff;
+
+  }
+  
+  .add-button {
+    background-color: #007bff; /* Bleu */
+    color: #fff;
+  }
+  
+  /* Ajoutez d'autres styles au besoin */
   

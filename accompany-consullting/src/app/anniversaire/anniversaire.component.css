@@ -1,0 +1,12 @@
+/* Style pour les événements d'anniversaire (en rouge) */
+.fc-personal-birthday-event {
+    background-color: red;
+    color: white;
+  }
+  
+  /* Style pour les événements d'intégration professionnelle (en bleu) */
+  .fc-pro-integration-event {
+    background-color: blue;
+    color: white;
+  }
+  

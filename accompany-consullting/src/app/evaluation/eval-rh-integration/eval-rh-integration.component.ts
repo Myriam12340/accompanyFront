@@ -11,6 +11,7 @@ import { EvalMissionIntegration } from '../../Model/eval-mission-integration';
 import { MailService } from '../../service/mail.service';
 import { ConsultantdetailComponent } from 'src/app/consultant/consultantdetail/consultantdetail.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { PasswordDialogComponent } from 'src/app/parametres/password-dialog/password-dialog.component';
 
 @Component({
   selector: 'app-eval-rh-integration',
@@ -27,6 +28,7 @@ export class EvalRhIntegrationComponent implements OnInit {
     body: '',
     CcEmail:''
     ,CcName:''
+    , UserEmail:''
   };
   consultantnom: string;
 
@@ -49,16 +51,18 @@ export class EvalRhIntegrationComponent implements OnInit {
 old : boolean ;
   manager: any;
   consultant:any ;
-  constructor(private missionservice: MissionService,
+  pass : any ;
+  constructor( private dialogpass: MatDialog ,private missionservice: MissionService,
     private router: Router,
     private evaluationservice: EvaluationService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private consultantService: ConsultantService,
     private authService: AuthService, private emailService: MailService
-    ,    private dialog: MatDialog
+    ,    private dialog: MatDialog,private fb: FormBuilder
   ) { }
   
+  missionForms: { [key: string]: FormGroup } = {};
 
   ngOnInit() {
     this.consultantService.getConsultantData().subscribe((data) => {
@@ -125,7 +129,8 @@ old : boolean ;
       satisficationRH: ['', Validators.required],
       satisficationC: ['', Validators.required],
 
-
+      commentaire_Aspects_RH:[''],
+      commentaire_travailler:['']
 
 
 
@@ -138,6 +143,21 @@ old : boolean ;
       (data) => {
         this.missions = data;
         this.missions.forEach((mission) => {
+
+
+       
+            this.missionForms[mission.id] = this.fb.group({
+              roleC: [''],
+              roleRH: [''],
+              relationClientC: [''],
+              relationClientRH: [''],
+              chargeC: [''],
+              chargeRH: [''],
+              satisficationC: [''],
+              satisficationRH: [''],
+              // Add other mission form controls here
+            });
+        
            this.missionservice.getevalintegrationbyMission(mission.id).subscribe(
 
             (evaluationM:any)=>{
@@ -231,11 +251,13 @@ old : boolean ;
 
 
   onSubmit() {
-    // Handle form submission
+
+    
     console.log(this.evaluationForm.value);
 
     // Assign form values to evaluation object
-
+ this.evaluation.commentaire_Aspects_RH = this.evaluationForm.get('commentaire_Aspects_RH')?.value;
+ this.evaluation.commentaire_travailler = this.evaluationForm.get('commentaire_travailler')?.value;
     this.evaluation.processusR = this.evaluationForm.get('processusR')?.value;
     this.evaluation.communicationinterne = this.evaluationForm.get('communication_interne')?.value;
     this.evaluation.relation = this.evaluationForm.get('relation')?.value;
@@ -277,54 +299,67 @@ old : boolean ;
         this.evaluation = new Evaluation();
         this.evaluationId = response.id; // Storing the evaluation ID
 
-        this.evaluationForm.reset();
         this.router.navigate(['/evaluation']);
 console.log("hhhh",this.evaluationId);
         // Pass the evaluation ID to the MissionComponent
 
         // Call the submitForm method in MissionComponent
-
      
-    this.missions.forEach((mission) => {
-      const evalMissionIntegration: any = {
-        // Assign properties based on the evaluationForm values
-        roleC: this.evaluationForm.get('roleC')?.value,
-        roleRH: this.evaluationForm.get('roleRH')?.value,
-        relationClientRH: this.evaluationForm.get('relationClientRH')?.value,
-        relationClientC: this.evaluationForm.get('relationClientC')?.value,
-        chargeRH: this.evaluationForm.get('chargeRH')?.value,
-        chargeC: this.evaluationForm.get('chargeC')?.value,
-        satisficationRH: this.evaluationForm.get('satisficationRH')?.value,
-        satisficationC: this.evaluationForm.get('satisficationC')?.value,
-        consultant: this.consultantData.consultantId,
-        manager: mission.manager,
-        mission: mission.id,
-        evaluation: this.evaluationId 
-      };
-      const emailBody = `
-    <div style="color: #333; font-family: Arial, sans-serif;">
-      <p>Cher responsable d'équipe,</p>
-  
-      <p>J'ai effectué une évaluation pour la mission <strong>${mission.titre}</strong> de l'un de vos membres d'équipe :</p>
-  
-      <ul>
-        <li><strong>Référent :</strong> ${ this.consultantData.nom } ${this.consultantData.prenom }}</li>
-        <li><strong>Évaluation du rôle :</strong> ${this.evaluationForm.get('roleC')?.value} (Consultant) / ${this.evaluationForm.get('roleRH')?.value} (RH)</li>
-        <li><strong>Évaluation de la relation avec le client :</strong> ${this.evaluationForm.get('relationClientC')?.value} (Consultant) / ${this.evaluationForm.get('relationClientRH')?.value} (RH)</li>
-        <li><strong>Évaluation de la charge :</strong> ${this.evaluationForm.get('chargeC')?.value} (Consultant) / ${this.evaluationForm.get('chargeRH')?.value} (RH)</li>
-        <li><strong>Évaluation de la satisfaction globale :</strong> ${this.evaluationForm.get('satisficationC')?.value} (Consultant) / ${this.evaluationForm.get('satisficationRH')?.value} (RH)</li>
-      </ul>
-      <p style="color:#e80000; font-family: Arial, sans-serif;" >Je vous prie de bien vouloir terminer l'évaluation de la mission ${mission.titre} . Il est essentiel d'obtenir votre précieuse contribution pour évaluer les performances de notre membre d'équipe.
+     
+        this.missions.forEach((mission) => {
+          const missionForm = this.missionForms[mission.id];
+         
+          var evalMissionIntegration :any = {
+            roleC: missionForm.get('roleC')?.value,
+            roleRH: missionForm.get('roleRH')?.value,
+            relationClientC: missionForm.get('relationClientC')?.value,
+            relationClientRH: missionForm.get('relationClientRH')?.value,
+            chargeC: missionForm.get('chargeC')?.value,
+            chargeRH: missionForm.get('chargeRH')?.value,
+            satisficationC: missionForm.get('satisficationC')?.value,
+            satisficationRH: missionForm.get('satisficationRH')?.value,
+            consultant: this.consultantData.consultantId,
+            manager: mission.manager,
+            mission: mission.id,
+            evaluation: this.evaluationId
+          };
+        
+          this.evaluations.push(evalMissionIntegration);
+          this.missionservice.addeval_integration_Mission(evalMissionIntegration).subscribe(
+            (response) => {
+              console.log('EvalMissionIntegration added successfully!');
+            
+            },
+            (error) => {
+              console.log('An error occurred while adding the EvalMissionIntegration:', error);
+            }
+          );
 
-      Votre achèvement rapide de l'évaluation est grandement apprécié.</p>
-      
-     <p> Je vous remercie de votre coopération.</p>
-  
-      <p>Cordialement,</p>
-      <p>${this.rh}</p>
-    </div>
-  `;
-      const email: EmailMessage = {
+
+
+
+          var emailBody = `
+            <div style="color: #333; font-family: Arial, sans-serif;">
+              <p>Cher responsable d'équipe,</p>
+              <p>J'ai effectué une évaluation pour la mission <strong>${mission.titre}</strong> de l'un de vos membres d'équipe :</p>
+              <ul>
+                <li><strong>Référent :</strong> ${ this.consultantData.nom } ${this.consultantData.prenom }}</li>
+                <li><strong>Évaluation du rôle :</strong> ${missionForm.get('roleC')?.value} (Consultant) / ${missionForm.get('roleRH')?.value} (RH)</li>
+                <li><strong>Évaluation de la relation avec le client :</strong> ${missionForm.get('relationClientC')?.value} (Consultant) / ${missionForm.get('relationClientRH')?.value} (RH)</li>
+                <li><strong>Évaluation de la charge :</strong> ${missionForm.get('chargeC')?.value} (Consultant) / ${missionForm.get('chargeRH')?.value} (RH)</li>
+                <li><strong>Évaluation de la satisfaction globale :</strong> ${missionForm.get('satisficationC')?.value} (Consultant) / ${missionForm.get('satisficationRH')?.value} (RH)</li>
+              </ul>
+              <p style="color:#e80000; font-family: Arial, sans-serif;" >Je vous prie de bien vouloir terminer l'évaluation de la mission ${mission.titre} . Il est essentiel d'obtenir votre précieuse contribution pour évaluer les performances de notre membre d'équipe.
+              Votre achèvement rapide de l'évaluation est grandement apprécié.</p>
+              <p> Je vous remercie de votre coopération.</p>
+              <p>Cordialement,</p>
+              <p>${this.rh}</p>
+            </div>
+          `;
+        
+
+
+      var email: EmailMessage = {
         fromName: this.rh,
         fromEmail: this.mailrh,
         toName: mission.nomManager,
@@ -333,29 +368,17 @@ console.log("hhhh",this.evaluationId);
 
         body: emailBody,
         CcEmail:''
-        ,CcName:''
-      };
-      console.log(email);
-      this.email = email; // Assign the email to a property
+        ,CcName:'',     UserEmail:this.pass
 
+      };
+   
+      this.email = email; // Assign the email to a property
+   console.log("lesemail",email);
       
-      this.sendEmail();
+
     
       // Add the evaluation to the evaluations array
-      this.evaluations.push(evalMissionIntegration);
-      this.missionservice.addeval_integration_Mission(evalMissionIntegration).subscribe(
-        (response) => {
-          console.log('EvalMissionIntegration added successfully!');
-          // Reset the form
-          this.evaluationForm.reset();
-
-          // Pass the response or any other necessary data to the next steps
-          // ...
-        },
-        (error) => {
-          console.log('An error occurred while adding the EvalMissionIntegration:', error);
-        }
-      );
+   
     });
     
   },
@@ -363,7 +386,7 @@ console.log("hhhh",this.evaluationId);
     console.log('An error occurred while adding the evaluation:', error);
   }
 );
-   
+
   }
 
   annuler() {

@@ -1,4 +1,33 @@
 .buttons-container {
     margin-bottom: 10px;
   }
-  
+  /* Ajoutez ces styles à votre fichier CSS */
+
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px; /* Ajoute un espacement en bas pour séparer des autres éléments */
+}
+
+input[type="text"] {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 50%;
+}
+
+.buttonrecherche {
+  padding: 10px 20px;
+  background-color: #3f7da7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #45a049;
+}

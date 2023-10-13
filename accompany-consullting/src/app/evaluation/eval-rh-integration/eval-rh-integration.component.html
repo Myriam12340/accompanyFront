@@ -40,7 +40,9 @@
 </mat-card>
 <form [formGroup]="evaluationForm" (ngSubmit)="onSubmit()">
   <div *ngFor="let mission of missions">
-    
+    <form [formGroup]="missionForms[mission.id]">
+      <!-- Utilisez les contrôles du formulaire de mission ici en utilisant mission.id comme identifiant -->
+
     <table style="width: 100%;" *ngIf="mission.old">
       <td colspan="6">
         <mat-toolbar style="background-color: #1e5d6b; color: antiquewhite;">
@@ -71,16 +73,15 @@
         </tr>
         <tr>
           <td>Roles et responsabilités</td>
-          <td>
-            <select id="roleC" formControlName="roleC" required>
-              <option value="">Sélectionnez une option</option>
-              <option value="Très satisfait">Très satisfait</option>
-              <option value="Satisfait">Satisfait</option>
-              <option value="Moyennement satisfait">Moyennement satisfait</option>
-              <option value="Insuffisant">Insuffisant</option>
-              
-            </select>
-          </td>
+      
+          <td> <select formControlName="roleC">
+            <option value="">Sélectionnez une option</option>
+            <option value="Très satisfait">Très satisfait</option>
+            <option value="Satisfait">Satisfait</option>
+            <option value="Moyennement satisfait">Moyennement satisfait</option>
+            <option value="Insuffisant">Insuffisant</option>
+            
+          </select> </td>
           <td>
          
             <textarea class="form-control border" placeholder="Laissez un commentaire ici" id="floatingTextarea2" formControlName="roleRH" required style="height: 100px ; width: 500px ;"></textarea>
@@ -98,7 +99,12 @@
               <option value="Insuffisant">Insuffisant</option>
               
             </select>
+
+
+
+            
           </td>
+          
           <td>
          
             <textarea class="form-control border" placeholder="Laissez un commentaire ici" id="floatingTextarea2" formControlName="relationClientRH" required style="height: 100px ; width: 500px ;"></textarea>
@@ -143,6 +149,7 @@
         </tr>
       </tbody>
     </table>
+  </form>
 </div>  
   <!-- ----------------------------1 partie -------------------------->
 <mat-card *ngIf="consultantData.evaluationType === 'Intégration 3 mois'">
@@ -153,6 +160,9 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <br>
+  <div style="display: flex; flex-direction: row;">
+    <div style="flex: 1; margin-right: 20px;">
+ 
   <table style="width: 100%; ">
     <thead style="background-color:#1e5d6b;color: azure;">
       <tr>
@@ -221,8 +231,14 @@
         </select> </td>
       </tr>
     </tbody>
+   
   </table>
-
+</div>
+<div style="flex: 1;">
+  <label>Commentaire</label>
+  <textarea class="form-control border" placeholder="Laissez un commentaire ici" id="floatingTextarea2" formControlName="commentaire_Aspects_RH" required style="height: 100px; width: 100%;"></textarea>
+</div>
+</div>
 
 
 
@@ -361,6 +377,9 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <br>
+  <div style="display: flex; flex-direction: row;">
+    <div style="flex: 1; margin-right: 20px;">
+ 
   <table style="width: 100%; ">
     <thead style="background-color:#1e5d6b; color: azure;">
      
@@ -432,7 +451,12 @@
     </tbody>
   </table>
 
-
+</div>
+<div style="flex: 1;">
+  <label>Commentaire</label>
+  <textarea class="form-control border" placeholder="Laissez un commentaire ici" id="floatingTextarea2" formControlName="commentaire_travailler" required style="height: 100px; width: 100%;"></textarea>
+</div>
+</div>
 
 
    </mat-card>
@@ -468,4 +492,3 @@
   
 </form>
 </mat-card>
-

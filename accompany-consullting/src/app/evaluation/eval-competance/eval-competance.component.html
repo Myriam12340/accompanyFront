@@ -39,36 +39,69 @@
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <table style="width: 100%;">
+ 
     <ng-container *ngFor="let mission of missions">
-      <td colspan="6">
-        <mat-toolbar style="background-color: #1e5d6b; color: antiquewhite;">
-          <mat-toolbar-row>
-            <div style="text-align: center;" >
-              
-                <span >Titre: {{ mission.titre }}</span>
-              
-            </div>
-          </mat-toolbar-row>
-        </mat-toolbar>
-      </td>
+
+      <mat-toolbar style="background-color: #1e5d6b; color: antiquewhite;">
+        <mat-toolbar-row>
+          <div class="mission-info">
+            <span>Missions:</span>
+            <mat-icon class="material-icons">assignment</mat-icon>
+            <input type="text" class="form-control" id="titre" value="{{mission.titre}}"  disabled style="cursor: not-allowed;background-color: aliceblue;" required placeholder="Titre">
+          </div>
+          <div class="chef-projet-info">
+            <span>Chef de projet:</span>
+            <input type="text" class="form-control" id="manager" value="{{mission.nomManager}} " disabled style="cursor: not-allowed;background-color: aliceblue;"  placeholder="Email du chef de projet">
+          </div>
+        </mat-toolbar-row>
+      </mat-toolbar>
+    
+      <table style="width: 100%;">
+   
+       
+     
       <br>
+      <thead>
+        <tr>
+          <td style="width: 33.33%; font-size:large; font-family: Georgia, serif; color: #24527a;">Critères</td>
+          <td style="width: 33.33%; font-size:large; font-family: Georgia, serif; color: #24527a;">Consultant</td>
+          <td style="width: 33.33%; font-size:large; font-family: Georgia, serif; color: #24527a;">HR BP</td>
+        </tr>
+      </thead>
       <tbody>
+     
+       
+
         <tr>
-          <td>Nom du manager</td>
-          <td>{{ mission.nomManager }}</td>
+          <td>Roles et responsabilités</td>
+          <td>{{mission.roleC}}</td>
+          <td>{{mission.roleRH}}</td>
         </tr>
         <tr>
-          <td>feedback</td>
-          <td>{{mission.feedbackManager}}</td>
+          <td>Relation avec client</td>
+          <td>{{mission.relationClientC}}</td>
+          <td>{{mission.relationClientRH}}</td>
         </tr>
         <tr>
-          <td>note</td>
-          <td>{{mission.noteManager}}</td>
+          <td>Charge (surcharge / Baisse de charge)</td>
+          <td>{{mission.chargeC}}</td>
+          <td>{{mission.chargeRH}}</td>
         </tr>
+        <tr>
+          <td>Satisfaction Globale</td>
+          <td>{{mission.satisficationC}}</td>
+          <td>{{mission.satisficationRH}}</td>
+        </tr>
+       
+
+
+
+        
       </tbody>
+    </table>
     </ng-container>
-  </table>
+
+  
 
   <br>
 
@@ -80,7 +113,7 @@
   <form [formGroup]="evaluationForm" (ngSubmit)="onSubmit(consultant)" class="left-align">
     <table class="custom-table">
       <tbody>
-        <mat-toolbar  >
+        <!-- <mat-toolbar  >
           <mat-toolbar-row>
             <tr>
               <td>
@@ -110,7 +143,7 @@
               </td>
             </tr>
           </mat-toolbar-row>
-        </mat-toolbar>
+        </mat-toolbar> -->
         <mat-toolbar >
           <mat-toolbar-row>
             <tr>
@@ -130,6 +163,24 @@
                
                 </div>
               </td>
+              
+              </tr></mat-toolbar-row>
+              <mat-toolbar-row>
+              <tr>
+              <td>
+                <label for="notefinal" class="label" > Entreprise</label>
+              </td>
+
+              <td>
+                <div class="input-icon">
+                    <select formControlName="entreprise">
+                      <option value="Prestataire">Prestataire</option>
+                      <option value="CDI">Accompany</option>
+                      <option value="CIVP">Alpha Banking</option>
+                      <option value="CDD">CIC</option>
+                    </select>
+                </div>
+              </td>
             </tr>
           </mat-toolbar-row>
         </mat-toolbar>
@@ -144,9 +195,37 @@
                 <i class="fa fa-check-circle"></i>
               </div>
             </td>
+
+            
+
+
           </mat-toolbar-row>
         </mat-toolbar>
-        
+
+        <mat-toolbar>
+          <mat-toolbar-row>
+
+
+            <td class="label-cell">
+              <label for="decision" class="label">Commentaire</label>
+            </td>
+            <td>
+              <div class="input-icon">
+                <textarea formControlName="commentaire" id="commentaire" required></textarea>
+                <i class="fa fa-check-circle"></i>
+              </div>
+            </td>
+
+            
+
+
+          </mat-toolbar-row>
+        </mat-toolbar>
+
+
+
+
+<!--         
         <mat-toolbar class="custom-toolbar" style="background: linear-gradient(to right, #7ba7c4, #a0bad1);">
           <mat-toolbar-row>
             <tr>
@@ -161,7 +240,7 @@
               </td>
             </tr>
           </mat-toolbar-row>
-        </mat-toolbar>
+        </mat-toolbar> -->
   
 
   

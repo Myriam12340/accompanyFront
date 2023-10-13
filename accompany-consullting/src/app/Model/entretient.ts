@@ -14,5 +14,6 @@ export class entretient {
     nom_recruteur?: string; // add this property
     traite : string ;
     candidat : number ; 
+    tel1_candidat : string
   }
   

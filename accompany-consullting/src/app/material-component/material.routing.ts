@@ -48,17 +48,36 @@ import { ShowEvaluationIntegrationComponent } from '../evaluation/show-evaluatio
 import { ShowEval6Component } from '../evaluation/eval-competance/show-eval6/show-eval6.component';
 import { DashadminComponent } from '../admin/dashadmin/dashadmin.component';
 import { AnniversaireComponent } from '../anniversaire/anniversaire.component';
+import { AdminComponent } from '../admin/admin.component';
+import { AnniversairetableComponent } from '../anniversaire/anniversairetable/anniversairetable.component';
+import { ModifiersoldeComponent } from '../modifiersolde/modifiersolde.component';
+import { DemanderecupComponent } from '../Recuperation/demanderecup/demanderecup.component';
+import { AuthGuardService } from '../service/auth-guard-service.service';
+import { RequiperationValidateurComponent } from '../Recuperation/demanderecup/requiperation-validateur/requiperation-validateur.component';
+import { RecupRHComponent } from '../Recuperation/recup-rh/recup-rh.component';
 
 export const MaterialRoutes: Routes = [
 
+  { path: 'RecupRH', component: RecupRHComponent },
+
+  { path: 'demanderequip', component: DemanderecupComponent },
+
+  { path: 'validateurRequip', component: RequiperationValidateurComponent },
+
+  { path: 'modifiersolde', component: ModifiersoldeComponent, canActivate: [AuthGuardService], data: { roles: ['admin'] }},
+
+  { path: 'birthdaytable', component: AnniversairetableComponent},
+
   { path: 'birthday', component: AnniversaireComponent},
+  
+
 
   { path: 'dash', component: DashadminComponent},
 
-  { path: 'showevaluation', component: ShowEvaluationIntegrationComponent},
-  { path: 'showevaluationcompetance', component: ShowEval6Component},
+  { path: 'showevaluation', component: ShowEvaluationIntegrationComponent, canActivate: [AuthGuardService], data: { roles: ['admin'] }},
+  { path: 'showevaluationcompetance', component: ShowEval6Component, canActivate: [AuthGuardService], data: { roles: ['admin'] }},
 
-  { path: 'consultantEvals', component: ConsutantevaluationsComponent },
+  { path: 'consultantEvals', component: ConsutantevaluationsComponent , canActivate: [AuthGuardService], data: { roles: ['admin'] }},
 
   { path: 'list_missions', component: MissionsManagerComponent },
   { path: 'eval-consultant', component:ConsultantEvalMissionComponent},
@@ -71,9 +90,9 @@ export const MaterialRoutes: Routes = [
 
   { path: 'evaluation/:consultantId', component: EvaluationComponent },
 
-  {path :'add_mission',component:CreateMissionComponent},
+  {path :'add_mission',component:CreateMissionComponent, canActivate: [AuthGuardService], data: { roles: ['admin'] }},
 
-  {path :'les conges',component:CongeshrComponent},
+  {path :'les conges',component:CongeshrComponent, canActivate: [AuthGuardService], data: { roles: ['admin'] }},
 
   {path :'listdemandes',component:ListdemandeComponent},
 
@@ -84,7 +103,7 @@ export const MaterialRoutes: Routes = [
   {path:'eval_competance', component:EvalCompetanceComponent},
   {path:'eval_mission', component:ManagerEvalComponent},
 
-  {path:'evaluation-Integration',component:EvalRhIntegrationComponent},
+  {path:'evaluation-Integration',component:EvalRhIntegrationComponent, canActivate: [AuthGuardService], data: { roles: ['admin'] }},
 
 
   {path:'evaluation',component:EvaluationComponent},
@@ -98,7 +117,7 @@ export const MaterialRoutes: Routes = [
   {path: 'Anniversaire',component:EvaluationListComponent},
   {path: 'calender',component:CalendarComponent},
 
-  {path: 'AddConsultant', component:AddConsultantComponent},
+  {path: 'AddConsultant', component:AddConsultantComponent, canActivate: [AuthGuardService], data: { roles: ['admin'] }},
 
   {path: 'consultant', component:ConsultantComponent},
   {path: 'listconsultants', component:ListconsultantComponent},

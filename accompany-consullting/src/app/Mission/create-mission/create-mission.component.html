@@ -24,8 +24,23 @@
         <label for="demandeur">Titre de mission: <i class="fa fa-briefcase"></i> </label>
         <input type="text" class="form-control" id="titreMission" formControlName="titreMission" required>
         <label for="demandeur"> Chef de mission  <i class="fa fa-user" ></i></label>
-        <input type="text" class="form-control" id="emailManager" formControlName="emailManager" required>
-       
+        <div class="col" style="width: 50%;">
+        
+            <mat-form-field  style="width: 50%;">
+              <mat-label>chef de mission </mat-label>
+              <mat-select formControlName="emailManager" >
+                  <input  style="width: 50%;"type="text" matInput placeholder="Rechercher un utilisateur" (input)="filterUsers($event.target.value)">
+
+                <mat-option *ngFor="let utilisateur of filteredUtilisateurs" [value]="utilisateur.mail">
+                  {{ utilisateur.nom }} {{ utilisateur.prenom }}
+                </mat-option>
+                <mat-option *ngIf="filteredUtilisateurs.length === 0" [value]="searchTerm">
+                  Aucun résultat trouvé.  {{ searchTerm }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        
+          </div> 
        
     </div>
     <div class="row">
@@ -57,7 +72,24 @@
 
     <div *ngFor="let consultant of consultantControls; let i = index" class="form-group">
       <label for="emailConsultant{{i}}">Email du consultant {{i+1}}</label>
-      <input type="text" class="form-control" [id]="'emailConsultant'+i" [formControlName]="'emailConsultant'+i" required>
+    
+    
+      <mat-form-field  style="width: 50%;">
+        <mat-label>Consultant {{i+1}} </mat-label>
+        <mat-select [id]="'emailConsultant'+i" [formControlName]="'emailConsultant'+i">
+            <input  style="width: 50%;"type="text" matInput placeholder="Rechercher un utilisateur" (input)="filterUsers($event.target.value)">
+
+          <mat-option *ngFor="let utilisateur of filteredUtilisateurs" [value]="utilisateur.mail">
+            {{ utilisateur.nom }} {{ utilisateur.prenom }}
+          </mat-option>
+          <mat-option *ngIf="filteredUtilisateurs.length === 0" [value]="searchTerm">
+            Aucun résultat trouvé.  {{ searchTerm }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    
+    
+    
     </div>
     <button type="submit" class="btn btn-primary mr-2" (click)="onSubmit()">
         <i class="fa fa-floppy-o" aria-hidden="true" ></i> Enregistrer

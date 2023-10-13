@@ -58,7 +58,10 @@ getEntretienCandidat(val : number): Observable<entretient[]>{
     return this.http.get(this.baseUrl + '/email/' + email);
   }
   
-
+  getCandidatparphone(phone:string) {
+    return this.http.get(this.baseUrl + '/phone/' + phone);
+  }
+  
 
   /** Get candidat */
 

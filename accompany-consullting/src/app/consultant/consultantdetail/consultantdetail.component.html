@@ -40,6 +40,11 @@
                 <p><strong>Téléphone :</strong>{{consultant.tel1}}</p>
                 <p><strong>Téléphone 2 :</strong>{{consultant.tel2}}</p>
                 <p><strong>Status:</strong>{{consultant.status}}</p>
+
+
+                <div *ngIf="consultant.status === 'inactif'">
+                  <p><strong>Date de départ  :</strong> {{consultant.date_sortie| date:'dd-MM-yyyy'}}</p>
+                </div>
               </div>
             </div>
             <h4 class="card-title">Données RH & Contractulles</h4>

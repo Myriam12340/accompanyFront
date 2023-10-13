@@ -5,7 +5,7 @@ export class EvalMissionIntegration {
         consultant: number;
         manager:number;
         mission:number;
-        roleRH: string | null;
+        RoleRH: string | null;
         roleC: string | null;
         relationClientRH: string | null;
         relationClientC: string | null;

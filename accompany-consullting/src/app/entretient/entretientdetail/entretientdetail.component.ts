@@ -6,6 +6,7 @@ import { entretient } from '../../Model/entretient';
 import { AuthService } from '../../service/Authentication Service/auth.service';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { FichierService } from 'src/app/service/fichier.service';
 
 @Component({
   selector: 'app-entretientdetail',
@@ -23,7 +24,7 @@ export class EntretientdetailComponent implements OnInit {
 cv:any;
 showPdf: boolean = false;
   entretients: entretient[] = [];
-  constructor(private sanitizer: DomSanitizer,private http: HttpClient,private route: ActivatedRoute
+  constructor(private fichieservice:FichierService,private sanitizer: DomSanitizer,private http: HttpClient,private route: ActivatedRoute
      ,private entretienService: EntretienService,private authService: AuthService) { 
   
      }
@@ -95,17 +96,19 @@ this.entretienService.getCandidat(this.candidatid).subscribe(
 
   
 this.cv = this.candidatprofil.cvPdfUrl;
-    this.http.get(`http://localhost:60734/api/entretients/download-pdf?fileName=${this.cv}`, {
-      responseType: 'arraybuffer',
-    }).subscribe(
-      (response: any) => {
-        const blob = new Blob([response], { type: 'application/pdf' });
-        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+
+
+this.fichieservice.downloadcvPdf( this.cv).subscribe(
+  (response: any) => {
+    this.pdfUrl = this.fichieservice.createBlob(response);
+  },
+  (error) => {
+    console.error(error);
+  }
+);
+
+
+  
     // Appel à la fonction qui ajoute l'entretien après la récupération de l'utilisateur
   },
   (error) => {

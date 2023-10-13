@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConsultantService } from 'src/app/Model/consultant/consultant.service';
 import { Consultant } from 'src/app/Model/consultant';
 import { Router } from '@angular/router';
@@ -10,13 +10,16 @@ import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import { AddConsultantComponent } from 'src/app/consultant/add-consultant/add-consultant.component';
 import { ConsultantdetailComponent } from '../consultantdetail/consultantdetail.component';
 import { UpdateconsultantComponent } from '../updateconsultant/updateconsultant.component';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { ConsultantModule } from '../../Model/consultant/consultant.module';
 import { AuthService } from 'src/app/service/Authentication Service/auth.service';
+
+import * as XLSX from 'xlsx';
+
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 
@@ -28,7 +31,8 @@ import { AuthService } from 'src/app/service/Authentication Service/auth.service
   styleUrls: ['./listconsultant.component.css']
 })
 export class ListconsultantComponent implements OnInit {
-  
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   role : any ;
 
   type : string ; 
@@ -44,16 +48,115 @@ export class ListconsultantComponent implements OnInit {
 
   displayedColumns: string[] = ['nom', 'prenom', 'adresse', 'grade', 'date_naissance', 'genre', 'cin', 'tel1', 'tel2', 'mail', 'fonction', 'contrat', 'societe', 'date_integration', 'business_unit', 'status', 'code', 'age', 'situation_amoureuse'];
 
+  selectedStatus: string = '';
+
+  exportToExcel() {
+    let consultantsToExport = this.filteredConsultants;
+  
+  if (this.selectedStatus === 'actif') {
+    consultantsToExport = this.filteredConsultants.filter(cons => cons.status === 'Actif');
+  } else if (this.selectedStatus === 'inactif') {
+    consultantsToExport = this.filteredConsultants.filter(cons => cons.status === 'Inactif');
+  }
+    const personalData = this.filteredConsultants.map(cons => ({
 
 
+      Nom: cons.nom,
+      Prénom: cons.prenom,
+      Adresse: cons.adress,
+
+      Email: cons.mail,
+      Age: cons.age,
+      
+      Date_naissance: this.formatDate(cons.date_naissance),   
+         situation_amoureuse:cons.situation_amoureuse,
+      Cin:cons.cin,
+      Mobile1:cons.tel1,
+      Mobile2:cons.tel2,
+      Statut:cons.status
+    }));
+  
+    const hrData = this.filteredConsultants.map(cons => ({
+      Nom: cons.nom,
+      Prénom: cons.prenom,
+      Code: cons.code,
+      Grade: cons.grade,
+    
+      Foncttion:cons.fonction
+    }));
+  
+    const contractData = this.filteredConsultants.map(cons => ({
+      Nom: cons.nom,
+      Prénom: cons.prenom,
+      Contrat: cons.contrat,
+      Salaire:cons.salaire,
+      Date_integration:this.formatDate(cons.date_integration),
+      Societe:cons.societe,
+      Business_Unit:cons.business_unit
+    }));
+    
+  
+    const personalWorksheet = XLSX.utils.json_to_sheet(personalData);
+    
+    const hrWorksheet = XLSX.utils.json_to_sheet(hrData);
+    const contractWorksheet = XLSX.utils.json_to_sheet(contractData);
+   
+    // Set background color for header row to red
+    personalWorksheet['!cols'] = [
+      { wpx: 100 },
+      { wpx: 100 },
+      { wpx: 150 },
+      { wpx: 150 },
+      { wpx: 100 },
+      { wpx: 150 },
+      { wpx: 200 }
+    ];
+    const blueBackgroundColorStyle = { fgColor: { rgb: '#0000FF' } };
+    personalWorksheet['A1'].s = blueBackgroundColorStyle; 
+    personalWorksheet['B1'].s = blueBackgroundColorStyle; 
+    const style = {
+      fill: {
+        fgColor: { rgb: 'FF0000' }, // Red color
+      },
+    };
+  
+    const firstRowCols = ['A', 'B', 'C', 'D', 'E', 'F', 'G']; // Update with your column letters
+    firstRowCols.forEach(col => {
+      personalWorksheet[col + '1'] = Object.assign({}, personalWorksheet[col + '1'], { s: style });
+    });
+  
+    const workbook = {
+      Sheets: {
+        'Données Personnelles': personalWorksheet,
+        'Données RH': hrWorksheet,
+        'Données Contractuelles': contractWorksheet
+      },
+      SheetNames: ['Données Personnelles', 'Données RH', 'Données Contractuelles']
+    };
+  
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx',type: 'buffer'  });
+  
+    this.saveAsExcelFile(excelBuffer, 'consultants_data');
+  }
+  
+  
+  saveAsExcelFile(buffer: any, fileName: string) {
+    const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const blobUrl = URL.createObjectURL(data);
+  
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = `${fileName}.xlsx`;
+    link.click();
+  
+    URL.revokeObjectURL(blobUrl);
+  }
 
 
-
-
-
-
-
-
+  formatDate(isoDate: any) {
+    const dateParts = isoDate.split('T')[0].split('-');
+    return `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+  }
 
 
 
@@ -61,6 +164,8 @@ export class ListconsultantComponent implements OnInit {
 
   filtreStatuts(status: string) {
     this.filtre = status;
+    this.selectedStatus = status;
+
   }
 
   consultants: Consultant[] = []; // Initialisation de la variable consultants
@@ -69,10 +174,11 @@ export class ListconsultantComponent implements OnInit {
 
   paginatedConsultants: Consultant[] = [];
   
-  pageSizeOptions: number[] = [5, 10, 20, 50];
+  pageSizeOptions: number[] = [5,10,20];
   pageSize = 5;
-  currentPage = 0;
-  totalConsultants = 0;
+  currentPage : number;
+  totalConsultants: number;
+  
   nbactif :Number ;
   nbinactif: number ;
   userProfile: any;
@@ -80,7 +186,9 @@ export class ListconsultantComponent implements OnInit {
   constructor(    private authService: AuthService,
     private consultantservice: ConsultantService, private router: Router,private dialog: MatDialog) { }
 
-  ngOnInit(): void {
+  
+  
+    ngOnInit(): void {
     const jwt = sessionStorage.getItem('jwt');
     if (jwt) {
       this.authService.getUserProfile(jwt).subscribe(
@@ -96,7 +204,6 @@ export class ListconsultantComponent implements OnInit {
     }
     this.allconsultant();
    
-  
   }
 
   private allconsultant() {
@@ -104,7 +211,7 @@ export class ListconsultantComponent implements OnInit {
       this.consultants = data.sort((c1, c2) => {
         const date1 = new Date(c1.date_integration);
         const date2 = new Date(c2.date_integration);
-        this.paginatedConsultants = this.consultants.slice(0, this.pageSize);
+       
        
         return date2.getTime() - date1.getTime();
 
@@ -116,6 +223,9 @@ export class ListconsultantComponent implements OnInit {
       console.log(this.type);
 
       this.filteredConsultants = this.consultants; // Initialisation de filteredConsultants après avoir reçu les données du service
+   
+      this.filteredConsultants.slice(0, this.pageSize);
+   
     });
   }
 
@@ -209,14 +319,25 @@ console.log(this.type);
 
     this.dialog.open(UpdateconsultantComponent, dialogConfig);
   }
+ paginateConsultants() {
+  const startIndex = this.currentPage * this.pageSize;
+  const endIndex = startIndex + this.pageSize;
+  console.log('Start Index:', startIndex);
+  console.log('End Index:', this.pageSize);
+ this.filteredConsultants= this.filteredConsultants.slice(0, this.pageSize);
+
+  console.log('Paginated Consultants:', this.paginatedConsultants);
+}
+
   
 
+ 
   onPageChange(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
+    this.paginateConsultants();
   }
-
-
+  
 
   loadConsultants() {
     this.consultantservice.getConsultantlist().subscribe(data => {

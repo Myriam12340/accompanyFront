@@ -77,13 +77,32 @@ export class UpdateconsultantComponent implements OnInit {
       business_unit: [this.c.business_unit],
       code: [this.c.code, Validators.required],
       age: [this.c.age, Validators.required],
-      situation_amoureuse: [this.c.situation_amoureuse]
+      situation_amoureuse: [this.c.situation_amoureuse],
+      date_sortie: [this.c.date_sortie],
 
+    });
+
+    this.consultantForm.get('status')?.valueChanges.subscribe((status: string) => {
+      // Check if the selected status is 'inactif'
+      if (status === 'inactif') {
+        // If 'inactif', enable the 'date_sortie' control and set it as required
+        this.consultantForm.get('date_sortie')?.setValidators([Validators.required]);
+      } else {
+        // If not 'inactif', disable the 'date_sortie' control and remove its validation
+        this.consultantForm.get('date_sortie')?.clearValidators();
+      }
+  
+      // Update the validity of the 'date_sortie' control
+      this.consultantForm.get('date_sortie')?.updateValueAndValidity();
     });
   }
 
   async onclique() {
     this.consultantForm.markAllAsTouched(); // marquer tous les champs comme touchés
+    
+  
+    
+    
     if (this.consultantForm.valid) { // vérifier si le formulaire est valide
       const consultantup = this.consultantForm.value;
       consultantup.id = this.c.id;

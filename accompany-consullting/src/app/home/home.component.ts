@@ -7,6 +7,7 @@ import { Consultant } from '../Model/consultant';
 import { ConsultantService } from '../Model/consultant/consultant.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
+import { FichierService } from '../service/fichier.service';
 
 @Component({
     selector: 'app-home',
@@ -26,7 +27,7 @@ export class HomeComponent  {
 
     currentPassword: string = '';
   newPassword: string = '';
-  constructor(private sanitizer: DomSanitizer,private http: HttpClient,private authService: AuthService , private consultantservice: ConsultantService,) { }
+  constructor(private fichieservice:FichierService,private sanitizer: DomSanitizer,private http: HttpClient,private authService: AuthService , private consultantservice: ConsultantService,) { }
   togglePasswordFields(): void {
     this.showPasswordFields = !this.showPasswordFields;
     // Réinitialisez les champs lorsque vous basculez l'affichage
@@ -55,14 +56,9 @@ export class HomeComponent  {
             (user) => {
               this.user = user;
               this.photo = this.user.photo;
-              this.http.get(`http://localhost:60734/api/Consultants/download-pdf?fileName=${this.photo}`, {
-                responseType: 'arraybuffer',
-              }).subscribe(
+              this.fichieservice.downloadimage(this.photo).subscribe(
                 (response: any) => {
-                  const blob = new Blob([response], { type: 'application/image' });
-                  this.imgurl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
-                  console.log("urrrrrrl",this.imgurl);
-          
+                  this.imgurl = this.fichieservice.createBlobphoto(response);
                 },
                 (error) => {
                   console.error(error);

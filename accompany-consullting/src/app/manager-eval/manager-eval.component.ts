@@ -9,6 +9,8 @@ import { AuthService } from '../service/Authentication Service/auth.service';
 import { EmailMessage } from '../Model/email-message';
 import { EvaluationService } from '../service/evaluation.service';
 import { EvalMissionIntegration } from '../Model/eval-mission-integration';
+import { MatDialog } from '@angular/material/dialog';
+import { PasswordDialogComponent } from '../parametres/password-dialog/password-dialog.component';
 
 @Component({
   selector: 'app-manager-eval',
@@ -29,6 +31,8 @@ export class ManagerEvalComponent implements OnInit {
     body: '',
     CcEmail:''
     ,CcName:''
+    , UserEmail:''
+
   };
 
   updatem : EvalMissionIntegration ;
@@ -37,6 +41,7 @@ missionid:any;
 titremission : any ;
 consultantnom : any ;
   constructor(
+    private dialog: MatDialog,
     private router: Router,
     public snackBar: MatSnackBar,
     private route: ActivatedRoute,
@@ -130,7 +135,18 @@ consultantnom : any ;
 
   async onclique() {
     this.missionForm.markAllAsTouched(); // marquer tous les champs comme touchés
-    
+    this.email.subject = 'Evaluation de mission : ⭐';
+    const dialogRef = this.dialog.open(PasswordDialogComponent, {
+      width: '300px',
+    });
+
+
+    dialogRef.afterClosed().subscribe(async (password) => {
+      if (password) {
+        this.email.UserEmail=password;
+  
+  }
+     
     if (this.missionForm.valid) { // vérifier si le formulaire est valide
       const updatedMission = this.missionForm.value;
 
@@ -138,11 +154,9 @@ consultantnom : any ;
   
       this.missionService.updateEvalMissionIntegration(this.eval_id, updatedMission).subscribe(
         async () => {
-  
+       
         
-          this.router.navigate(['/list_missions']).then(() => {
-            window.location.reload();
-          });
+          this.router.navigate(['/list_missions']);
   
           await this.snackBar.open("Consultant modifié avec succès", "test", {
             duration: 40000,
@@ -172,7 +186,7 @@ consultantnom : any ;
       <p style="color: #333333;">L'évaluation de la mission "<span style="color: #0066cc;"></span>" a été réalisée par <span style="color: #0066cc;">${this.userProfile.userName}</span>.</p>
       <p style="color: #333333;">Détails de la mission :</p>
       <ul>
-        <li><span style="color: #0066cc;">Rôle RH :</span> ${this.mission.roleRH}</li>
+        <li><span style="color: #0066cc;">Rôle RH :</span> ${this.mission.RoleRH}</li>
         <li><span style="color: #0066cc;">Rôle Consultant :</span> ${this.mission.roleC}</li>
         <li><span style="color: #0066cc;">Relation Client (RH) :</span> ${this.mission.relationClientRH}</li>
         <li><span style="color: #0066cc;">Relation Client (Consultant) :</span> ${this.mission.relationClientC}</li>
@@ -189,9 +203,7 @@ consultantnom : any ;
       <p style="color: #333333;">Veuillez prendre en compte cette évaluation pour les prochaines étapes.</p>
       <p style="color: #333333;">Cordialement,<br>${this.userProfile.userName}</p>`;
   this.email.body = body ; 
-    this.email.subject = 'Evaluation de mission : ⭐';
-  
-    this.sendEmail();
+  this.sendEmail(); });
   }
   
 

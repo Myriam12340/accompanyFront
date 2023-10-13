@@ -7,6 +7,7 @@ import { entretient } from 'src/app/Model/entretient';
 import { ConsultantService } from 'src/app/Model/consultant/consultant.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
+import { FichierService } from 'src/app/service/fichier.service';
 @Component({
   selector: 'app-consultantdetail',
   templateUrl: './consultantdetail.component.html',
@@ -25,7 +26,7 @@ recruteursuivant :any;
 imgurl: SafeResourceUrl;
 showPdf: boolean = false;
 photo:any;
-constructor(@Inject(MAT_DIALOG_DATA) private data: any ,private sanitizer: DomSanitizer,private http: HttpClient,private entretienService:EntretienService, private consultantservice : ConsultantService ) { 
+constructor(@Inject(MAT_DIALOG_DATA) private data: any ,private fichieservice:FichierService ,private sanitizer: DomSanitizer,private http: HttpClient,private entretienService:EntretienService, private consultantservice : ConsultantService ) { 
     this.consultant = data.consultant;
 
   }
@@ -33,7 +34,7 @@ constructor(@Inject(MAT_DIALOG_DATA) private data: any ,private sanitizer: DomSa
   ngOnInit(): void {
     this.photo = this.consultant.photo;
 
-    this.entretienService.getCandidatparemail(this.consultant.mail).subscribe((candidatData) => {
+    this.entretienService.getCandidatparphone(this.consultant.tel1).subscribe((candidatData) => {
       this.candidat = candidatData;
       console.log("hello "+ this.candidat.id);
 
@@ -64,19 +65,18 @@ constructor(@Inject(MAT_DIALOG_DATA) private data: any ,private sanitizer: DomSa
     });
    
     console.log("urrrrrrl",this.photo);
-    this.http.get(`http://localhost:60734/api/Consultants/download-pdf?fileName=${this.photo}`, {
-      responseType: 'arraybuffer',
-    }).subscribe(
-      (response: any) => {
-        const blob = new Blob([response], { type: 'application/image' });
-        this.imgurl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
-        console.log("urrrrrrl",this.imgurl);
+ 
 
+    this.fichieservice.downloadimage( this.photo).subscribe(
+      (response: any) => {
+        this.imgurl = this.fichieservice.createBlobphoto(response);
       },
       (error) => {
         console.error(error);
       }
     );
+
+
   }
 
   dateconvert(date:any):String{

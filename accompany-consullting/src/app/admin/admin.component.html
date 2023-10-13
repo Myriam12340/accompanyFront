@@ -1,276 +1,288 @@
 <div class="scrollable-content">
 
-    <mat-card>
-        <mat-card-content>
-          <mat-card-title style="text-align: center;">Bienvenue </mat-card-title>
-          <mat-chip-list class="mat-chip-list-stacked" *ngIf="sp==true">
-              <mat-chip id="sp" *ngFor="let aColor of availableColors"
-              (focus)="color = aColor.color" color="{{aColor.color}}" selected="true">
-          {{aColor.name}}
-          </mat-chip>
-          </mat-chip-list>
+  <mat-card>
+      <mat-card-content>
+        <mat-card-title style="text-align: center;">Bienvenue</mat-card-title>
+        <mat-chip-list class="mat-chip-list-stacked" *ngIf="sp==true">
+            <mat-chip id="sp" *ngFor="let aColor of availableColors"
+            (focus)="color = aColor.color" color="{{aColor.color}}" selected="true">
+        {{aColor.name}}
+        </mat-chip>
+        </mat-chip-list>
+  
+  
+  
+  
+  
+      <mat-card-subtitle style="text-align: center;">Ajouter Consultant</mat-card-subtitle>
+  
     
-    
-    
-    
-    
-        <mat-card-subtitle style="text-align: center;">Ajouter Admin</mat-card-subtitle>
-    
+  
+  
+  
+  
+  
+   
       
-    
-    
-    
-    
-    
-     
-        
-        <form [formGroup]="myForm">
-    
-    
-    <!-- ==================================================-------------------------------============ -->
-    
-    
-            <mat-accordion class="example-headers-align"></mat-accordion>
-            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" >
-              
-            <mat-expansion-panel-header>
-          
-              <mat-panel-title>Données personnelles</mat-panel-title>
-              <mat-panel-description>Remplir les données personnelles du consultant<mat-icon>account_circle</mat-icon></mat-panel-description>
-            </mat-expansion-panel-header>
-         
-    
-            <mat-form-field>
-              <input matInput placeholder="Nom" name="nom" formControlName="nom" required>
-              <mat-error *ngIf="myForm?.get('nom')?.hasError('required')">Le nom est obligatoire</mat-error>
-              <mat-error *ngIf="myForm?.get('nom')?.hasError('minlength')">Le nom doit comporter au moins 3 caractères</mat-error>
-            </mat-form-field>
+      <form [formGroup]="myForm">
+  
+  
+  <!-- ==================================================-------------------------------============ -->
+  
+  
+          <mat-accordion class="example-headers-align"></mat-accordion>
+          <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" >
             
-    <!-- ========================== -->
-          <mat-form-field>
-            <input matInput placeholder="Prénom" name="prenom" formControlName="prenom" required>
-            <mat-error *ngIf="myForm?.get('prenom')?.hasError('required')">Le prénom est obligatoire</mat-error>
-            <mat-error *ngIf="myForm?.get('prenom')?.hasError('minlength')">Le prénom doit comporter au moins 3 caractères</mat-error>
-          </mat-form-field>
-          <!-- ===================== -->
-          <mat-form-field>
-            <input type="number" matInput placeholder="Age" name="age" formControlName="age" required>
-          </mat-form-field>
-          <!-- ===================== -->
-    
-    
-    
-          <mat-form-field>
-            <input  type="date" matInput placeholder="Date de naissance" name="date_naissance" formControlName="date_naissance" required>
-           
-          </mat-form-field>
-          <!-- =================================== -->
-          <mat-form-field>
-            <mat-label>Genre</mat-label>
-            <mat-select formControlName="genre">
-              <mat-option value="Masculin">Masculin</mat-option>
-              <mat-option value="Féminin">Féminin</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <!-- ============================= -->
-    
-    
-          <mat-form-field>
-            <mat-label>situation_amoureuse</mat-label>
-                    <mat-select formControlName="situation_amoureuse">
-                      <mat-option value="Célibataire">Célibataire</mat-option>
-                      <mat-option value="En couple">En couple</mat-option>
-                    <mat-option value="Marié(e)">Marié(e)</mat-option>
-                  <mat-option value="Divorcé(e)">Divorcé(e)</mat-option>
-                <mat-option value="Veuf(ve)">Veuf(ve)</mat-option>
-                 </mat-select>
-              </mat-form-field>
-          <!-- ============================= -->
-          <mat-form-field>
-            <input matInput placeholder="CIN" name="cin" formControlName="cin" required>
-            <mat-error *ngIf="myForm?.get('cin')?.hasError('required')">Le cin est obligatoire</mat-error>
-            <mat-error *ngIf="myForm?.get('cin')?.hasError('exactLength')">Le cin doit comporter  8 caractères</mat-error>
-    
-            <mat-error *ngIf="myForm?.get('cin')?.hasError('numeric')">Le cin doit comporter des chiffres</mat-error>
-          </mat-form-field>
-            <!-- ============================= -->
-          <mat-form-field>
-            <input matInput placeholder="Adresse" name="adress" formControlName="adress" required>
-          </mat-form-field>
-            <!-- ============================= -->
-          <mat-form-field>
-            <input matInput type="email" placeholder="Email" name="mail" formControlName="mail" required>
-          </mat-form-field>
-            <!-- ============================= -->
-          <mat-form-field>
-            <input matInput placeholder="Mobile 1" name="tel1" formControlName="tel1" required>
-            <mat-error *ngIf="myForm?.get('tel1')?.hasError('required')">Le numéro téléphone est obligatoire</mat-error>
-            <mat-error *ngIf="myForm?.get('tel1')?.hasError('exactLength')">Le numéro téléphone doit comporter  8 caractères</mat-error>
-    
-            <mat-error *ngIf="myForm?.get('tel1')?.hasError('numeric')">Le numéro téléphone doit comporter des chiffres</mat-error>
-          </mat-form-field>
-            <!-- ============================= -->
-          <mat-form-field>
-            <input matInput placeholder="Mobile 2" name="tel2" formControlName="tel2"  >
-            <mat-error *ngIf="myForm?.get('tel2')?.hasError('exactLength')">Le numéro téléphone doit comporter  8 caractères</mat-error>
-            <mat-error *ngIf="myForm?.get('tel2')?.hasError('required')">Le numéro téléphone est obligatoire</mat-error>
-            <mat-error *ngIf="myForm?.get('tel2')?.hasError('numeric')">Le numéro téléphone doit comporter des chiffres</mat-error>
-          </mat-form-field>
-            <!-- ============================= -->
-            <div>
-              <label for="img">photo:</label>
-              <input type="file" id="photo" (change)="onFileSelected($event)" accept=".png">
-            </div>
-          <mat-form-field>
-            <mat-label>Statut</mat-label>
-            <mat-select formControlName="status">
-              <mat-option value="actif">Actif</mat-option>
-              <mat-option value="inactif">Inactif</mat-option>
-            </mat-select>
-          </mat-form-field>
-            <!-- ============================= -->
-          <mat-action-row>
-            <button mat-button color="primary" (click)="nextStep()">Suivant</button>
-    
-     
-      </mat-action-row>
-    
-    
-    
-            </mat-expansion-panel>
-        <!-- =====*******************************************************====== -->
-      <mat-expansion-panel [expanded]="step === 1"   (opened)="setStep(1)" hideToggle="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>Données RH</mat-panel-title>
-          <mat-panel-description>Remplir les données RH<mat-icon>map</mat-icon></mat-panel-description>
-        </mat-expansion-panel-header>
+          <mat-expansion-panel-header>
         
-    
+            <mat-panel-title>Données personnelles</mat-panel-title>
+            <mat-panel-description>Remplir les données personnelles du consultant<mat-icon>account_circle</mat-icon></mat-panel-description>
+          </mat-expansion-panel-header>
+       
+  
+          <mat-form-field>
+            <input matInput placeholder="Nom" name="nom" formControlName="nom" required>
+            <mat-error *ngIf="myForm?.get('nom')?.hasError('required')">Le nom est obligatoire</mat-error>
+            <mat-error *ngIf="myForm?.get('nom')?.hasError('minlength')">Le nom doit comporter au moins 3 caractères</mat-error>
+          </mat-form-field>
+          
+  <!-- ========================== -->
         <mat-form-field>
-          <input matInput type="text" placeholder="Code" name="code" formControlName="code" required>
+          <input matInput placeholder="Prénom" name="prenom" formControlName="prenom" required>
+          <mat-error *ngIf="myForm?.get('prenom')?.hasError('required')">Le prénom est obligatoire</mat-error>
+          <mat-error *ngIf="myForm?.get('prenom')?.hasError('minlength')">Le prénom doit comporter au moins 3 caractères</mat-error>
+        </mat-form-field>
+        <!-- ===================== -->
+        <mat-form-field>
+          <input type="number" matInput placeholder="Age" name="age" formControlName="age" disabled style="cursor: not-allowed;" >
+        </mat-form-field>
+  
+        <mat-form-field>
+          <input type="date" matInput placeholder="Date de naissance" name="date_naissance" formControlName="date_naissance" required>
+        </mat-form-field>
+        
+        <!-- =================================== -->
+        <mat-form-field>
+          <mat-label>Genre</mat-label>
+          <mat-select formControlName="genre">
+            <mat-option value="Masculin">Masculin</mat-option>
+            <mat-option value="Féminin">Féminin</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- ============================= -->
+  
+  
+        <mat-form-field>
+          <mat-label>État sentimental</mat-label>
+                  <mat-select formControlName="situation_amoureuse">
+                    <mat-option value="Célibataire">Célibataire</mat-option>
+                    <mat-option value="En couple">En couple</mat-option>
+                  <mat-option value="Marié(e)">Marié(e)</mat-option>
+                <mat-option value="Divorcé(e)">Divorcé(e)</mat-option>
+              <mat-option value="Veuf(ve)">Veuf(ve)</mat-option>
+               </mat-select>
+            </mat-form-field>
+        <!-- ============================= -->
+        <mat-form-field>
+          <input matInput placeholder="CIN" name="cin" formControlName="cin" required>
+          <mat-error *ngIf="myForm?.get('cin')?.hasError('required')">Le cin est obligatoire</mat-error>
+          <mat-error *ngIf="myForm?.get('cin')?.hasError('exactLength')">Le cin doit comporter  8 caractères</mat-error>
+  
+          <mat-error *ngIf="myForm?.get('cin')?.hasError('numeric')">Le cin doit comporter des chiffres</mat-error>
         </mat-form-field>
           <!-- ============================= -->
-    
-    
-    
-    
-            <mat-form-field>
-                <input matInput type="text" placeholder="fonction" name="fonction" formControlName="fonction" required>
-              </mat-form-field>
-                <!-- ============================= -->
-               
-    
-    
-                  <mat-form-field>
-                    <mat-label>Grade</mat-label>
-                    <mat-select formControlName="grade">
-                      <mat-option value="Manager">manager</mat-option>
-                      <mat-option value="Consultant">consultant</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                <!-- ============================= -->
-    
-    
-                <mat-action-row>
-          
-            
-        
-          <button mat-button color="warn" (click)="prevStep()">Previous</button>
-    
-          <button mat-button color="primary" (click)="nextStep()">Suivant</button></mat-action-row>
-    </mat-expansion-panel>
-    
-    
-    
-                <!-- =========**********************************************************==================== -->
-    
-    
-    
-    <!-- =====*******************************************************====== -->
-    <mat-expansion-panel [expanded]="step === 2"   (opened)="setStep(2)" hideToggle="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>Données Contractulles</mat-panel-title>
-          <mat-panel-description>Remplir les données contractulles<mat-icon>map</mat-icon></mat-panel-description>
-        </mat-expansion-panel-header>
-        
-    <!-- =================================== -->
-    <mat-form-field>
-        <mat-label>Type de contrat</mat-label>
-        <mat-select formControlName="contrat">
-            <mat-option value="Prestataire">Prestataire</mat-option>
-            <mat-option value="CDI">CDI</mat-option>
-            <mat-option value="CIVP">CIVP</mat-option>
-            <mat-option value="CDD">CDD</mat-option>
-        </mat-select>
+        <mat-form-field>
+          <input matInput placeholder="Adresse" name="adress" formControlName="adress" required>
+        </mat-form-field>
+          <!-- ============================= -->
+        <mat-form-field>
+          <input matInput type="email" placeholder="Email" name="mail" formControlName="mail" required>
+        </mat-form-field>
+          <!-- ============================= -->
+        <mat-form-field>
+          <input matInput placeholder="Mobile 1" name="tel1" formControlName="tel1" >
+          <mat-error *ngIf="myForm?.get('tel1')?.hasError('exactLength')">Le numéro téléphone doit comporter  8 caractères</mat-error>
+  
+          <mat-error *ngIf="myForm?.get('tel1')?.hasError('numeric')">Le numéro téléphone doit comporter des chiffres</mat-error>
+        </mat-form-field>
+          <!-- ============================= -->
+        <mat-form-field>
+          <input matInput placeholder="Mobile AC " name="tel2" formControlName="tel2"  >
+          <mat-error *ngIf="myForm?.get('tel2')?.hasError('exactLength')">Le numéro téléphone doit comporter  8 caractères</mat-error>
+          <mat-error *ngIf="myForm?.get('tel2')?.hasError('required')">Le numéro téléphone est obligatoire</mat-error>
+          <mat-error *ngIf="myForm?.get('tel2')?.hasError('numeric')">Le numéro téléphone doit comporter des chiffres</mat-error>
+        </mat-form-field>
+          <!-- ============================= -->
+          <div>
+            <label for="img">photo:</label>
+            <input type="file" id="photo" (change)="onFileSelected($event)" accept=".png">
+          </div>
+  
+        <mat-form-field>
+          <mat-label>Statut</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value="actif">Actif</mat-option>
+            <mat-option value="inactif">Inactif</mat-option>
+          </mat-select>
+        </mat-form-field>
+          <!-- ============================= -->
+        <mat-action-row>
+          <button mat-button color="primary" (click)="nextStep()">Suivant</button>
+  
+   
+    </mat-action-row>
+  
+  
+  
+          </mat-expansion-panel>
+      <!-- =====*******************************************************====== -->
+    <mat-expansion-panel [expanded]="step === 1"   (opened)="setStep(1)" hideToggle="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Données RH</mat-panel-title>
+        <mat-panel-description>Remplir les données RH<mat-icon>map</mat-icon></mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-form-field>
+        <input type="number" matInput placeholder="solde maladie" name="SoldeMaladie" formControlName="SoldeMaladie" required>
       </mat-form-field>
       <mat-form-field>
-        <input type="number" matInput placeholder="salaire" name="salaire" formControlName="salaire" required>
+        <input type="number" matInput placeholder="solde congé" name="SoldeConge" formControlName="SoldeConge" required>
       </mat-form-field>
-    <!-- =================================== -->
-    
-    
-    <mat-form-field>
-        <input  type="date" matInput placeholder="Date d integration" name="date_integration" formControlName="date_integration" required>
-       
+      <mat-form-field>
+        <input matInput type="text" placeholder="Code" name="code" formControlName="code" required>
       </mat-form-field>
-    
-           
-                <!-- ============================= -->
-           
-      <mat-form-field >
-        <mat-label>Société </mat-label>
-       
-        <mat-select formControlName="societe">
-       
-            <mat-option value="Prestataire">Prestataire</mat-option>
-            <mat-option value="Accompany">Accompany</mat-option>
-            <mat-option value="Alpha Banking">Alpha Banking </mat-option>
-            <mat-option value="Digitaly">Digitaly  </mat-option>
-    
-    
-        </mat-select>
-      </mat-form-field>
-                <!-- ============================= -->
-                <mat-form-field >
-                    <mat-label>Business_unit</mat-label>
-                   
-                    <mat-select formControlName="business_unit">
-                   
-                        <mat-option value="Prestataire">Prestataire</mat-option>
-                        <mat-option value="Accompany">Accompany</mat-option>
-                        <mat-option value="Alpha Banking">Alpha Banking </mat-option>
-                        <mat-option value="Digitaly">Digitaly  </mat-option>
-                
-                
-                    </mat-select>
-                  </mat-form-field>
-    
-    
-    
-    
-                <mat-action-row>
+        <!-- ============================= -->
+  
+  
+  
+  
+          <mat-form-field>
+              <input matInput type="text" placeholder="fonction" name="fonction" formControlName="fonction" required>
+            </mat-form-field>
+              <!-- ============================= -->
+             
+  
+  
+                <mat-form-field>
+                  <mat-label>Grade</mat-label>
+                  <mat-select formControlName="grade">
+                    <mat-option value="Manager">manager</mat-option>
+                    <mat-option value="Consultant">consultant</mat-option>
+                    <mat-option value="consultant_stagier">consultant stagiaire</mat-option>
+                    <mat-option value="developpeur">développeur</mat-option>
+                    <mat-option value="Business_Analyst">Business Analyst </mat-option>
+                    <mat-option value="Product leader">Product leader </mat-option>
+  
+                    <mat-option value="technical_Analyst">technical Analyst  </mat-option>
+                    <mat-option value="ConsultantSenior">Consultant Senior</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              <!-- ============================= -->
+  
+  
+              <mat-action-row>
+        
           
-          <button mat-button color="warn" (click)="prevStep()">Previous</button>
-    
-          <button mat-button color="primary"  (click)="ajouterConsultant()">Ajouter</button>
-    
-        </mat-action-row>
-    </mat-expansion-panel>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    </form>
-    
-    
-    
-        </mat-card-content></mat-card></div>
+      
+        <button mat-button color="warn" (click)="prevStep()">Précédent </button>
+  
+        <button mat-button color="primary" (click)="nextStep()">Suivant</button></mat-action-row>
+  </mat-expansion-panel>
+  
+  
+  
+              <!-- =========**********************************************************==================== -->
+  
+  
+  
+  <!-- =====*******************************************************====== -->
+  <mat-expansion-panel [expanded]="step === 2"   (opened)="setStep(2)" hideToggle="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Données Contractulles</mat-panel-title>
+        <mat-panel-description>Remplir les données contractulles<mat-icon>map</mat-icon></mat-panel-description>
+      </mat-expansion-panel-header>
+      
+  <!-- =================================== -->
+  <mat-form-field>
+      <mat-label>Type de contrat</mat-label>
+      <mat-select formControlName="contrat">
+          <mat-option value="Prestataire">Prestataire</mat-option>
+          <mat-option value="CDI">CDI</mat-option>
+          <mat-option value="CIVP">CIVP</mat-option>
+          <mat-option value="CDD">CDD</mat-option>
+          <mat-option value="Cntrat_de_stage">Contrat de stage</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="number" matInput placeholder="salaire" name="salaire" formControlName="salaire" >
+    </mat-form-field>
+  <!-- =================================== -->
+  
+  
+  <mat-form-field>
+      <input  type="date" matInput placeholder="Date d integration" name="date_integration" formControlName="date_integration" required>
+     
+    </mat-form-field>
+  
+         
+              <!-- ============================= -->
+         
+    <mat-form-field >
+      <mat-label>Société </mat-label>
+     
+      <mat-select formControlName="societe">
+     
+          <mat-option value="Prestataire">Prestataire</mat-option>
+          <mat-option value="Accompany">Accompany</mat-option>
+          <mat-option value="Alpha Banking">Alpha Banking </mat-option>
+          <mat-option value="CIC">CIC  </mat-option>
+  
+  
+      </mat-select>
+    </mat-form-field>
+              <!-- ============================= -->
+              <mat-form-field >
+                  <mat-label>Business_unit</mat-label>
+                 
+                  <mat-select formControlName="business_unit">
+                 
+                      <mat-option value="Prestataire">Prestataire</mat-option>
+                      <mat-option value="Accompany">Accompany</mat-option>
+                      <mat-option value="Alpha Banking">Alpha Banking </mat-option>
+                      <mat-option value="Digitaly">Digitaly  </mat-option>
+                      <mat-option value="Autre">Autre</mat-option>
+  
+              
+                  </mat-select>
+  
+                </mat-form-field>
+  
+                <input matInput *ngIf="myForm.get('business_unit')?.value === 'Autre'" formControlName="otherBusinessUnit" placeholder="Veuillez préciser">
+  
+  
+  
+              <mat-action-row>
+        
+        <button mat-button color="warn" (click)="prevStep()">Précédent </button>
+  
+        <button mat-button color="primary"  (click)="ajouterConsultant()">Ajouter</button>
+  
+      </mat-action-row>
+  </mat-expansion-panel>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </form>
+  
+  
+  
+      </mat-card-content></mat-card></div>

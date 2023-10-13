@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Consultant } from 'src/app/Model/consultant';
 import { ConsultantService } from 'src/app/Model/consultant/consultant.service';
 import { Mission } from 'src/app/mission';
 import { MissionService } from 'src/app/service/mission.service';
@@ -20,10 +21,29 @@ export class CreateMissionComponent implements OnInit {
   id_consultant : any ;
   date_fin:any;
   date_debut :any ;
-
+  toname:string;
+  validateurs: any[]= [];
+  filteredUtilisateurs: Consultant[] = [];
+  utilisateurs: any[] = [];
   constructor(private formBuilder: FormBuilder, private consultantService: ConsultantService, private missionService: MissionService) { }
-
+  filterUsers(searchTerm: string): void {
+    this.filteredUtilisateurs = this.utilisateurs.filter(user =>
+      (user.nom.toLowerCase().includes(searchTerm.toLowerCase()) || user.prenom.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+  }
   ngOnInit(): void {
+
+    this.consultantService.getConsultantlist().subscribe(
+      (response) => {
+       
+        this.utilisateurs = response.filter(user => user.status === 'actif');
+      },
+      
+      (error) => {
+        console.error(error); // Gérez l'erreur de la requête
+      }
+    );
+
     this.missionForm = this.formBuilder.group({
       titreMission: [''],
       emailManager: ['', Validators.required],
@@ -93,7 +113,6 @@ export class CreateMissionComponent implements OnInit {
                 response => {
                   console.log('Mission ajoutée avec succès !');
                   // Réinitialiser le formulaire
-                  this.missions.push(mission);
                   this.missionForm.reset();
                 },
                 error => {

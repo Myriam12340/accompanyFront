@@ -102,8 +102,13 @@
         </mat-select>
       </mat-form-field>
         <!-- ============================= -->
+
+        <mat-form-field *ngIf="consultantForm.get('status')?.value === 'inactif'">
+          <input matInput type="date" placeholder="Date de Départ " formControlName="date_sortie" required>
+        </mat-form-field>
+        
       <mat-action-row>
-        <button mat-button color="primary" (click)="nextStep()">Suivant</button>
+        <button mat-button color="primary" (click)="nextStep()">Modifier</button>
   
   
   </mat-action-row>
@@ -127,10 +132,23 @@
             <input matInput type="text" placeholder="fonction" name="fonction" formControlName="fonction" >
           </mat-form-field>
             <!-- ============================= -->
-            <mat-form-field>
-                <input matInput placeholder="Grade" name="grade" formControlName="grade" >
-              </mat-form-field>
+           
   
+
+              <mat-form-field>
+                <mat-label>Grade</mat-label>
+                <mat-select formControlName="grade">
+                  <mat-option value="Manager">manager</mat-option>
+                  <mat-option value="Consultant">consultant</mat-option>
+                  <mat-option value="consultant_stagier">consultant stagiaire</mat-option>
+                  <mat-option value="developpeur">développeur</mat-option>
+                  <mat-option value="Business_Analyst ">Business Analyst </mat-option>
+                  <mat-option value="Product leader ">Product leader </mat-option>
+
+                  <mat-option value="technical_Analyst  ">technical Analyst  </mat-option>
+
+                </mat-select>
+              </mat-form-field>
             <!-- ============================= -->
   
   
@@ -140,7 +158,7 @@
     
       <button mat-button color="warn" (click)="prevStep()">Previous</button>
   
-      <button mat-button color="primary" (click)="nextStep()">Suivant</button></mat-action-row>
+      <button mat-button color="primary" (click)="nextStep()">Modifier</button></mat-action-row>
   </mat-expansion-panel>
   
   
@@ -164,6 +182,7 @@
         <mat-option value="CDI">CDI</mat-option>
         <mat-option value="CIVP">CIVP</mat-option>
         <mat-option value="CDD">CDD</mat-option>
+        <mat-option value="Cntrat_de_stage">Contrat de stage</mat-option>
     </mat-select>
   </mat-form-field>
   <!-- =================================== -->
@@ -196,6 +215,7 @@
   
     </mat-select>
   </mat-form-field>
+  
             <!-- ============================= -->
             <mat-form-field >
                 <mat-label>Business_unit</mat-label>

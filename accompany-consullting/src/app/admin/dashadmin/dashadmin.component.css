@@ -4,8 +4,16 @@
   }
   
   .admin-column {
-    flex-basis: 60%; /* Ajustez la largeur des colonnes selon vos besoins */
+    flex-basis: 50%; /* Ajustez la largeur des colonnes selon vos besoins */
   }
+  .small-calendar {
+    /* Ajoutez ici les styles pour la taille réduite du calendrier */
+    width: 200px; /* Largeur réduite */
+    height: 200px; /* Hauteur réduite */
+    font-size: 14px; /* Taille de police réduite */
+    /* Autres styles personnalisés */
+  }
+  
   
   .admin-section {
     margin: 10px;

@@ -67,6 +67,7 @@
           <span *ngIf="consultant.isI3 && !consultant.isI1 && !consultant.isI6">Intégration 3 mois</span>
           <span *ngIf="consultant.isI1 && !consultant.isI3  && !consultant.isI6">Intégration 1 mois</span>
           <span *ngIf="consultant.isI6 && !consultant.isI1 && !consultant.isI3">Evaluation 6 mois</span>
+          
         </td>
       </ng-container>
 
@@ -78,7 +79,36 @@
           <span class="table-title">Action</span>
         </th>
         <td mat-cell *matCellDef="let consultant" [ngClass]="{'highlight-row': isNextEvaluationToday(consultant)}">
-         
+          <div *ngIf="showMailFormState[consultant.id]">
+            <!-- Ajoutez les champs du formulaire ici -->
+            <input type="datetime-local" [(ngModel)]="dateInput" name="dateInput" />
+            <select [(ngModel)]="selectedOption" name="selectedOption">
+              <option value="teams">Teams</option>
+              <option value="bureau">Bureau</option>
+            </select>
+            <div *ngIf="selectedOption === 'teams'">
+              <input type="text" [(ngModel)]="teamsLink" name="teamsLink" placeholder="Lien Teams" />
+            </div>
+            <div *ngIf="selectedOption === 'bureau'">
+              <select [(ngModel)]="selectedLocation" name="selectedLocation">
+                <option value="Urbain Nord">Urbain Nord</option>
+                <option value="Lac 1">Lac 1</option>
+                <option value="Manzeh1">Manzeh 1</option>
+              </select>
+            </div>
+            <button (click)="sendMail(consultant.mail , consultant)" class="icon-button"> <i class="fas fa-envelope"></i> Envoi Mail</button>
+           
+           
+            <button (click)="toggleMailForm(consultant.id)" class="icon-buttoncancel">
+              <i class="fa fa-times-circle" aria-hidden="true"></i>
+              Annuler
+            </button>
+          </div>
+          <div *ngIf="!showMailFormState[consultant.id]">
+          <button (click)="toggleMailForm(consultant.id)" class="icon-button">
+            <i class="fas fa-envelope"></i> Envoi Mail
+          </button></div>
+                    
          <div *ngIf="!consultant.isI6 &&!consultant.isI3 ">
          
           <button mat-icon-button color="primary" [disabled]="consultant.nb >=1 " *ngIf="!consultant.isI6" (click)="evaluerConsultant1(consultant.id, consultant.nom, consultant.prenom, consultant.date_integration, consultant.grade, consultant.isI3 ? 'Intégration 3 mois' : 'Intégration 1 mois')">
@@ -144,6 +174,13 @@
           </th>
           <td mat-cell *matCellDef="let evaluation">
             <button type="button" class="btn btn-primary" (click)="showintegration(evaluation)">Consulter</button>
+         
+         
+         
+         
+         
+         
+         
           </td>
           
         </ng-container>
@@ -173,13 +210,7 @@
       </ng-container>
 
 
-      <ng-container matColumnDef="notefinal">
-        <th mat-header-cell *matHeaderCellDef class="thead-info">
-          <span class="table-title">Note final </span>
-        </th>
-        <td mat-cell *matCellDef="let evalcomp">{{ evalcomp.notefinal }}</td>
-
-      </ng-container>
+  
       <ng-container matColumnDef="Date_evaluation">
         <th mat-header-cell *matHeaderCellDef class="thead-info">
           <span class="table-title">Date d'évaluation</span>
@@ -202,8 +233,8 @@
       <!-- Add more columns as needed for evaluation competence data -->
 
       <!-- Define the header row and data rows -->
-      <tr mat-header-row *matHeaderRowDef="['nom','notefinal', 'Date_evaluation','action']"></tr>
-      <tr mat-row *matRowDef="let evalcomps; columns: ['nom','notefinal', 'Date_evaluation','action'];"></tr>
+      <tr mat-header-row *matHeaderRowDef="['nom', 'Date_evaluation','action']"></tr>
+      <tr mat-row *matRowDef="let evalcomps; columns: ['nom','Date_evaluation','action'];"></tr>
     </table>
   </div>
 </mat-card>

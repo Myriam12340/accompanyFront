@@ -13,6 +13,9 @@ export class MailService {
   constructor(private http: HttpClient) { }
 
   sendEmail(email: EmailMessage): Observable<any> {
-    return this.http.post<any>(this.apiUrl, email);
+    return this.http.post<any>(this.apiUrl+"/SendEmail", email);
+  }
+    sendEmailsanscc(email: EmailMessage): Observable<any> {
+    return this.http.post<any>(this.apiUrl+"/SendEmailsanscc", email);
   }
 }

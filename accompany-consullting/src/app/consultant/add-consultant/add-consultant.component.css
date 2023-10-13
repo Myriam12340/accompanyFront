@@ -2,3 +2,7 @@
     height: 1000px; /* Set the desired height for the scrollable area */
     overflow: auto; /* Enable scrolling */
   }
+  /* Dans votre fichier CSS */
+input[formControlName="age"] {
+  pointer-events: none;
+}

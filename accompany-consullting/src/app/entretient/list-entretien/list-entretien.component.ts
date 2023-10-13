@@ -16,6 +16,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-entretien.component.css']
 })
 export class ListEntretienComponent implements OnInit {
+  searchTerm: string = '';
+  candidatNames: { [key: number]: string } = {};
+  candidattels: { [key: number]: string } = {};
 
  nom : any 
   showHistorique = false;
@@ -50,6 +53,7 @@ role : any ;
   
 
   }
+  
   getall(){
 
     this.entretienService.getallentretien().subscribe(
@@ -72,6 +76,8 @@ role : any ;
         this.entretienService.getCandidat(e.candidat).subscribe((candidatData) => {
           this.candidat = candidatData;
           e.nom_candidat = this.candidat.nom + " " + this.candidat.prenom;
+          this.candidatNames[e.candidat] = e.nom_candidat;
+
         });
       });
   
@@ -111,6 +117,10 @@ if (action ==='Historique'){
         this.candidat = candidatData;
         console.log("hello "+ this.candidat.nom);
         e.nom_candidat = this.candidat.nom +" " + this.candidat.prenom;
+        this.candidatNames[e.candidat] = e.nom_candidat;
+        
+        // Stocker le nom du candidat
+
       });
     });
 
@@ -196,6 +206,19 @@ this.authService.getUser(e.recruteur).subscribe((recruteurData) => {
   buttondetail(Candidat: number  , descriptionPoste : string , post : string ) {
     this.router.navigate(['/entretientdetail'], { queryParams: { Candidat  , descriptionPoste , post} });
   }
+
+
+  searchEntretiens() {
+    if (this.searchTerm) {
+      this.filteredEntretiens = this.entretients.filter(entretien =>
+        this.candidatNames[entretien.candidat].toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+      this.dataSource.data = this.filteredEntretiens;
+    } else {
+      this.dataSource.data = this.entretients;
+    }
+  }
+  
 
 }
 

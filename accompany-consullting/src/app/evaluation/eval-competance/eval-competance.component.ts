@@ -40,11 +40,14 @@ export class EvalCompetanceComponent implements OnInit {
   ngOnInit(): void {
 
     this.evaluationForm = this.formBuilder.group({
-      noterh: [''],
-      notemissions: [{  disabled: true }],
+      noterh: [0],
+      notemissions: [0],
       decision: [null, Validators.required],
       contrat: [""],
-      notefinal: [{ disabled: true }]
+      notefinal: [],
+      entreprise :[""],
+      commentaire:[""]
+
     });
     
 
@@ -67,9 +70,9 @@ export class EvalCompetanceComponent implements OnInit {
     }
 
     this.missionService.getevalmissionintegrationbyconsultant(this.consultant).subscribe(
-      (missions) => {
-        if (missions) {
-          this.missions = missions.filter(mission => mission.feedbackManager !== '' && mission.noteManager !== null);
+      (evaluation) => {
+        if (evaluation) {
+          this.missions = evaluation;
           this.totalMissionNotes = this.calculateMissionNotesSum(); // Calculer la somme des notes de mission
 
           this.missions.forEach(mission => {
@@ -136,7 +139,7 @@ export class EvalCompetanceComponent implements OnInit {
     const noterh = this.evaluationForm.get('noterh')?.value || 0;
     const notemissions = this.evaluationForm.get('notemissions')?.value || 0;
     const notefinal = Number(noterh) + Number(notemissions);
-    this.evaluationForm.get('notefinal')?.setValue(notefinal);
+  
   }
 
 
@@ -149,8 +152,13 @@ export class EvalCompetanceComponent implements OnInit {
     this.evaluation.contrat = this.evaluationForm.get('contrat')?.value;
    
     this.evaluation.decision = this.evaluationForm.get('decision')?.value;
-    this.evaluation.notefinal = this.evaluationForm.get('notefinal')?.value ;
+    this.evaluation.notefinal = 0;
+
+this.evaluation.notefinal=0;
+    this.evaluation.commentaire = this.evaluationForm.get('commentaire')?.value ;
+    this.evaluation.entreprise  = this.evaluationForm.get('entreprise')?.value ;
     const contratValue = this.evaluationForm.get('contrat')?.value;
+    console.log("Evaluation object:", JSON.stringify(this.evaluation, null, 2));
 
     this.evaluationservice.addevalC(this.evaluation).subscribe(
       (response) => {
@@ -159,9 +167,10 @@ export class EvalCompetanceComponent implements OnInit {
         const evaluationId = response.id;
         console.log('contratValue:', contratValue);
 
-  
+  if (   contratValue != "" && contratValue!=null )
+  {
           this.updateConsultantContract(this.consultant,  contratValue); 
-        
+        }
         // ...
       },
       (error) => {
@@ -169,14 +178,14 @@ export class EvalCompetanceComponent implements OnInit {
       }
 
     );
-    this.router.navigate(['evaluation', consultantId]);
+   // this.router.navigate(['evaluation', consultantId]);
 
   }
   
   
   updateConsultantContract(consultantId: number, contrat: string) {
     
-    this.consultantService.updateCongeEtat(consultantId, contrat)
+    this.consultantService.updatecontratEtat(consultantId, contrat)
       .subscribe(
         () => {
           console.log('Consultant contract updated successfully!');

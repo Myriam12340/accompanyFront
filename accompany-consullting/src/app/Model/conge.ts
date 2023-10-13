@@ -10,5 +10,6 @@ export class Conge {
     demandeurnom : string ;
     duree : number ;
     certif:string;
+    imprime:boolean;
   }
   

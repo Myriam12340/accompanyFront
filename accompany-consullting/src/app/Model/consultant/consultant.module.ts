@@ -44,4 +44,8 @@ export class ConsultantModule {
   nb : number;
   competance:boolean;
 photo : string ;
+SoldeConge : number; 
+SoldeMaladie : number; 
+date_sortie : Date;
+
  }

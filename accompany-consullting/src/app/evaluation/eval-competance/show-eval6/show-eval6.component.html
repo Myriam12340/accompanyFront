@@ -39,26 +39,26 @@
         <span style="margin-left: auto;margin-right: auto;color: aliceblue;text-align: center;">Liste des missions</span>
       </mat-toolbar-row>
     </mat-toolbar>
-  
+  <br>
     <div *ngFor="let mission of missions" >
       <table style="width: 100%; border: 2px solid #24527a;">
-      <ng-container *ngIf="mission.feedbackManager !== null && mission.noteManager !== null">
+      <ng-container >
   
       <mat-toolbar style="background-color: #1e5d6b; color: antiquewhite;">
         <mat-toolbar-row>
           <div class="mission-info">
             <span>Missions:</span>
             <mat-icon class="material-icons">assignment</mat-icon>
-            <input type="text" class="form-control" id="titre" value="{{titremission.titre}}"  disabled style="cursor: not-allowed;" required placeholder="Titre">
+            <input type="text" class="form-control" id="titre" [value]="mission.titre"  disabled style="cursor: not-allowed;" required placeholder="Titre">
           </div>
           <div class="chef-projet-info">
             <span>Chef de projet:</span>
-            <input type="text" class="form-control" id="manager" value="{{manager.mail}} " disabled style="cursor: not-allowed;"  placeholder="Email du chef de projet">
+            <input type="text" class="form-control" id="manager" value="{{mission.manager}} " disabled style="cursor: not-allowed;"  placeholder="Email du chef de projet">
           </div>
         </mat-toolbar-row>
       </mat-toolbar>
       </ng-container>
-      <table style="width: 100%;" *ngIf="mission.feedbackManager !== null && mission.noteManager !== null">
+      <table style="width: 100%;" >
         <thead>
           <tr>
             <th style="width: 33.33%; font-size:large; font-family: Georgia, serif; color: #24527a;">Critères</th>
@@ -91,39 +91,7 @@
       </table>
       
   
-      <mat-toolbar style="background-color: #1e5d6b; color: antiquewhite;">
-        <mat-toolbar-row>
-          <div class="mission-info">
-            <span>Partie Manager </span>
-            <mat-icon class="material-icons"></mat-icon>
-          </div>
-         
-        </mat-toolbar-row>
-      </mat-toolbar>
-      <br>
-      <table style="width: 100%; ">
-        <tr>
-          <th >
-            <label for="exampleFormControlInput1" class="form-label" style="font-size: 16px;"> Note</label>
-  
-          </th>
-          <th >
-            <mat-icon class="material-icons" style="color: white; font-size: 24px; vertical-align: middle;">star_rate</mat-icon>
-            <span style="vertical-align: middle; font-size: 20px; ">{{ mission.noteManager }}</span>
-          </th>
-        </tr>
-        <tr>
-          <th >
-            <label class="form-label" style="font-size: 16px;">Feedback</label>
-          </th>
-          <th >
-            <div >
-              <mat-icon class="material-icons" style="color: white; font-size: 24px; vertical-align: middle;">post_add</mat-icon>
-              <span style="vertical-align: middle; font-size: 18px; ">{{ mission.feedbackManager }}</span>
-            </div>
-          </th>
-        </tr>
-      </table>
+     
       </table>
   
   </div>  
@@ -137,7 +105,7 @@
   
       <table class="custom-table">
         <tbody>
-          <mat-toolbar  >
+          <!-- <mat-toolbar  >
             <mat-toolbar-row>
               <tr>
                 <td>
@@ -151,9 +119,9 @@
                 </td>
               </tr>
             </mat-toolbar-row>
-          </mat-toolbar>
+          </mat-toolbar> -->
     
-          <mat-toolbar>
+          <!-- <mat-toolbar>
             <mat-toolbar-row>
               <tr>
                 <td>
@@ -167,7 +135,7 @@
                 </td>
               </tr>
             </mat-toolbar-row>
-          </mat-toolbar>
+          </mat-toolbar> -->
           <mat-toolbar >
             <mat-toolbar-row>
               <tr>
@@ -176,29 +144,33 @@
                 </td>
                 <td>
                     <div class="input-icon">
-                    <input type="texte" value="{{data.evaluation.contrat}}" style="color:#1347a4">
+                    <input type="texte" value="{{data.evaluation.contrat}}" style="color:#1347a4;cursor: not-allowed;">
 
              </div>
                 </td>
               </tr>
             </mat-toolbar-row>
           </mat-toolbar>
-          <mat-toolbar>
+          <mat-toolbar >
             <mat-toolbar-row>
-              <td class="label-cell">
-                <label for="decision" class="label">Decision</label>
-              </td>
-              <td>
-                <div class="input-icon">
-                  <textarea id="decision" disabled style="cursor: not-allowed;">
-                    {{data.evaluation.decision}}
-                    </textarea>            
-                </div>
-              </td>
+              <tr>
+                <td>
+                  <label class="label" >Entreprise</label>
+                </td>
+                <td>
+                    <div class="input-icon">
+                    <input type="texte" value="{{data.evaluation.entreprise}}" style="color:#1347a4;cursor: not-allowed;">
+
+             </div>
+                </td>
+              </tr>
             </mat-toolbar-row>
+
+
           </mat-toolbar>
+        
           
-          <mat-toolbar class="custom-toolbar" style="background: linear-gradient(to right, #7ba7c4, #a0bad1);">
+          <!-- <mat-toolbar class="custom-toolbar" style="background: linear-gradient(to right, #7ba7c4, #a0bad1);">
             <mat-toolbar-row>
               <tr>
                 <td class="label-cell">
@@ -212,7 +184,7 @@
                 </td>
               </tr>
             </mat-toolbar-row>
-          </mat-toolbar>
+          </mat-toolbar> -->
     
   
     
@@ -225,7 +197,50 @@
       
   
   
-      
+      <table class="custom-table2">        <tbody>
+          <mat-toolbar>
+          
+
+
+    <mat-toolbar-row>
+              <td class="label-cell2">
+                
+                <label for="commentaire" class="label">Decision</label>
+              </td>
+              <td>
+                <div class="input-icon">
+                  
+                  <pre rows="2" cols="20" id="decision" class="styled-textarea" disabled style="cursor: not-allowed;color:#1347a4;"> {{data.evaluation.decision}}</pre>
+                </div>
+              </td>
+            </mat-toolbar-row>
+
+
+
+
+
+
+          </mat-toolbar>
+          <mat-toolbar >
+            
+       
+            <mat-toolbar-row>
+              <td class="label-cell2">
+                
+                <label for="commentaire" class="label">Commentaire</label>
+              </td>
+              <td>
+                <div class="input-icon">
+                  
+                  <pre rows="2" cols="20" id="decision" class="styled-textarea" disabled style="cursor: not-allowed;color:#1347a4;"> {{data.evaluation.commentaire}}</pre>
+                </div>
+              </td>
+            </mat-toolbar-row>
+        
+          </mat-toolbar>
+
+        </tbody>
+      </table>
 
       
   </mat-card>

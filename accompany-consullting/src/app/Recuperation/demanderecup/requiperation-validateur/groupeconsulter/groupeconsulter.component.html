@@ -1,0 +1,79 @@
+<mat-toolbar style="background-color: #5F9EA0; color:white;">
+    <mat-toolbar-row style="text-align: center;">
+        <span> Demande de récupération</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+
+<br>
+    <div class="row">
+        <div class="col-1">
+            <label for="manager" class="mb-0" style="color: #5F9EA0;"><strong>Manager <i class="fa fa-user-o" aria-hidden="true"></i> : </strong></label>
+        </div>
+        <div class="col">
+          <div class="input-group">
+            <input type="text" class="form-control" id="nbConsultants" [value]="manager" min="0" required [disabled]="true">
+          </div>
+        </div>
+      </div>
+      
+ 
+
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Consultant</th>
+        <th>Date de début</th>
+        <th>Date de fin</th>
+        <th>Durée</th>
+        <th>Commentaire <i class="fa fa-commenting-o" aria-hidden="true"></i>
+        </th>
+        <th>Action</th>
+        <!-- Ajoutez d'autres en-têtes selon vos besoins -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let demande of demandes; let i = index ; else noRecups">
+        <td>{{ i + 1 }}</td>
+        <td>{{ demande.demandeurnom }}</td>
+
+        <td>{{ demande.dateDebut | date }}</td>
+        <td>{{ demande.dateFin | date }}</td>
+        <td>{{ demande.duree }}</td>
+        <td>{{ demande.commentaire }}</td>
+
+        <td>
+            <ng-container *ngIf="demande.etat === 'valide'||demande.etat === 'Rejeter' || demande.show ; else notValidated">
+              <h4 style="color: #5F9EA0;">Demande Traité</h4>
+            </ng-container>
+            <ng-template #notValidated>
+              <div *ngIf="!demande.showInput && demande.etat !== 'valide'">
+                <button mat-button class="btn btn-outline-success mr-2" (click)="validateRequest(demande)">
+                  <mat-icon>send</mat-icon> Valider
+                </button>
+                <button mat-button class="btn btn-outline-danger mr-2" (click)="rejectRequest(demande)">
+                  <mat-icon>highlight_off</mat-icon> Rejeter
+                </button>
+              </div>
+              <div *ngIf="demande.showInput || demande.show">                              
+                <input type="number" [(ngModel)]="demande.joursValides" placeholder="Nombre de jours">
+                <button mat-mini-fab color="primary" (click)="confirmValidation(demande)">
+                  <mat-icon>task_alt</mat-icon>
+                </button>
+              </div>
+            </ng-template>
+          </td>
+          
+  
+       
+        <!-- Ajoutez d'autres colonnes selon vos besoins -->
+      </tr>
+    </tbody>
+  </table>
+
+<!-- Ajoutez le bouton seulement si toutes les demandes sont traitées -->
+<button mat-button *ngIf="demandesTraitees === demandes.length" (click)="envoyerResultat( )">
+    Envoyer Résultat
+  </button>
+  

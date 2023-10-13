@@ -41,4 +41,121 @@
   .action-button:hover {
     background-color: #1976D2;
   }
-  
+  input[type=text], select {
+    width: 25%;
+    padding: 6px 6px;
+    margin: 10px 2 px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+  input[type=email], select {
+    width: 25%;
+    padding: 6px 6px;
+    margin: 10px 2 px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+  .input2 {
+    width: 50%;
+    padding: 6px 6px;
+    margin: 10px 2 px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+  input[type=number] {
+    width: 25%;
+    padding: 6px 6px;
+    margin: 10px 2 px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+  input[type=date], select {
+    width: 25%;
+    padding: 6px 6px;
+    margin: 10px 5px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  label{
+    text-indent: 25 px;
+    font-size: medium;
+    font-family: Georgia, serif;
+    color: #24527a;
+  }
+  input[type='radio']{
+    width: 25px;
+    height: 25px;
+    border-radius: 10px;
+    padding: 20px 20px;
+    margin: 20px 20px;
+
+}
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+.text-danger {
+  color: red;
+}
+
+
+input[type="file"] {
+  display: none; /* Masquer l'élément de base */
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  background-color: #f1f1f1;
+  color: #333;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.custom-file-upload:hover {
+  background-color: #ddd;
+}
+.icon-buttoncancel {
+  padding: 6px;
+  font-size: 16px;
+  background-color: #de1414;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Ajoutez ceci à votre fichier de styles CSS ou SCSS */
+.icon-button {
+  padding: 6px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.icon-button i {
+  margin-right: 5px; /* Espace entre l'icône et le texte */
+}
+.action-container {
+  display: flex;
+  align-items: center; /* Aligner les éléments verticalement au centre */
+}
+
+.icon-button {
+  margin-right: 10px; /* Espacement entre les boutons */
+}

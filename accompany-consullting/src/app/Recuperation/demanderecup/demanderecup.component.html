@@ -1,0 +1,207 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<mat-card>
+ 
+        <mat-toolbar color="accent">
+            <mat-toolbar-row style="text-align: center;">
+                <span style="margin-left: auto;margin-right: auto;color: aliceblue;text-align: center;">
+                    <i class="fa fa-calendar" aria-hidden="true"></i> Demande de Récupération
+                </span>
+            </mat-toolbar-row>
+            
+        </mat-toolbar>
+      
+        <br> <div *ngIf="role!== 'consultant'">
+        <div class="center d-flex justify-content-center"> <!-- Utilisez la classe d-flex et justify-content-center -->
+            <button mat-raised-button color="primary" (click)="togglePersonnelForm()" class="mx-2">Demande Personnel</button>
+           
+           
+           
+            <button mat-raised-button color="primary" (click)="toggleGroupeForm()" class="mx-2">Demande Groupe</button>
+        
+          
+          </div>
+            </div>
+  
+ <!--partie formulaire -->
+
+<div *ngIf="showPersonnelForm">
+ <form [formGroup]="demandeForm" >
+
+ <mat-card >
+    <mat-toolbar style="background-color: #5F9EA0; color:white;">
+        <mat-toolbar-row style="text-align: center;">
+            <span><i class="fa fa-info-circle"></i> Informations</span>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <br>
+
+    <div class="row">
+        <div class="col">
+            <label for="demandeur">Demandeur: <i class="fa fa-user" ></i> </label>
+            <input type="text" id="demandeur" value={{nomconsultant}} disabled style="cursor: not-allowed;">
+            <label for="demandeur"> Poste: <i class="fa fa-briefcase"></i> </label>
+            <input type="text" id="demandeur" value={{posteconsultant}} disabled style="cursor: not-allowed;">
+            
+            
+            <label for="validateur">Validateur: <i class="fa fa-check"></i> </label>
+            <select class="form-control" id="validateur" formControlName="validateur" required style="width: 25%;">
+                <option value="m.moussa@accompanyconsulting.net">Med Férid Moussa</option>
+                <option value="n.hili@accompanyconsulting.net">Najd Hili
+                </option>
+                <option value="m.trabelsi@accompanyconsulting.net">Mohamed Ali Trabelsi</option>
+                <option value="m.gueddas@accompanyconsulting.net">Mehdi Gueddas </option>
+       
+            </select>
+
+            <mat-error *ngIf="demandeForm?.get('validateur')?.hasError('required')">Le validateur est obligatoire</mat-error>
+
+          
+
+        </div>
+    
+    </div>
+ 
+    <br>
+
+   
+</mat-card>
+
+
+<mat-card>
+    <mat-toolbar style="background-color: #5F9EA0; color:white;">
+        <mat-toolbar-row style="text-align: center;">
+            <span><i class="fa fa-calendar"></i> Période </span>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <br>
+
+    <div class="row">
+        <div class="col">
+            <label for="dateDebut"> Date de début:</label>
+            <input type="date" id="dateDebut" formControlName="dateDebut" (input)="calculateDuree()">
+       
+
+            <label for="dateFin"> Date de fin:</label>
+            <input type="date" id="dateFin" formControlName="dateFin" (input)="calculateDuree()" >
+
+            <label for="demandeur"><i class="fa fa-clock-o"></i> Durée:</label>
+            <input type="text" formControlName="duree" id="duree" [value]="duree >= 0 ? duree : 0" disabled style="cursor: not-allowed;">
+            
+        </div>
+    
+
+
+    </div>
+   
+                </mat-card>
+
+<br>
+<mat-card >
+    <mat-toolbar style="background-color: #5F9EA0; color:white;">
+        <mat-toolbar-row style="text-align: center;">
+            <span><i class="fa fa-calendar"></i> Commentaire </span>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+
+
+    <label for="Commentaire"> Commentaire:</label>
+    <input type="text" id="Commentaire" formControlName="commentaire" >
+
+
+    <br>
+    <div class="center d-flex justify-content-center"> <!-- Utilisez la classe d-flex et justify-content-center -->
+
+    <button type="submit" class="btn btn-primary mr-2" (click)="onSubmit()">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i> Envoyer Demande
+    </button></div>
+    <br>
+</mat-card>
+
+
+
+
+</form></div>
+</mat-card>
+
+
+<!--partie pour groupe -->
+
+
+
+  <div *ngIf="showGroupeForm">
+    <mat-card>
+      <form [formGroup]="demandegrForm">
+        <div class="row">
+          <!-- ... Autres champs de formulaire ... -->
+          <div class="col">
+            <label for="nbConsultants">Nombre de consultants</label>
+            <input type="number" class="form-control" id="nbConsultants" formControlName="nbConsultants" min="0" required style="width: 50%;">
+        </div>
+        <div class="col" *ngIf="demandegrForm.get('nbConsultants')?.value > 0">
+            <label for="validateur">Validateur</label>
+            <select class="form-control" id="validateur" formControlName="validateur" required style="width: 50%;">
+                <option value="m.moussa@accompanyconsulting.net">Med Férid Moussa</option>
+                <option value="n.hili@accompanyconsulting.net">Najd Hili
+                </option>
+                <option value="m.trabelsi@accompanyconsulting.net">Mohamed Ali Trabelsi</option>
+                <option value="m.gueddas@accompanyconsulting.net">Mehdi Gueddas </option>
+      
+
+            </select>
+            <mat-error *ngIf="demandegrForm?.get('validateur')?.hasError('required')">Le validateur est obligatoire</mat-error>
+
+        </div>
+        
+        </div>
+        <br>
+        <div class="table-responsive">
+          <!-- ... Tableau de consultants ... -->
+          <table class="table table-bordered table-striped" *ngIf="demandegrForm.get('nbConsultants')?.value > 0">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Numéro de Consultant</th>
+                <th scope="col">Email</th>
+                <th scope="col">Date de Début</th>
+                <th scope="col">Date de Fin</th>
+                <th scope="col">Durée</th>
+
+                <th scope="col">Commentaire</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let consultant of consultantControls; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>
+               
+                  <input type="text"  [id]="'emailConsultant'+i" [formControlName]="'emailConsultant'+i" required style="width: 75%;">
+                </td>
+                <td>
+                  <input type="date" id="dateDebut" [formControlName]="'datedebut'+i" (input)="calculateDureegroupe(i)" style="width: 75%;">
+                </td>
+                <td>
+                  <input type="date" id="datefin" [formControlName]="'datefin'+i" (input)="calculateDureegroupe(i)" style="width: 75%;">
+                </td>
+                <td>
+                  <input type="number" [formControlName]="'duree'+i" style="width: 75%;">
+                </td>
+                <td>
+         
+                  <input type="text" [formControlName]="'commentaire'+i" id="commentaire"style="width: 75%;">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="center d-flex justify-content-center">
+          <!-- Bouton à l'intérieur de la carte -->
+          <button type="submit" class="btn btn-primary mr-2" (click)="onadd()" *ngIf="demandegrForm.get('nbConsultants')?.value > 0">
+            <i class="fa fa-floppy-o" aria-hidden="true"></i> Envoyer Demande
+          </button>
+        </div>
+        <br>
+      </form>
+    </mat-card>
+  </div>
+  

@@ -7,5 +7,6 @@ export interface EmailMessage {
     body: string;
     CcEmail:string;
     CcName:string;
+    UserEmail:string;
   }
   

@@ -1,12 +1,13 @@
 <mat-card>
   <mat-card-content>
-    <mat-card-title style="text-align: center ;color: blue; font-size: x-large;">Entretien initial</mat-card-title>
 
     <div class="container">
       <div class="row">
         <div class="col-md-6 offset-md-3 mt-5">
 
-          <form [formGroup]="entretienForm" >
+          <div class="container">
+            <!-- ... -->
+            <form [formGroup]="entretienForm" class="form-container">
             <div class="p-20 bg-info">
               <h4 class="card-title text-white m-0 text-center">Description du poste</h4>
             </div>
@@ -80,23 +81,23 @@
 
             <br><br>
             <section>
-              <div class="example-button-row">
-                <mat-action-row class="rows">
-                  <button mat-fab color="primary" (click)="annuler()" aria-label="Home">
-                    <mat-icon>home</mat-icon>
-                  </button>
-
-                  <button mat-fab color="primary" (click)="addEntretien()" aria-label="Open in new tab">
-                    <mat-icon>open_in_new</mat-icon>
-                  </button>
-
-                  <button mat-fab color="accent" (click)="add()" *ngIf="entretienForm.controls.statut.value === 'GO'" aria-label="Add">
-                    <mat-icon>plus_one</mat-icon>
-                  </button>
-                </mat-action-row>
+              <div class="button-container">
+                <button  class="cancel-button" (click)="annuler()" aria-label="Home">
+                  <mat-icon>close</mat-icon> Annuler
+                </button>
+            
+                <button  class="save-button" (click)="addEntretien()" aria-label="Open in new tab">
+                  <mat-icon>save</mat-icon> Enregistrer
+                </button>
+            
+                <button  class="add-button" (click)="add()" *ngIf="entretienForm.controls.statut.value === 'GO'" aria-label="Add">
+                  <mat-icon>plus_one</mat-icon> Ajouter
+                </button>
               </div>
             </section>
+            
           </form>
+          </div>
         </div>
       </div>
     </div>

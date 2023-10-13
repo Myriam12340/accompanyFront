@@ -92,12 +92,14 @@
               "node_modules/jquery/dist/jquery.min.js"
             ],
             "styles": [
+              "node_modules/chartist/dist/chartist.css",
               "src/styles.css",
-  "node_modules/@fullcalendar/core/main.css",
-  "node_modules/@fullcalendar/daygrid/main.css"
+              "src/assets/styles/style.scss",
+              "node_modules/@fullcalendar/core/main.css",
+              "src/app/anniversaire/anniversaire.component.css"
             ],
+            
             "assets": [
-              "src/assets",
               "src/favicon.ico"
             ]
           }

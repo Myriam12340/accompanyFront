@@ -1,0 +1,71 @@
+<mat-toolbar style="background-color: #5F9EA0; color:white;">
+    <mat-toolbar-row style="text-align: center;">
+        <span> Demande de récupération</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+
+<br>
+    <div class="row">
+        <div class="col-1">
+            <label for="manager" class="mb-0" style="color: #5F9EA0;"><strong>Manager <i class="fa fa-user-o" aria-hidden="true"></i> : </strong></label>
+        </div>
+        <div class="col">
+          <div class="input-group">
+            <input type="text" class="form-control" id="nbConsultants" [value]="manager" min="0" required [disabled]="true">
+          </div>
+        </div>
+      </div>
+      
+ 
+
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th>#</th>
+               <th>Consultant<th> 
+        <th>Date de début</th>
+        <th>Date de fin</th>
+        <th>Durée</th>
+        <th>Action</th>
+        <!-- Ajoutez d'autres en-têtes selon vos besoins -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let demande of demandes; let i = index ; else noRecups">
+        <td>{{ i + 1 }}</td>
+        <td>{{ demande.demandeurnom }}</td>
+
+
+        <td>{{ demande.dateDebut | date }}</td>
+        <td>{{ demande.dateFin | date }}</td>
+        <td>{{ demande.duree }}</td>
+      
+        <td>
+            <ng-container *ngIf="demande.etat === 'Traite'  ; else notValidated">
+              <h4 style="color: #5F9EA0;">Demande Traité <i class="fa fa-smile-o" aria-hidden="true"></i>
+              </h4>
+            </ng-container>
+
+            <ng-container *ngIf="demande.etat === 'Rejeter'  ">
+                <h4 style="color: #de3030;">Demande Rejeté <i class="fa fa-frown-o" aria-hidden="true"></i>
+                </h4>
+              </ng-container>
+            <ng-template #notValidated>
+              <div *ngIf="!demande.showInput && demande.etat == 'valide'">
+                <button mat-button class="btn btn-outline-success mr-2" (click)="confirmValidation(demande)">
+                  <mat-icon>send</mat-icon> Traiter
+                </button>
+               
+              </div>
+            
+            </ng-template>
+          </td>
+          
+  
+       
+        <!-- Ajoutez d'autres colonnes selon vos besoins -->
+      </tr>
+    </tbody>
+  </table>
+

@@ -1,0 +1,30 @@
+.error-container {
+    text-align: center;
+  }
+  
+  .error-code {
+    font-size: 6em;
+    color: #dc3545;
+  }
+  
+  .error-message {
+    font-size: 1.5em;
+    margin-top: 10px;
+    color: #6c757d;
+  }
+  
+  .go-back-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    transition: background-color 0.3s;
+  }
+  
+  .go-back-btn:hover {
+    background-color: #0056b3;
+  }
+  

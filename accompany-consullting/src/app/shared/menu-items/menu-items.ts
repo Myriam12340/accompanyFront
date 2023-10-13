@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Consultant } from 'src/app/Model/consultant';
+import { ConsultantService } from 'src/app/Model/consultant/consultant.service';
 import { AuthService } from 'src/app/service/Authentication Service/auth.service';
 
 export interface Menu {
@@ -11,14 +13,14 @@ export interface Menu {
 @Injectable()
 export class MenuItems {
   private MENUITEMS: Menu[] = []; // Initialize an empty array
-
-  constructor(private authService: AuthService) {
+consultant:any;
+  constructor(private authService: AuthService,private consultantservice: ConsultantService) {
     this.loadMenuItems();
   }
   ngOnInit(
     
     ): void {
-      window.location.reload();}
+      }
   private loadMenuItems(): void {
 
     if (sessionStorage.getItem("jwt")) {
@@ -26,8 +28,15 @@ export class MenuItems {
         userProfile => {
           const role = userProfile.role;
 
-          if (role === "Consultant") {
+          this.consultantservice.getConsultantbyemail(userProfile.email).subscribe(
+            (response) => {
+              this.consultant = response;
+              const grade = this.consultant.grade;
+          
+
+          if (role === "consultant") {
             this.MENUITEMS.push(
+           
               {
                 state: 'demande',
                 name: 'Demande de congé',
@@ -38,29 +47,40 @@ export class MenuItems {
                 state: 'listconge',
                 name: 'Mes congés',
                 type: 'link',
-                icon: 'face'
+                icon: 'insert_invitation'
               },
               {
                 state: 'projet',
                 type: 'link',
                 name: 'Projet',
-                icon: 'featured_play_list'
+                icon: 'work'
               }
-        
+             , {
+                state: 'demanderequip',
+                name: 'Demande_de_réquiperation',
+                type: 'link',
+                icon: 'note_add'
+              }
+        ,{
+          state: 'list_missions',
+          name: 'list_missions',
+          type: 'link',
+          icon: 'playlist_add_check'
+        }
               , 
             );
           } else if (role === "admin") {
             this.MENUITEMS.push(
               { state: 'add_mission', 
 type: 'link', name: 'créer mission ',
- icon: 'assignment_ind' },
+ icon: 'work_outline' },
              
               { state: 'listconsultants', 
-type: 'link', name: 'Liste du personnels ',
+type: 'link', name: 'Liste du personnel ',
  icon: 'assignment_ind' },
  {
   state: 'les conges',
-  name: 'list Conge',
+  name: 'liste des congés',
   type: 'link',
   icon: 'face'
 },
@@ -74,13 +94,13 @@ type: 'link', name: 'Liste du personnels ',
                 state: 'listconge',
                 name: 'Mes congés',
                 type: 'link',
-                icon: 'face'
+                icon: 'insert_invitation'
               },
               {
                 state: 'projet',
                 type: 'link',
                 name: 'Projet',
-                icon: 'featured_play_list'
+                icon: 'work'
               },
               {
                 state: 'evaluation',
@@ -95,7 +115,7 @@ type: 'link', name: 'Liste du personnels ',
                 icon: 'elevator'
               },
               {
-                state: 'birthday',
+                state: 'birthdaytable',
                 type: 'link',
                 name: 'Anniversaire',
                 icon: '✺︎'
@@ -103,6 +123,30 @@ type: 'link', name: 'Liste du personnels ',
               {
                 state: 'listdemandes',
                 name: 'Liste des demandes de congés',
+                type: 'link',
+                icon: 'playlist_add_check'
+              },
+              {
+                state: 'modifiersolde',
+                name: 'Modifier Solde',
+                type: 'link',
+                icon: 'face'
+              },
+              {
+                state: 'demanderequip',
+                name: 'Demande_de_réquiperation',
+                type: 'link',
+                icon: 'note_add'
+              },
+              {
+                state: 'RecupRH',
+                name: 'Traiter les demandes de réquiperation',
+                type: 'link',
+                icon: 'face'
+              },
+              {
+                state: 'list_missions',
+                name: 'list_missions',
                 type: 'link',
                 icon: 'playlist_add_check'
               }
@@ -114,7 +158,7 @@ type: 'link', name: 'Liste du personnels ',
              
              
               { state: 'listconsultants', 
-type: 'link', name: 'Liste du personnels ',
+type: 'link', name: 'Liste du personnel ',
  icon: 'assignment_ind' },
              
               {
@@ -127,13 +171,13 @@ type: 'link', name: 'Liste du personnels ',
                 state: 'listconge',
                 name: 'Mes congés',
                 type: 'link',
-                icon: 'face'
+                icon: 'insert_invitation'
               },
               {
                 state: 'projet',
                 type: 'link',
                 name: 'Projet',
-                icon: 'featured_play_list'
+                icon: 'work'
               },
             
               {
@@ -143,7 +187,7 @@ type: 'link', name: 'Liste du personnels ',
                 icon: 'elevator'
               },
               {
-                state: 'birthday',
+                state: 'birthdaytable',
                 type: 'link',
                 name: 'Anniversaire',
                 icon: '✺︎'
@@ -160,9 +204,66 @@ type: 'link', name: 'Liste du personnels ',
                 type: 'link',
                 icon: 'playlist_add_check'
               }
+              , {
+                state: 'demanderequip',
+                name: 'Demande_de_réquiperation',
+                type: 'link',
+                icon: 'note_add'
+              }
             );}
 
+            else if (role === "consultant" && grade=="Consultant_Senior") {
+              this.MENUITEMS.push(
+               
+               
+              
+                {
+                  state: 'demande',
+                  name: 'Demande de congé',
+                  type: 'link',
+                  icon: 'note_add'
+                },
+                {
+                  state: 'listconge',
+                  name: 'Mes congés',
+                  type: 'link',
+                  icon: 'insert_invitation'
+                },
+                {
+                  state: 'projet',
+                  type: 'link',
+                  name: 'Projet',
+                  icon: 'work'
+                },
+              
+            
+                {
+                  state: 'birthdaytable',
+                  type: 'link',
+                  name: 'Anniversaire',
+                  icon: '✺︎'
+                },
+            
+                {
+                  state: 'demanderequip',
+                  name: 'Demande_de_réquiperation',
+                  type: 'link',
+                  icon: 'note_add'
+                }
+                ,{
+                  state: 'listdemandes',
+                  name: 'Liste des demandes de congés',
+                  type: 'link',
+                  icon: 'playlist_add_check'
+                },
+              );}
+
           console.log(this.MENUITEMS);
+        },
+        (error) => {
+          console.error(error); // Gérez l'erreur de la requête
+        }
+      );
         },
         error => console.error(error)
       );

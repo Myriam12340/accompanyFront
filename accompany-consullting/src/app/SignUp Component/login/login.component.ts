@@ -12,57 +12,63 @@ import { MatDialog } from '@angular/material/dialog';
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  invalidlogin : boolean = false ;
-  constructor(private http: HttpClient, private router: Router , private authService: AuthService,private dialog: MatDialog) {}
+  invalidlogin: boolean = false;
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private dialog: MatDialog) {}
 
   login(form: NgForm) {
     const credentials = {
       'email': form.value.email,
       'password': form.value.password
     };
-  
+
     this.http.post("http://localhost:60734/api/auth/login", credentials).subscribe(
-      response => {
-        const token = (<any>response).token;
+      (response: any) => {
+        const token = response.token;
         localStorage.setItem("jwt", token);
         sessionStorage.setItem("jwt", token);
-  
-        this.authService.getUserProfile(token).subscribe(
-          userProfile => {
-            const role = userProfile.role;
-  
-            if (role === "admin") {
-              this.router.navigate(['/dash']); // Redirect to '/conge' for admin
-            } else {
-              this.router.navigate(['/home']); // Redirect to '/home' for other roles
+        const status = response.statut; // Vérifier si la propriété 'statut' existe dans la réponse
+    
+        if (status === "actif") {
+          this.authService.getUserProfile(token).subscribe(
+            userProfile => {
+              const role = userProfile.role;
+    
+              if (role === "admin") {
+                this.router.navigate(['/dash']); // Redirect to '/dash' for admin
+              } else {
+                this.router.navigate(['/home']); // Redirect to '/home' for other roles
+              }
+            },
+            error => {
+              console.error(error);
+              // Handle error if unable to get user profile
             }
-          },
-          error => {
-            console.error(error);
-            // Handle error if unable to get user profile
-          }
-        );
-  
+          );
+        } else {
+          // Open the error popup
+          this.openErrorPopup("Vous ne pouvez pas vous connecter en tant que consultant inactif.");
+        }
+    
         this.invalidlogin = false;
       },
       err => {
-        this.invalidlogin = true;
-  
-        // Open the error popup
-        this.openErrorPopup('Email ou mot de passe incorrect. ');
+        if (err.status === 403) { // Vérifiez le code HTTP 403
+          this.invalidlogin = true;
+          this.openErrorPopup("Vous ne pouvez pas vous connecter en tant que consultant inactif.");
+        } else {
+          this.invalidlogin = true;
+          this.openErrorPopup('Email ou mot de passe incorrect.');
+        }
       }
     );
-  }
-  
-  
+    }
   openErrorPopup(errorMessage: string): void {
     const dialogRef = this.dialog.open(ErrorDialogComponent, {
-    
       data: { message: errorMessage }
     });
   }
-  
 }
+
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({

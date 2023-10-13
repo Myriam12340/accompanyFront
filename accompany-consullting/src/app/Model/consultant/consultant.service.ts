@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {  BehaviorSubject, Observable} from 'rxjs'
 import { ConsultantModule } from './consultant.module';
+import { map } from 'rxjs/operators';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class ConsultantService {
   private consultantData = new BehaviorSubject<any>(null);
 
   readonly APIurl ="http://localhost:60734/api";
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private sanitizer: DomSanitizer) { }
 
   setConsultantData(data: any) {
     this.consultantData.next(data);
@@ -44,11 +46,7 @@ export class ConsultantService {
     const url = `${this.APIurl}/Consultants/${consultantId}`;
     return this.http.get(url);
   }
-  updateConsultantContract(consultantId: number, contratValue: string): Observable<any> {
-    const url = `${this.APIurl}/Consultants/contract/${consultantId}`;
-    const body = `"${contratValue}"`; // Wrap the contratValue in double quotes to send it as a JSON string
-    return this.http.put(url, body, { headers: { 'Content-Type': 'application/json' } });
-  }
+
   
   getConsultantbyemail(email: string) {
     const url = `${this.APIurl}/Consultants/email/${email}`;
@@ -56,7 +54,7 @@ export class ConsultantService {
   }
  
   
-  updateCongeEtat(id: number, etatModifier: string): Observable<any> {
+  updatecontratEtat(id: number, etatModifier: string): Observable<any> {
     const url = `${this.APIurl}/Consultants/etat/${id}/${etatModifier}`;
     const body = { etatModifier };
 
@@ -95,9 +93,28 @@ console.log (soldemaladie);
 console.log (soldeconge);
     return this.http.put(url,id);
   }
+  updatesbonus(id: number, soldeconge: number): Observable<any> {
+    const url = `${this.APIurl}/Consultants/bonus/${id}/${soldeconge}`;
+    const body = { soldeconge };
 
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+console.log (soldeconge);
+    return this.http.put(url,id);
+  }
   uploadFile(formData: FormData): Observable<any> {
     return this.http.post(`${this.APIurl}/Consultants/upload`, formData);
   }
+  downloadPdf(fileName: string): Observable<any> {
+    const url = `http://localhost:60734/api/Conges/download-pdf?fileName=${fileName}`;
+    return this.http.get(url, { responseType: 'arraybuffer' });
+  }
 
+  createBlob(response: any): any {
+    const blob = new Blob([response], { type: 'application/pdf' });
+    return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+  }
 }

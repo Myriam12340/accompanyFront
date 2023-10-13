@@ -35,6 +35,7 @@ relation_com :string ;
 communication_interne_com :string ;
 processusR_com :string ;
 suggestion :string ;
-  
+commentaire_travailler : string ;
+commentaire_Aspects_RH : string ;
   }
   

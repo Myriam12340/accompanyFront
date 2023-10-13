@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Conge } from 'src/app/Model/conge';
 import { ConsultantService } from 'src/app/Model/consultant/consultant.service';
@@ -10,16 +11,44 @@ import { CongeService } from 'src/app/service/conge.service';
   styleUrls: ['./congeshr.component.css']
 })
 export class CongeshrComponent implements OnInit {
+  searchForm: FormGroup;
+
+  selectedConge: Conge | null = null;
+
+  showMonthSearch: boolean = false;
+  selectedSearchMonth: Date | null = null;
+
+  months = [
+    { name: 'Janvier', value: 0 },
+    { name: 'Février', value: 1 },
+    { name: 'Mars', value: 2 },
+    { name: 'Avril', value: 3 },
+    { name: 'Mai', value: 4 },
+    { name: 'Juin', value: 5 },
+    { name: 'Juillet', value: 6 },
+    { name: 'Août', value: 7 },
+    { name: 'Septembre', value: 8 },
+    { name: 'Octobre', value: 9 },
+    { name: 'Novembre', value: 10 },
+    { name: 'Décembre', value: 11 },
+  ];
+  
+  searchValidatorTerm: string = '';
+  selectedMonth: Date | null = null;
+
   conges: Conge[] = [];
   filteredConges: Conge[];
 
-  constructor(private congeService: CongeService,
+  constructor(private formBuilder: FormBuilder, private congeService: CongeService,
     private router: Router,
     private consultantService: ConsultantService,
     private authService: AuthService) { }
 
   ngOnInit(): void {
-
+    this.searchForm = this.formBuilder.group({
+      searchValidatorTerm: [''],
+      selectedMonth: [null],
+    });
     this.congeService.getCongelist().subscribe(
       (data: Conge[]) => {
         this.conges = data;
@@ -103,5 +132,63 @@ export class CongeshrComponent implements OnInit {
       return congeDate >= startOfWeek && congeDate <= endOfWeek;
     });
   }
+  filterByMonth() {
+    const today = new Date();
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+  
+    this.filteredConges = this.conges.filter(conge => {
+      const congeDate = new Date(conge.dateDebut);
+      return congeDate >= startOfMonth && congeDate <= endOfMonth;
+    });
+  }
+ 
+  
+  
+ 
+  
+  
+  
 
+  
+  
+  
+  
+
+  searchConges() {
+    const searchTerm = this.searchForm.get('searchValidatorTerm')?.value.toLowerCase();
+    const selectedMonth = this.searchForm.get('selectedMonth')?.value;
+  
+    this.filteredConges = this.conges.filter(conge => {
+      const demandeurnom = conge.demandeurnom.toLowerCase();
+      const congeDate = new Date(conge.dateDebut);
+    
+      const matchesSearch = !searchTerm || demandeurnom.includes(searchTerm);
+      const matchesMonth = selectedMonth === null || congeDate.getMonth()  === selectedMonth;
+    
+      return (matchesSearch && matchesMonth);
+    });
+    
+  }
+  
+  
+ 
+
+ 
+
+  toggleMonthSearch() {
+    this.showMonthSearch = !this.showMonthSearch;
+  }
+
+  selectMonthSearch(selectedConge: Conge) {
+    this.selectedConge = selectedConge;
+    this.showMonthSearch = true;
+  }
+
+  searchByMonth() {
+    this.selectedMonth = null;
+    this.showMonthSearch = false;
+    this.selectedConge = null;
+  }
+  
 }

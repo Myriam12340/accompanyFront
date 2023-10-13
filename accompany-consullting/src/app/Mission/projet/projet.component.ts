@@ -138,12 +138,31 @@ export class ProjetComponent implements OnInit {
   loadAllMissions() {
     this.missionservice.getlistmissiontous().subscribe(
       (d: Mission[]) => {
-       this.dataSource.data = d;
+        const groupedMissions = this.groupMissionsByName(d);
+        this.dataSource.data = groupedMissions;
       },
       (error) => {
         console.log('An error occurred while retrieving the list of missions:', error);
       }
     );
+  }
+  
+  groupMissionsByName(missions: Mission[]): Mission[] {
+    const groupedMissions: Mission[] = [];
+    
+    missions.forEach((mission) => {
+      const existingMission = groupedMissions.find((m) => m.titre === mission.titre);
+  
+      if (existingMission) {
+        // Si une mission avec le même titre existe, ajoutez les évaluations de la mission actuelle à la mission existante
+        existingMission.evaluations += mission.evaluations;
+      } else {
+        // Sinon, ajoutez simplement la mission au tableau accumulé
+        groupedMissions.push({ ...mission });
+      }
+    });
+  
+    return groupedMissions;
   }
   
   loadInProgressMissions() {
